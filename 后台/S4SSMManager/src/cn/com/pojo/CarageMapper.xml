@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.CarageMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Carage" >
+    <result column="A_ID" property="aId" jdbcType="DECIMAL" />
+    <result column="A_NAME" property="aName" jdbcType="VARCHAR" />
+    <result column="A_COUNT" property="aCount" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="getCarAgeByCount" resultMap="BaseResultMap" > 
+  select * from(select rownum rn , b.* from (select  a.* from carage  a order by a_count desc) b  where rownum&lt;6)
+  </select>
+  <insert id="insert" parameterType="cn.com.pojo.Carage" >
+    insert into CARAGE (A_ID, A_NAME, A_COUNT
+      )
+    values (#{aId,jdbcType=DECIMAL}, #{aName,jdbcType=VARCHAR}, #{aCount,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Carage" >
+    insert into CARAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      
+        A_ID,
+      
+      <if test="aName != null" >
+        A_NAME,
+      </if>
+      <if test="aCount != null" >
+        A_COUNT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     
+       seq_age.nextval,
+      
+      <if test="aName != null" >
+        #{aName,jdbcType=VARCHAR},
+      </if>
+      <if test="aCount != null" >
+        #{aCount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteCarAge" parameterType="cn.com.pojo.Carage" >
+  delete from carage where a_id=#{aId}
+  </delete>
+  <update id="updateCarAge" parameterType="cn.com.pojo.Carage">
+  update carage set a_name=#{aName},a_count=#{aCount} where a_id=#{aId}
+  </update>
+  <select id="getCarAgeById" resultMap="BaseResultMap" parameterType="cn.com.pojo.Carage">
+  select * from carage where a_id=#{aId}
+  </select>
+  <select id="queryPersonCarCount" resultType="java.lang.Long" >
+  select count(*) from carage where 1=1 
+  </select>
+  <select id="showPersonCarList" resultMap="BaseResultMap" parameterType="hashmap">
+  select * from(select rownum rn , b.* from(select   a.* from carage  a  where 1=1 
+   order by a_count desc ) b  where rownum&lt;=(#{curPage})*(#{rowsPrePage})) where rn&gt;((#{curPage}-1)*(#{rowsPrePage}))
+  </select>
+</mapper>

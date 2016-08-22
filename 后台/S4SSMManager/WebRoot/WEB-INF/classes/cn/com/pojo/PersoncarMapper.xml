@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.PersoncarMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Personcar" >
+    <id column="P_ID" property="pId" jdbcType="DECIMAL" />
+    <result column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="C_UID" property="cUid" jdbcType="DECIMAL" />
+    <result column="C_ID" property="cId" jdbcType="DECIMAL" />
+    <result column="P_STATE" property="pState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    P_ID, U_ID, C_UID, C_ID, P_STATE
+  </sql>
+  <select id="getCarCountByWhere" resultType="java.lang.Long" parameterType="cn.com.pojo.Personcar">
+  select count(*) from personcar where 1=1
+  <if test="uId !=null">
+  and u_id=#{uId}
+  </if>
+   <if test="pState !=null">
+  and p_state=#{pState}
+  </if>
+  
+  </select>
+  <select id="getPerSonCarMapByWhere" resultMap="BaseResultMap" parameterType="cn.com.pojo.Personcar">
+  select * from personcar where 1=1
+   <if test="uId !=null">
+  and u_id=#{uId,jdbcType=DECIMAL}
+  </if>
+   <if test="pState !=null">
+  and p_state=#{pState,jdbcType=VARCHAR}
+  </if>
+    <if test="cId !=null">
+  and c_id=#{cId,jdbcType=DECIMAL}
+  </if>
+    <if test="cUid !=null">
+  and c_uid=#{cUid,jdbcType=DECIMAL}
+  </if>
+  </select>
+  <select id="getPersoncar" resultMap="BaseResultMap" parameterType="cn.com.pojo.Personcar">
+  select * from Personcar where 1=1
+  <if test="uId !=null">
+  and u_id=#{uId}
+  </if>
+   <if test="pState !=null">
+  and p_state=#{pState}
+  </if>
+    <if test="cId !=null">
+  and c_id=#{cId}
+  </if>
+    <if test="cUid !=null">
+  and c_uid=#{cUid}
+  </if>
+  </select>
+  <select id="getPersonList" resultMap="BaseResultMap" parameterType="hashmap">
+  select * from (select rownum rn , b. * from (select rownum  ,a.* from  (select * from personcar where 1=1 
+ 
+  and u_id=#{uId}
+  
+  
+  and p_state=#{pState}
+  
+  ) a where rownum&lt;=(#{curPage})*(#{rowsPrePage})) b) where rn&gt;((#{curPage})-1)*(#{rowsPrePage})
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from PERSONCAR
+    where P_ID = #{pId,jdbcType=DECIMAL}
+  </select>
+  <select id="get_PersonList" resultMap="BaseResultMap" parameterType="hashmap">
+  select * from (select rownum rn , b. * from (select rownum  ,a.* from  (select * from personcar where u_id&lt;&gt;c_uid 
+  <if test="uId !=null">
+  and u_id=#{uId}
+  </if>
+  <if test="pState !=null">
+  and p_state=#{pState}
+  </if>
+  ) a where rownum&lt;=(#{curPage})*(#{rowsPrePage})) b) where rn&gt;((#{curPage})-1)*(#{rowsPrePage})
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PERSONCAR
+    where P_ID = #{pId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deletePerSoncar" parameterType="cn.com.pojo.Personcar">
+  delete from personcar where u_id= #{uId,jdbcType=DECIMAL} and c_id=#{cId,jdbcType=DECIMAL} and c_uid=#{cUid,jdbcType=DECIMAL} and p_state=#{pState,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.com.pojo.Personcar" >
+    insert into PERSONCAR (P_ID, U_ID, C_UID, 
+      C_ID, P_STATE)
+    values (#{pId,jdbcType=DECIMAL}, #{uId,jdbcType=DECIMAL}, #{cUid,jdbcType=DECIMAL}, 
+      #{cId,jdbcType=DECIMAL}, #{pState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Personcar" >
+    insert into PERSONCAR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      
+        P_ID,
+      
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="cUid != null" >
+        C_UID,
+      </if>
+      <if test="cId != null" >
+        C_ID,
+      </if>
+      <if test="pState != null" >
+        P_STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    SEQ_PERSONCAR.nextval,
+      <if test="uId != null" >
+        #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="cUid != null" >
+        #{cUid,jdbcType=DECIMAL},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=DECIMAL},
+      </if>
+      <if test="pState != null" >
+        #{pState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.pojo.Personcar" >
+    update PERSONCAR
+    <set >
+      <if test="uId != null" >
+        U_ID = #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="cUid != null" >
+        C_UID = #{cUid,jdbcType=DECIMAL},
+      </if>
+      <if test="cId != null" >
+        C_ID = #{cId,jdbcType=DECIMAL},
+      </if>
+      <if test="pState != null" >
+        P_STATE = #{pState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where P_ID = #{pId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.pojo.Personcar" >
+    update PERSONCAR
+    set U_ID = #{uId,jdbcType=DECIMAL},
+      C_UID = #{cUid,jdbcType=DECIMAL},
+      C_ID = #{cId,jdbcType=DECIMAL},
+      P_STATE = #{pState,jdbcType=VARCHAR}
+    where P_ID = #{pId,jdbcType=DECIMAL}
+  </update>
+  <update id="updatePerSoncar" parameterType="hashmap">
+  update  personcar set  p_state=#{state,jdbcType=VARCHAR} where u_id=#{uId,jdbcType=DECIMAL} and c_id=#{cId,jdbcType=DECIMAL} and c_uid=#{cUid,jdbcType=DECIMAL} and p_state=#{pState,jdbcType=VARCHAR}
+  </update>
+  <update id="updatePerSonCarByState" parameterType="hashmap">
+  update  Personcar set  P_State=#{state} where  C_Id=#{cId}  and P_State=#{pState}
+  </update>
+  <delete id="deletepersoncaruser" parameterType="cn.com.pojo.Personcar" >
+  delete from personcar where u_id=#{uId}
+  </delete>
+   <delete id="deletecidpersoncaruser" parameterType="cn.com.pojo.Personcar" >
+  delete from personcar where c_id=#{cId}
+  </delete>
+   <select id="checkipersonuser" resultMap="BaseResultMap" parameterType="cn.com.pojo.Personcar">
+  select * from personcar where u_id=#{uId}
+  </select>
+  <select id="checkcidipersonuser" resultMap="BaseResultMap" parameterType="cn.com.pojo.Personcar">
+  select * from personcar where c_id=#{cId}
+  </select>
+  <delete id="deletePersonByAll" parameterType="cn.com.pojo.Personcar">
+  delete from personcar where u_id=#{uId} and c_id=#{cId} and c_uid=#{cUid} and p_state=#{pState}
+  </delete>
+  <select id="checkcuidperson" resultMap="BaseResultMap" parameterType="cn.com.pojo.Personcar" >
+  select * from personcar where c_uid=#{cUid}
+  </select>
+  <delete id="deletecuidperson" parameterType="cn.com.pojo.Personcar">
+   delete from personcar where c_uid=#{cUid}
+  </delete>
+</mapper>

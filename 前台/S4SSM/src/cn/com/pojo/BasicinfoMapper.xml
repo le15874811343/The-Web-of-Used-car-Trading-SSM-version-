@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.BasicinfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Basicinfo" >
+    <result column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="C_ID" property="cId" jdbcType="DECIMAL" />
+    <result column="AIDD" property="aidd" jdbcType="DATE" />
+    <result column="SRDT" property="srdt" jdbcType="DATE" />
+    <result column="BODYCOLOR" property="bodycolor" jdbcType="VARCHAR" />
+    <result column="INTERIORCOLOR" property="interiorcolor" jdbcType="VARCHAR" />
+    <result column="DOMF" property="domf" jdbcType="DATE" />
+    <result column="ORGIN" property="orgin" jdbcType="VARCHAR" />
+    <result column="CIMD" property="cimd" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getAllBasic" resultMap="BaseResultMap" parameterType="cn.com.pojo.Basicinfo">
+  select to_char(a.aidd,'yyyy-mm') as aidd,to_char(a.srdt,'yyyy-mm') as srdt ,to_char(a.domf,'yyyy-mm') as domf,a.u_id,a.c_id,a.BODYCOLOR,a.INTERIORCOLOR, 
+  a.ORGIN,a.CIMD
+  from basicinfo a
+  </select>
+   <select id="getAllBasicById" resultMap="BaseResultMap" parameterType="cn.com.pojo.Carinfo">
+select to_char(a.aidd,'yyyy-mm') as aidd,to_char(a.srdt,'yyyy-mm') as srdt ,to_char(a.domf,'yyyy-mm') as domf,a.u_id,a.c_id,a.BODYCOLOR,a.INTERIORCOLOR,
+  a.ORGIN,a.CIMD from basicinfo a where u_id=#{uId} and c_id=#{cId}
+  </select>
+  <insert id="insert" parameterType="cn.com.pojo.Basicinfo" >
+    insert into BASICINFO (U_ID, C_ID, AIDD, 
+      SRDT, BODYCOLOR, INTERIORCOLOR, 
+      DOMF, ORGIN, CIMD)
+    values (#{uId,jdbcType=DECIMAL}, #{cId,jdbcType=DECIMAL}, #{aidd,jdbcType=DATE}, 
+      #{srdt,jdbcType=DATE}, #{bodycolor,jdbcType=VARCHAR}, #{interiorcolor,jdbcType=VARCHAR}, 
+      #{domf,jdbcType=DATE}, #{orgin,jdbcType=VARCHAR}, #{cimd,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Basicinfo" >
+    insert into BASICINFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="cId != null" >
+        C_ID,
+      </if>
+      <if test="aidd != null" >
+        AIDD,
+      </if>
+      <if test="srdt != null" >
+        SRDT,
+      </if>
+      <if test="bodycolor != null" >
+        BODYCOLOR,
+      </if>
+      <if test="interiorcolor != null" >
+        INTERIORCOLOR,
+      </if>
+      <if test="domf != null" >
+        DOMF,
+      </if>
+      <if test="orgin != null" >
+        ORGIN,
+      </if>
+      <if test="cimd != null" >
+        CIMD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=DECIMAL},
+      </if>
+      <if test="aidd != null" >
+        to_date(#{aidd},'yyyy/mm'),
+      </if>
+      <if test="srdt != null" >
+        to_date(#{srdt},'yyyy/mm'),
+      </if>
+      <if test="bodycolor != null" >
+        #{bodycolor,jdbcType=VARCHAR},
+      </if>
+      <if test="interiorcolor != null" >
+        #{interiorcolor,jdbcType=VARCHAR},
+      </if>
+      <if test="domf != null" >
+          to_date(#{domf},'yyyy/mm'),
+      </if>
+      <if test="orgin != null" >
+        #{orgin,jdbcType=VARCHAR},
+      </if>
+      <if test="cimd != null" >
+        #{cimd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateBasicInfo"  parameterType="cn.com.pojo.Basicinfo">
+  update  basicinfo set aidd=to_date(#{aidd},'yyyy/mm'),srdt=to_date(#{srdt},'yyyy/mm'),bodycolor=#{bodycolor,jdbcType=VARCHAR},interiorcolor=#{interiorcolor,jdbcType=VARCHAR},domf=to_date(#{domf},'yyyy/mm'),orgin=#{orgin,jdbcType=VARCHAR},cimd=#{cimd,jdbcType=VARCHAR} where u_id=#{uId,jdbcType=DECIMAL} and c_id=#{cId,jdbcType=DECIMAL}
+  
+  </update>
+</mapper>

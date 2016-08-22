@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.HardwareconfigMapper">
+	<resultMap id="BaseResultMap" type="cn.com.pojo.Hardwareconfig">
+		<result column="U_ID" property="uId" jdbcType="DECIMAL" />
+		<result column="C_ID" property="cId" jdbcType="DECIMAL" />
+		<result column="CONSOLELCDSCREEN" property="consolelcdscreen"
+			jdbcType="VARCHAR" />
+		<result column="AUTOLIGHT" property="autolight" jdbcType="VARCHAR" />
+		<result column="HEADLIGHTS" property="headlights" jdbcType="VARCHAR" />
+		<result column="LIGHTWASH" property="lightwash" jdbcType="VARCHAR" />
+		<result column="EFGV" property="efgv" jdbcType="VARCHAR" />
+		<result column="SEATNUMBER" property="seatnumber" jdbcType="DECIMAL" />
+		<result column="FUELFORM" property="fuelform" jdbcType="VARCHAR" />
+		<result column="CVT" property="cvt" jdbcType="VARCHAR" />
+		<result column="DRIVINGMETHOD" property="drivingmethod"
+			jdbcType="VARCHAR" />
+		<result column="PKE" property="pke" jdbcType="VARCHAR" />
+		<result column="KEYLESSGO" property="keylessgo" jdbcType="VARCHAR" />
+		<result column="SUNROOF" property="sunroof" jdbcType="VARCHAR" />
+		<result column="LEATHERSEAT" property="leatherseat" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getAllHardwareConfig" resultMap="BaseResultMap">
+		select * from
+		hardwareconfig
+	</select>
+	<select id="getHardwareConfigById" resultMap="BaseResultMap"
+		parameterType="cn.com.pojo.Carinfo">
+		select * from hardwareconfig where u_id=#{uId} and
+		c_id=#{cId}
+	</select>
+	<insert id="insert" parameterType="cn.com.pojo.Hardwareconfig">
+		insert into HARDWARECONFIG
+		(U_ID, C_ID, CONSOLELCDSCREEN,
+		AUTOLIGHT, HEADLIGHTS, LIGHTWASH,
+		EFGV,
+		SEATNUMBER, FUELFORM,
+		CVT, DRIVINGMETHOD, PKE,
+		KEYLESSGO, SUNROOF,
+		LEATHERSEAT
+		)
+		values (#{uId,jdbcType=DECIMAL}, #{cId,jdbcType=DECIMAL},
+		#{consolelcdscreen,jdbcType=VARCHAR},
+		#{autolight,jdbcType=VARCHAR},
+		#{headlights,jdbcType=VARCHAR}, #{lightwash,jdbcType=VARCHAR},
+		#{efgv,jdbcType=VARCHAR}, #{seatnumber,jdbcType=DECIMAL},
+		#{fuelform,jdbcType=VARCHAR},
+		#{cvt,jdbcType=VARCHAR},
+		#{drivingmethod,jdbcType=VARCHAR}, #{pke,jdbcType=VARCHAR},
+		#{keylessgo,jdbcType=VARCHAR}, #{sunroof,jdbcType=VARCHAR},
+		#{leatherseat,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="cn.com.pojo.Hardwareconfig">
+		insert into HARDWARECONFIG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uId != null">
+				U_ID,
+			</if>
+			<if test="cId != null">
+				C_ID,
+			</if>
+			<if test="consolelcdscreen != null">
+				CONSOLELCDSCREEN,
+			</if>
+			<if test="autolight != null">
+				AUTOLIGHT,
+			</if>
+			<if test="headlights != null">
+				HEADLIGHTS,
+			</if>
+			<if test="lightwash != null">
+				LIGHTWASH,
+			</if>
+			<if test="efgv != null">
+				EFGV,
+			</if>
+			<if test="seatnumber != null">
+				SEATNUMBER,
+			</if>
+			<if test="fuelform != null">
+				FUELFORM,
+			</if>
+			<if test="cvt != null">
+				CVT,
+			</if>
+			<if test="drivingmethod != null">
+				DRIVINGMETHOD,
+			</if>
+			<if test="pke != null">
+				PKE,
+			</if>
+			<if test="keylessgo != null">
+				KEYLESSGO,
+			</if>
+			<if test="sunroof != null">
+				SUNROOF,
+			</if>
+			<if test="leatherseat != null">
+				LEATHERSEAT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uId != null">
+				#{uId,jdbcType=DECIMAL},
+			</if>
+			<if test="cId != null">
+				#{cId,jdbcType=DECIMAL},
+			</if>
+			<if test="consolelcdscreen != null">
+				#{consolelcdscreen,jdbcType=VARCHAR},
+			</if>
+			<if test="autolight != null">
+				#{autolight,jdbcType=VARCHAR},
+			</if>
+			<if test="headlights != null">
+				#{headlights,jdbcType=VARCHAR},
+			</if>
+			<if test="lightwash != null">
+				#{lightwash,jdbcType=VARCHAR},
+			</if>
+			<if test="efgv != null">
+				#{efgv,jdbcType=VARCHAR},
+			</if>
+			<if test="seatnumber != null">
+				#{seatnumber,jdbcType=DECIMAL},
+			</if>
+			<if test="fuelform != null">
+				#{fuelform,jdbcType=VARCHAR},
+			</if>
+			<if test="cvt != null">
+				#{cvt,jdbcType=VARCHAR},
+			</if>
+			<if test="drivingmethod != null">
+				#{drivingmethod,jdbcType=VARCHAR},
+			</if>
+			<if test="pke != null">
+				#{pke,jdbcType=VARCHAR},
+			</if>
+			<if test="keylessgo != null">
+				#{keylessgo,jdbcType=VARCHAR},
+			</if>
+			<if test="sunroof != null">
+				#{sunroof,jdbcType=VARCHAR},
+			</if>
+			<if test="leatherseat != null">
+				#{leatherseat,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateHardwareConfig" parameterType="cn.com.pojo.Hardwareconfig">
+		update
+		hardwareconfig set
+		consoleLcdScreen=#{consolelcdscreen,jdbcType=VARCHAR},autoLight=#{autolight,jdbcType=VARCHAR},headLights=#{headlights,jdbcType=VARCHAR},lightWash=#{lightwash,jdbcType=VARCHAR},efgv=#{efgv,jdbcType=VARCHAR},seatNumber=#{seatnumber,jdbcType=DECIMAL},fuelForm=#{fuelform,jdbcType=VARCHAR},cvt=#{cvt,jdbcType=VARCHAR},drivingMethod=	#{drivingmethod,jdbcType=VARCHAR},pke=#{pke,jdbcType=VARCHAR},keyLessgo=#{keylessgo,jdbcType=VARCHAR},sunRoof=#{sunroof,jdbcType=VARCHAR},leatherSeat=#{leatherseat,jdbcType=VARCHAR}
+		where u_id=#{uId,jdbcType=DECIMAL} and c_id=#{cId,jdbcType=DECIMAL}
+	</update>
+	<delete id="deletehardwareconfiguser" parameterType="cn.com.pojo.Hardwareconfig">
+	delete from hardwareconfig where u_id=#{uId}
+	</delete>
+	<delete id="deletecidhardwareconfiguser" parameterType="cn.com.pojo.Hardwareconfig">
+	delete from hardwareconfig where c_id=#{cId}
+	</delete>
+	<select id="checkhardwareconfig" parameterType="cn.com.pojo.Hardwareconfig" resultMap="BaseResultMap" >
+	select * from hardwareconfig where u_id=#{uId}
+	</select>
+	<select id="checkcidhardwareconfig" parameterType="cn.com.pojo.Hardwareconfig"  resultMap="BaseResultMap">
+	select * from hardwareconfig where c_id=#{cId}
+	</select>
+</mapper>

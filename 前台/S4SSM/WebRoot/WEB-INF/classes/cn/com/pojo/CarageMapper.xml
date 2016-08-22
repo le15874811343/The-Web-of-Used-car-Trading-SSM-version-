@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.CarageMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Carage" >
+    <result column="A_ID" property="aId" jdbcType="DECIMAL" />
+    <result column="A_NAME" property="aName" jdbcType="VARCHAR" />
+    <result column="A_COUNT" property="aCount" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="getCarAgeByCount" resultMap="BaseResultMap" > 
+  select * from(select rownum rn , b.* from (select  a.* from carage  a order by a_count desc) b  where rownum&lt;6)
+  </select>
+  <insert id="insert" parameterType="cn.com.pojo.Carage" >
+    insert into CARAGE (A_ID, A_NAME, A_COUNT
+      )
+    values (#{aId,jdbcType=DECIMAL}, #{aName,jdbcType=VARCHAR}, #{aCount,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Carage" >
+    insert into CARAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        A_ID,
+      </if>
+      <if test="aName != null" >
+        A_NAME,
+      </if>
+      <if test="aCount != null" >
+        A_COUNT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        #{aId,jdbcType=DECIMAL},
+      </if>
+      <if test="aName != null" >
+        #{aName,jdbcType=VARCHAR},
+      </if>
+      <if test="aCount != null" >
+        #{aCount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>

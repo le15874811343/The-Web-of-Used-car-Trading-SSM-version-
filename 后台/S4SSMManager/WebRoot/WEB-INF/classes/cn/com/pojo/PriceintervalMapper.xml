@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.PriceintervalMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Priceinterval" >
+    <result column="P_ID" property="pId" jdbcType="DECIMAL" />
+    <result column="P_NAME" property="pName" jdbcType="VARCHAR" />
+    <result column="P_COUNT" property="pCount" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="getPriceIntervalByCount" resultMap="BaseResultMap">
+  select * from(select rownum rn , b.* from (select  a.* from priceinterval  a order by p_count desc) b  where rownum&lt;5)
+  </select>
+  <insert id="insert" parameterType="cn.com.pojo.Priceinterval" >
+    insert into PRICEINTERVAL (P_ID, P_NAME, P_COUNT
+      )
+    values (#{pId,jdbcType=DECIMAL}, #{pName,jdbcType=VARCHAR}, #{pCount,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Priceinterval" >
+    insert into PRICEINTERVAL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+     
+        P_ID,
+      
+      <if test="pName != null" >
+        P_NAME,
+      </if>
+      <if test="pCount != null" >
+        P_COUNT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     seq_price.nextval,
+      <if test="pName != null" >
+        #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="pCount != null" >
+        #{pCount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deletePriceInterval" parameterType="cn.com.pojo.Priceinterval" >
+  delete from priceinterval where p_id=#{pId}
+  </delete>
+  <update id="updatePriceInterval" parameterType="cn.com.pojo.Priceinterval" >
+  update priceinterval set p_name=#{pName},p_count=#{pCount} where p_id=#{pId}
+  </update>
+  <select id="getPriceIntervalById" resultMap="BaseResultMap" parameterType="cn.com.pojo.Priceinterval" >
+  select * from priceinterval where p_id=#{pId}
+  </select>
+   <select id="queryPersonCarCount" resultType="java.lang.Long" >
+  select count(*) from priceinterval where 1=1 
+  </select>
+  <select id="showPersonCarList" resultMap="BaseResultMap" parameterType="hashmap">
+  select * from(select rownum rn , b.* from(select   a.* from priceinterval  a  where 1=1 
+   order by p_count desc ) b  where rownum&lt;=(#{curPage})*(#{rowsPrePage})) where rn&gt;((#{curPage}-1)*(#{rowsPrePage}))
+  </select>
+</mapper>

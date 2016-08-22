@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+  <display-name></display-name>	
+  <welcome-file-list>
+    <welcome-file>MyJsp.jsp</welcome-file>
+  </welcome-file-list>
+    <!-- 所有请求响应 http 交给Spring MVC DispatcherServlet核心引擎 -->
+	<servlet>
+		<servlet-name>SpringMVC</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SpringMVC</servlet-name>
+		<!-- /包括所有资源 class,媒体文件 js,css -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+		<!-- spring 配置 -->
+	<!-- spring提供监听器去加载spring的配置文件，读取contextConfigLocation参数 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- 配置参数路径 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<!-- 配置过滤器 -->
+	 <filter>
+  <description>编码过滤器</description>
+  <filter-name>EncodingFilter</filter-name>
+  <filter-class>cn.com.filter.EncodingFilter</filter-class>
+  <init-param>
+  <param-name>Encoding</param-name>
+  <param-value>UTF-8</param-value>
+  </init-param>
+  </filter>
+  <filter-mapping>
+  <filter-name>EncodingFilter</filter-name>
+  <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <filter>
+  <description>管理员权限过滤器</description>
+  <filter-name>AdminFilter</filter-name>
+  <filter-class>cn.com.filter.AdminFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  <filter-name>AdminFilter</filter-name>
+  <url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
+</web-app>

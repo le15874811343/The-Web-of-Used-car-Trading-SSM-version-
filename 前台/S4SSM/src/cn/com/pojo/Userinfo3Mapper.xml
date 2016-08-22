@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.Userinfo3Mapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Userinfo3" >
+    <id column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="U_TEL" property="uTel" jdbcType="DECIMAL" />
+    <result column="U_PWD" property="uPwd" jdbcType="VARCHAR" />
+    <result column="U_CARD" property="uCard" jdbcType="DECIMAL" />
+    <result column="U_ADR" property="uAdr" jdbcType="VARCHAR" />
+    <result column="U_QQ" property="uQq" jdbcType="DECIMAL" />
+    <result column="U_EMAIL" property="uEmail" jdbcType="VARCHAR" />
+    <result column="U_NAME" property="uName" jdbcType="VARCHAR" />
+    <result column="U_SEX" property="uSex" jdbcType="VARCHAR" />
+    <result column="U_ADMIN" property="uAdmin" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="login" resultMap="BaseResultMap" parameterType="cn.com.pojo.Userinfo3">
+  select * from userinfo3  where u_tel=#{uTel} and u_pwd=#{uPwd}
+  </select>
+  <select id="getUserInfoByUnique" resultMap="BaseResultMap" parameterType="cn.com.pojo.Userinfo3">
+  select * from userinfo3 where 1=1 
+  <if test="uTel !=null">
+   and u_tel=#{uTel}
+  </if>
+   
+  </select>
+  <sql id="Base_Column_List" >
+    U_ID, U_TEL, U_PWD, U_CARD, U_ADR, U_QQ, U_EMAIL, U_NAME, U_SEX, U_ADMIN
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from USERINFO3
+    where U_ID = #{uId,jdbcType=DECIMAL}
+  </select>
+  <select id="queryPersonCarCount" resultType="java.lang.Long" parameterType="cn.com.pojo.Userinfo3">
+  select count(*) from userinfo3 where 1=1 
+  <if test="uAdmin !=null">
+     and u_admin=#{uAdmin}
+  </if>
+
+  </select>
+  <select id="showPersonCarList" resultMap="BaseResultMap" parameterType="hashmap">
+  select * from(select rownum rn , b.* from(select  a.* from userinfo3  a  where 1=1 
+   <if test="uAdmin !=null">
+     and u_admin=#{uAdmin}
+  </if>
+   ) b  where rownum&lt;=(#{curPage})*(#{rowsPrePage})) where rn&gt;((#{curPage})-1)*(#{rowsPrePage})
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from USERINFO3
+    where U_ID = #{uId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="cn.com.pojo.Userinfo3" >
+    insert into USERINFO3 (U_ID, U_TEL, U_PWD, 
+      U_CARD, U_ADR, U_QQ, U_EMAIL, 
+      U_NAME, U_SEX, U_ADMIN
+      )
+    values (#{uId,jdbcType=DECIMAL}, #{uTel,jdbcType=DECIMAL}, #{uPwd,jdbcType=VARCHAR}, 
+      #{uCard,jdbcType=DECIMAL}, #{uAdr,jdbcType=VARCHAR}, #{uQq,jdbcType=DECIMAL}, #{uEmail,jdbcType=VARCHAR}, 
+      #{uName,jdbcType=VARCHAR}, #{uSex,jdbcType=VARCHAR}, #{uAdmin,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Userinfo3" >
+    insert into USERINFO3
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+     
+        U_ID,
+     
+      <if test="uTel != null" >
+        U_TEL,
+      </if>
+      <if test="uPwd != null" >
+        U_PWD,
+      </if>
+      <if test="uCard != null" >
+        U_CARD,
+      </if>
+      <if test="uAdr != null" >
+        U_ADR,
+      </if>
+      <if test="uQq != null" >
+        U_QQ,
+      </if>
+      <if test="uEmail != null" >
+        U_EMAIL,
+      </if>
+      <if test="uName != null" >
+        U_NAME,
+      </if>
+      <if test="uSex != null" >
+        U_SEX,
+      </if>
+      <if test="uAdmin != null" >
+        U_ADMIN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     
+       seq_userinfo3.nextval,
+      
+      <if test="uTel != null" >
+        #{uTel,jdbcType=DECIMAL},
+      </if>
+      <if test="uPwd != null" >
+        #{uPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="uCard != null" >
+        #{uCard,jdbcType=DECIMAL},
+      </if>
+      <if test="uAdr != null" >
+        #{uAdr,jdbcType=VARCHAR},
+      </if>
+      <if test="uQq != null" >
+        #{uQq,jdbcType=DECIMAL},
+      </if>
+      <if test="uEmail != null" >
+        #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uName != null" >
+        #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uSex != null" >
+        #{uSex,jdbcType=VARCHAR},
+      </if>
+      <if test="uAdmin != null" >
+        #{uAdmin,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.pojo.Userinfo3" >
+    update USERINFO3
+    <set >
+      <if test="uTel != null" >
+        U_TEL = #{uTel,jdbcType=DECIMAL},
+      </if>
+      <if test="uPwd != null" >
+        U_PWD = #{uPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="uCard != null" >
+        U_CARD = #{uCard,jdbcType=DECIMAL},
+      </if>
+      <if test="uAdr != null" >
+        U_ADR = #{uAdr,jdbcType=VARCHAR},
+      </if>
+      <if test="uQq != null" >
+        U_QQ = #{uQq,jdbcType=DECIMAL},
+      </if>
+      <if test="uEmail != null" >
+        U_EMAIL = #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uName != null" >
+        U_NAME = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uSex != null" >
+        U_SEX = #{uSex,jdbcType=VARCHAR},
+      </if>
+      <if test="uAdmin != null" >
+        U_ADMIN = #{uAdmin,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where U_ID = #{uId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.pojo.Userinfo3" >
+    update USERINFO3
+    set U_TEL = #{uTel,jdbcType=DECIMAL},
+      U_PWD = #{uPwd,jdbcType=VARCHAR},
+      U_CARD = #{uCard,jdbcType=DECIMAL},
+      U_ADR = #{uAdr,jdbcType=VARCHAR},
+      U_QQ = #{uQq,jdbcType=DECIMAL},
+      U_EMAIL = #{uEmail,jdbcType=VARCHAR},
+      U_NAME = #{uName,jdbcType=VARCHAR},
+      U_SEX = #{uSex,jdbcType=VARCHAR},
+      U_ADMIN = #{uAdmin,jdbcType=VARCHAR}
+    where U_ID = #{uId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateUserPwd" parameterType="cn.com.pojo.Userinfo3" >
+  update userinfo3 set u_pwd=#{uPwd} where u_id=#{uId}
+  </update>
+</mapper>

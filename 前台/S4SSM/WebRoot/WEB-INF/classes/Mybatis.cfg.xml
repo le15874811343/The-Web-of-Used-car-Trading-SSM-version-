@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="db.properties">
+	</properties>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"></transactionManager>
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<!--通过resource方法一次加载一个映射文件 -->
+		<mapper resource="cn\com\pojo\CarinfoMapper.xml" />
+		<mapper resource="cn\com\pojo\CarbrandMapper.xml" />
+		<mapper resource="cn\com\pojo\CarageMapper.xml" />
+		<mapper resource="cn\com\pojo\BasicinfoMapper.xml" />
+		<mapper resource="cn\com\pojo\CartypeMapper.xml" />
+		<mapper resource="cn\com\pojo\Comment1Mapper.xml" />
+		<mapper resource="cn\com\pojo\DistanceMapper.xml" />
+		<mapper resource="cn\com\pojo\EmissionstandardMapper.xml" />
+		<mapper resource="cn\com\pojo\HardwareconfigMapper.xml" />
+		<mapper resource="cn\com\pojo\ImagesinfoMapper.xml" />
+		<mapper resource="cn\com\pojo\ModelMapper.xml" />
+		<mapper resource="cn\com\pojo\PersoncarMapper.xml" />
+		<mapper resource="cn\com\pojo\PersonneedMapper.xml" />
+		<mapper resource="cn\com\pojo\PriceintervalMapper.xml" />
+		<mapper resource="cn\com\pojo\ProcedureinfoMapper.xml" />
+		<mapper resource="cn\com\pojo\SellinfoMapper.xml" />
+		<mapper resource="cn\com\pojo\SystemconfigMapper.xml" />
+		<mapper resource="cn\com\pojo\TrendsMapper.xml" />
+		<mapper resource="cn\com\pojo\Userinfo3Mapper.xml" />
+	</mappers>
+</configuration>

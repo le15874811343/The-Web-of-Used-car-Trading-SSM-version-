@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.ImagesinfoMapper">
+	<resultMap id="BaseResultMap" type="cn.com.pojo.Imagesinfo">
+		<result column="C_ID" property="cId" jdbcType="DECIMAL" />
+		<result column="U_ID" property="uId" jdbcType="DECIMAL" />
+		<result column="IMAGE1" property="image1" jdbcType="VARCHAR" />
+		<result column="IMAGE2" property="image2" jdbcType="VARCHAR" />
+		<result column="IMAGE3" property="image3" jdbcType="VARCHAR" />
+		<result column="IMAGE4" property="image4" jdbcType="VARCHAR" />
+		<result column="IMAGE5" property="image5" jdbcType="VARCHAR" />
+		<result column="IMAGE6" property="image6" jdbcType="VARCHAR" />
+		<result column="IMAGE7" property="image7" jdbcType="VARCHAR" />
+		<result column="IMAGE8" property="image8" jdbcType="VARCHAR" />
+		<result column="IMAGE9" property="image9" jdbcType="VARCHAR" />
+		<result column="IMAGE10" property="image10" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getCarImagesInfoByID" resultMap="BaseResultMap"
+		parameterType="cn.com.pojo.Carinfo">
+		select * from imagesinfo where c_id=#{cId} and u_id=#{uId}
+	</select>
+	<insert id="insert" parameterType="cn.com.pojo.Imagesinfo">
+		insert into IMAGESINFO (C_ID, U_ID, IMAGE1,
+		IMAGE2, IMAGE3, IMAGE4,
+		IMAGE5, IMAGE6, IMAGE7,
+		IMAGE8, IMAGE9, IMAGE10
+		)
+		values (#{cId,jdbcType=DECIMAL}, #{uId,jdbcType=DECIMAL},
+		#{image1,jdbcType=VARCHAR},
+		#{image2,jdbcType=VARCHAR}, #{image3,jdbcType=VARCHAR}, #{image4,jdbcType=VARCHAR},
+		#{image5,jdbcType=VARCHAR}, #{image6,jdbcType=VARCHAR},
+		#{image7,jdbcType=VARCHAR},
+		#{image8,jdbcType=VARCHAR}, #{image9,jdbcType=VARCHAR}, #{image10,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="cn.com.pojo.Imagesinfo">
+		insert into IMAGESINFO
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cId != null">
+				C_ID,
+			</if>
+			<if test="uId != null">
+				U_ID,
+			</if>
+			<if test="image1 != null">
+				IMAGE1,
+			</if>
+			<if test="image2 != null">
+				IMAGE2,
+			</if>
+			<if test="image3 != null">
+				IMAGE3,
+			</if>
+			<if test="image4 != null">
+				IMAGE4,
+			</if>
+			<if test="image5 != null">
+				IMAGE5,
+			</if>
+			<if test="image6 != null">
+				IMAGE6,
+			</if>
+			<if test="image7 != null">
+				IMAGE7,
+			</if>
+			<if test="image8 != null">
+				IMAGE8,
+			</if>
+			<if test="image9 != null">
+				IMAGE9,
+			</if>
+			<if test="image10 != null">
+				IMAGE10,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cId != null">
+				#{cId,jdbcType=DECIMAL},
+			</if>
+			<if test="uId != null">
+				#{uId,jdbcType=DECIMAL},
+			</if>
+			<if test="image1 != null">
+				#{image1,jdbcType=VARCHAR},
+			</if>
+			<if test="image2 != null">
+				#{image2,jdbcType=VARCHAR},
+			</if>
+			<if test="image3 != null">
+				#{image3,jdbcType=VARCHAR},
+			</if>
+			<if test="image4 != null">
+				#{image4,jdbcType=VARCHAR},
+			</if>
+			<if test="image5 != null">
+				#{image5,jdbcType=VARCHAR},
+			</if>
+			<if test="image6 != null">
+				#{image6,jdbcType=VARCHAR},
+			</if>
+			<if test="image7 != null">
+				#{image7,jdbcType=VARCHAR},
+			</if>
+			<if test="image8 != null">
+				#{image8,jdbcType=VARCHAR},
+			</if>
+			<if test="image9 != null">
+				#{image9,jdbcType=VARCHAR},
+			</if>
+			<if test="image10 != null">
+				#{image10,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateCarImagesInfo" parameterType="cn.com.pojo.Imagesinfo">
+		update imagesinfo set image1= #{image1,jdbcType=VARCHAR},image2=
+		#{image2,jdbcType=VARCHAR},image3= #{image3,jdbcType=VARCHAR},image4=
+		#{image4,jdbcType=VARCHAR},image5= #{image5,jdbcType=VARCHAR},image6=
+		#{image6,jdbcType=VARCHAR},image7= #{image7,jdbcType=VARCHAR},image8=
+		#{image8,jdbcType=VARCHAR},image9= #{image9,jdbcType=VARCHAR},image10=
+		#{image10,jdbcType=VARCHAR} where u_id=#{uId,jdbcType=DECIMAL} and
+		c_id=#{cId,jdbcType=DECIMAL}
+	</update>
+</mapper>

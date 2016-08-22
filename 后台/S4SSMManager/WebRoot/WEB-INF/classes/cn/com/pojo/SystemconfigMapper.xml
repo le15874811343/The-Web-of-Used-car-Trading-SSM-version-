@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.SystemconfigMapper">
+	<resultMap id="BaseResultMap" type="cn.com.pojo.Systemconfig">
+		<result column="U_ID" property="uId" jdbcType="DECIMAL" />
+		<result column="C_ID" property="cId" jdbcType="DECIMAL" />
+		<result column="GUIDANCESYSTEM" property="guidancesystem"
+			jdbcType="VARCHAR" />
+		<result column="ALB" property="alb" jdbcType="VARCHAR" />
+		<result column="FPG" property="fpg" jdbcType="VARCHAR" />
+		<result column="RPG" property="rpg" jdbcType="VARCHAR" />
+		<result column="RCPA" property="rcpa" jdbcType="VARCHAR" />
+		<result column="DSEA" property="dsea" jdbcType="VARCHAR" />
+		<result column="FSEA" property="fsea" jdbcType="VARCHAR" />
+		<result column="DLCC" property="dlcc" jdbcType="VARCHAR" />
+		<result column="HFS" property="hfs" jdbcType="VARCHAR" />
+		<result column="HRS" property="hrs" jdbcType="VARCHAR" />
+		<result column="FSV" property="fsv" jdbcType="VARCHAR" />
+		<result column="RSV" property="rsv" jdbcType="VARCHAR" />
+		<result column="FSM" property="fsm" jdbcType="VARCHAR" />
+		<result column="RSM" property="rsm" jdbcType="VARCHAR" />
+		<result column="RVMH" property="rvmh" jdbcType="VARCHAR" />
+		<result column="ESS" property="ess" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getAllSystemConfig" resultMap="BaseResultMap">
+		select * from systemconfig
+	</select>
+	<select id="getSystemConfigById" resultType="cn.com.pojo.Systemconfig"
+		parameterType="cn.com.pojo.Carinfo">
+		select * from systemconfig where u_id=#{uId} and c_id=#{cId}
+	</select>
+	<insert id="insert" parameterType="cn.com.pojo.Systemconfig">
+		insert into SYSTEMCONFIG (U_ID, C_ID, GUIDANCESYSTEM,
+		ALB, FPG, RPG, RCPA,
+		DSEA, FSEA, DLCC, HFS,
+		HRS, FSV, RSV, FSM,
+		RSM, RVMH, ESS)
+		values (#{uId,jdbcType=DECIMAL}, #{cId,jdbcType=DECIMAL},
+		#{guidancesystem,jdbcType=VARCHAR},
+		#{alb,jdbcType=VARCHAR}, #{fpg,jdbcType=VARCHAR}, #{rpg,jdbcType=VARCHAR},
+		#{rcpa,jdbcType=VARCHAR},
+		#{dsea,jdbcType=VARCHAR}, #{fsea,jdbcType=VARCHAR}, #{dlcc,jdbcType=VARCHAR},
+		#{hfs,jdbcType=VARCHAR},
+		#{hrs,jdbcType=VARCHAR}, #{fsv,jdbcType=VARCHAR}, #{rsv,jdbcType=VARCHAR},
+		#{fsm,jdbcType=VARCHAR},
+		#{rsm,jdbcType=VARCHAR}, #{rvmh,jdbcType=VARCHAR}, #{ess,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="cn.com.pojo.Systemconfig">
+		insert into SYSTEMCONFIG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uId != null">
+				U_ID,
+			</if>
+			<if test="cId != null">
+				C_ID,
+			</if>
+			<if test="guidancesystem != null">
+				GUIDANCESYSTEM,
+			</if>
+			<if test="alb != null">
+				ALB,
+			</if>
+			<if test="fpg != null">
+				FPG,
+			</if>
+			<if test="rpg != null">
+				RPG,
+			</if>
+			<if test="rcpa != null">
+				RCPA,
+			</if>
+			<if test="dsea != null">
+				DSEA,
+			</if>
+			<if test="fsea != null">
+				FSEA,
+			</if>
+			<if test="dlcc != null">
+				DLCC,
+			</if>
+			<if test="hfs != null">
+				HFS,
+			</if>
+			<if test="hrs != null">
+				HRS,
+			</if>
+			<if test="fsv != null">
+				FSV,
+			</if>
+			<if test="rsv != null">
+				RSV,
+			</if>
+			<if test="fsm != null">
+				FSM,
+			</if>
+			<if test="rsm != null">
+				RSM,
+			</if>
+			<if test="rvmh != null">
+				RVMH,
+			</if>
+			<if test="ess != null">
+				ESS,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uId != null">
+				#{uId,jdbcType=DECIMAL},
+			</if>
+			<if test="cId != null">
+				#{cId,jdbcType=DECIMAL},
+			</if>
+			<if test="guidancesystem != null">
+				#{guidancesystem,jdbcType=VARCHAR},
+			</if>
+			<if test="alb != null">
+				#{alb,jdbcType=VARCHAR},
+			</if>
+			<if test="fpg != null">
+				#{fpg,jdbcType=VARCHAR},
+			</if>
+			<if test="rpg != null">
+				#{rpg,jdbcType=VARCHAR},
+			</if>
+			<if test="rcpa != null">
+				#{rcpa,jdbcType=VARCHAR},
+			</if>
+			<if test="dsea != null">
+				#{dsea,jdbcType=VARCHAR},
+			</if>
+			<if test="fsea != null">
+				#{fsea,jdbcType=VARCHAR},
+			</if>
+			<if test="dlcc != null">
+				#{dlcc,jdbcType=VARCHAR},
+			</if>
+			<if test="hfs != null">
+				#{hfs,jdbcType=VARCHAR},
+			</if>
+			<if test="hrs != null">
+				#{hrs,jdbcType=VARCHAR},
+			</if>
+			<if test="fsv != null">
+				#{fsv,jdbcType=VARCHAR},
+			</if>
+			<if test="rsv != null">
+				#{rsv,jdbcType=VARCHAR},
+			</if>
+			<if test="fsm != null">
+				#{fsm,jdbcType=VARCHAR},
+			</if>
+			<if test="rsm != null">
+				#{rsm,jdbcType=VARCHAR},
+			</if>
+			<if test="rvmh != null">
+				#{rvmh,jdbcType=VARCHAR},
+			</if>
+			<if test="ess != null">
+				#{ess,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateSystemConfig" parameterType="cn.com.pojo.Systemconfig">
+		update systemconfig set guidanceSystem=
+		#{guidancesystem,jdbcType=VARCHAR},alb=#{alb,jdbcType=VARCHAR},fpg=
+		#{fpg,jdbcType=VARCHAR},rpg= #{rpg,jdbcType=VARCHAR},rcpa=
+		#{rcpa,jdbcType=VARCHAR},dsea=#{dsea,jdbcType=VARCHAR},fsea=
+		#{fsea,jdbcType=VARCHAR},dlcc=#{dlcc,jdbcType=VARCHAR},hfs=#{hfs,jdbcType=VARCHAR},hrs=#{hrs,jdbcType=VARCHAR},fsv=
+		#{fsv,jdbcType=VARCHAR},rsv=#{rsv,jdbcType=VARCHAR},fsm=
+		#{fsm,jdbcType=VARCHAR},rsm=#{rsm,jdbcType=VARCHAR},rvmh=
+		#{rvmh,jdbcType=VARCHAR},ess=#{ess,jdbcType=VARCHAR} where u_id=#{uId,jdbcType=DECIMAL} and
+		c_id=#{cId,jdbcType=DECIMAL}
+	</update>
+	<delete id="deletesystemconfiguser" parameterType="cn.com.pojo.Systemconfig">
+	delete from systemconfig where u_id=#{uId}
+	</delete>
+	<delete id="deletecidsystemconfiguser" parameterType="cn.com.pojo.Systemconfig">
+	delete from systemconfig where c_id=#{cId}
+	</delete>
+	<select id="checksystemconfiguser" parameterType="cn.com.pojo.Systemconfig" resultMap="BaseResultMap" >
+	select * from systemconfig where u_id=#{uId}
+	</select>
+	<select id="checkcidsystemconfiguser" parameterType="cn.com.pojo.Systemconfig"  resultMap="BaseResultMap">
+	select * from systemconfig where c_id=#{cId}
+	</select>
+</mapper>

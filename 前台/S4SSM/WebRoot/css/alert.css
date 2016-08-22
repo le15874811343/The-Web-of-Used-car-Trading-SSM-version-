@@ -1,0 +1,8 @@
+#popBoxYzm {position: fixed;left: 0;top: 0;right: 0;bottom: 0;width: 100%;height: 100%;z-index: 1999;background: rgba(0,0,0,0.6);display: none;}
+.popForm{background:#fff;width:430px;height:300px;position:absolute;left:50%;top:50%;margin-left:-200px;margin-top:-130px;}
+.popForm form{padding:20px;}
+.popForm p{padding:0 5px;border:1px solid #ddd;margin-top:25px;}
+ input{padding:8px 0;width: 100%;font-family:'Microsoft Yahei'}
+.popForm  a.getCode{display:block;background: #0261bf;color: #fff;text-align: center;font-family:'Microsoft Yahei';padding:10px 0;font-size:14px;}
+.closed{position:absolute;right:0;top:0;width:35px;line-height:35px;height:35px;text-align:center;background:#0261bf;color:#fff;font-size:17px;font-family:'宋体';font-weight: bold;}
+.closed:hover{opacity:.8;color:#fff;}

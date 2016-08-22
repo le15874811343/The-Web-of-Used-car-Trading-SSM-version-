@@ -1,0 +1,35 @@
+﻿@charset "utf-8";
+body, ul, dl, dd, dt, ol, li, p, h1, h2, h3, h4, h5, h6, textarea, form, select, fieldset, table, td, div, input{margin:0;padding:0;-webkit-text-size-adjust:none}
+h1, h2, h3, h4, h5, h6{font-size:12px;font-weight:normal}
+div{text-align:left}
+a img{border:0}
+body{color:#333; text-align:center; font:12px "微软雅黑";}
+ul, ol, li{list-style-type:none;vertical-align:0}
+a{outline-style:none;color:#535353;text-decoration:none}
+a:hover{color:#D40000; text-decoration:none}
+
+/* 效果CSS开始 */
+.mod18{width:592px;position:relative; /*background-color:#ededed;*/ border:1px solid #CCC;}
+.mod18 .btn{position:absolute;cursor:pointer;z-index:99;font-size:50px;font-weight:bold;}
+.mod18 .prev{left:10px;background:url(../images/prevBtn.png) no-repeat;}
+.mod18 #prevTop,.mod18 #nextTop{top:250px;width:32px;height:48px;}
+.mod18 #prev,.mod18 #next{top:490px;width:10px;height:16px;}
+.mod18 #prevTop{background:url(../images/prevBtnTop.png) 0 0 no-repeat;}
+.mod18 #nextTop{background:url(../images/nextBtnTop.png) 0 0 no-repeat;}
+.mod18 .next{right:10px;background:url(../images/nextBtn.png) no-repeat;}
+.mod18 li{float:left;}
+.mod18 .cf li{position:relative;color:#fff;}
+.mod18 .cf a{display:block;width:526px;height:377px;position:absolute;color:#fff;}
+.mod18 .cf li span{display:block;width:486px;position:absolute;left:75px;bottom:0;padding:10px 20px;line-height:22px;text-align:left;background:rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient( GradientType = 0,startColorstr = "#60000000",endColorstr = "#60000000");}
+.mod18 .picBox{width:526px; height:394px; padding-left:33px; padding-right:33px;position:relative;overflow:hidden;  padding-top:40px;}
+.mod18 .picBox ul{height:377px;position:absolute; left:0;}
+.mod18 .picBox li{padding-left:33px; padding-right:1px; width:526px;height:377px;}
+.mod18 .listBox{width:521px;height:100px;margin:0 auto;position:relative; padding-top:15px;overflow:hidden;}
+.mod18 .listBox ul{height:88px;position:absolute; padding-left:12px;}
+.mod18 .listBox li{width:127px;height:77px;cursor:pointer;position:relative; padding:5px 0 0 0;}
+.mod18 .listBox li i{display:none;}
+.mod18 .listBox li a{display:block;width:108px;height:77px;}
+.mod18 .listBox img{border:3px solid #fff;}
+.mod18 .listBox .on img{border:3px solid #CECDCC;}
+.mod18 .listBox .on{background:url(../images/img_bg.jpg) center top no-repeat;}
+.mod18 .listBox .on i{display:block;}

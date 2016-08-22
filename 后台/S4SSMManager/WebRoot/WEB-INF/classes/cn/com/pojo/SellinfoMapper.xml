@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.SellinfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Sellinfo" >
+    <result column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="C_ID" property="cId" jdbcType="DECIMAL" />
+    <result column="PRICETYPE" property="pricetype" jdbcType="VARCHAR" />
+    <result column="TRANSFERFEE" property="transferfee" jdbcType="VARCHAR" />
+    <result column="STAGE" property="stage" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getAllSellInfo" resultMap="BaseResultMap">
+  select * from sellinfo
+  </select>
+  <select id="getSellInfoById"  resultType="cn.com.pojo.Sellinfo"  parameterType="cn.com.pojo.Carinfo">
+  select * from sellInfo where u_id=#{uId} and c_id=#{cId}
+  </select>
+  <insert id="insert" parameterType="cn.com.pojo.Sellinfo" >
+    insert into SELLINFO (U_ID, C_ID, PRICETYPE, 
+      TRANSFERFEE, STAGE)
+    values (#{uId,jdbcType=DECIMAL}, #{cId,jdbcType=DECIMAL}, #{pricetype,jdbcType=VARCHAR}, 
+      #{transferfee,jdbcType=VARCHAR}, #{stage,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Sellinfo" >
+    insert into SELLINFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="cId != null" >
+        C_ID,
+      </if>
+      <if test="pricetype != null" >
+        PRICETYPE,
+      </if>
+      <if test="transferfee != null" >
+        TRANSFERFEE,
+      </if>
+      <if test="stage != null" >
+        STAGE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=DECIMAL},
+      </if>
+      <if test="pricetype != null" >
+        #{pricetype,jdbcType=VARCHAR},
+      </if>
+      <if test="transferfee != null" >
+        #{transferfee,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null" >
+        #{stage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteSellInfo" parameterType="cn.com.pojo.Sellinfo">
+  delete * from sellinfo where 1=1
+  <if test="uId !=null">
+  and u_id=#{uId,jdbcType=DECIMAL}
+  </if>
+  <if test="cId !=null">
+  and c_id=#{cId,jdbcType=DECIMAL}
+  </if>
+ 
+  </delete>
+  <update id="updateSellInfo" parameterType="cn.com.pojo.Sellinfo">
+  update  sellinfo set priceType= #{pricetype,jdbcType=VARCHAR},transferFee=#{transferfee,jdbcType=VARCHAR},stage= #{stage,jdbcType=VARCHAR} where u_id= #{uId,jdbcType=DECIMAL} and c_id=#{cId,jdbcType=DECIMAL}
+  </update>
+  <delete id="deletesellinfouser" parameterType="cn.com.pojo.Sellinfo">
+	delete from sellinfo where u_id=#{uId}
+	</delete>
+	<delete id="deletecidsellinfouser" parameterType="cn.com.pojo.Sellinfo">
+	delete from sellinfo where c_id=#{cId}
+	</delete>
+	<select id="checksellinfouser" parameterType="cn.com.pojo.Sellinfo" resultMap="BaseResultMap" >
+	select * from sellinfo where u_id=#{uId}
+	</select>
+	<select id="checkcidsellinfouser" parameterType="cn.com.pojo.Sellinfo"  resultMap="BaseResultMap">
+	select * from sellinfo where c_id=#{cId}
+	</select>
+</mapper>

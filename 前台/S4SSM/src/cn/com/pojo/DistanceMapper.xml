@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.DistanceMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Distance" >
+    <id column="D_ID" property="dId" jdbcType="DECIMAL" />
+    <result column="D_NAME" property="dName" jdbcType="VARCHAR" />
+    <result column="D_COUNT" property="dCount" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    D_ID, D_NAME, D_COUNT
+  </sql>
+  <select id="getDistanceByCount" resultMap="BaseResultMap">
+  select * from(select rownum rn , b.* from (select  a.* from distance  a order by d_count desc) b  where rownum&lt;5)
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    from DISTANCE
+    where D_ID = #{dId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from DISTANCE
+    where D_ID = #{dId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="cn.com.pojo.Distance" >
+    insert into DISTANCE (D_ID, D_NAME, D_COUNT
+      )
+    values (#{dId,jdbcType=DECIMAL}, #{dName,jdbcType=VARCHAR}, #{dCount,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Distance" >
+    insert into DISTANCE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        D_ID,
+      </if>
+      <if test="dName != null" >
+        D_NAME,
+      </if>
+      <if test="dCount != null" >
+        D_COUNT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        #{dId,jdbcType=DECIMAL},
+      </if>
+      <if test="dName != null" >
+        #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dCount != null" >
+        #{dCount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.pojo.Distance" >
+    update DISTANCE
+    <set >
+      <if test="dName != null" >
+        D_NAME = #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dCount != null" >
+        D_COUNT = #{dCount,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where D_ID = #{dId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.pojo.Distance" >
+    update DISTANCE
+    set D_NAME = #{dName,jdbcType=VARCHAR},
+      D_COUNT = #{dCount,jdbcType=DECIMAL}
+    where D_ID = #{dId,jdbcType=DECIMAL}
+  </update>
+</mapper>

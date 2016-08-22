@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.CartypeMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Cartype" >
+    <result column="T_ID" property="tId" jdbcType="DECIMAL" />
+    <result column="T_NAME" property="tName" jdbcType="VARCHAR" />
+    <result column="T_IMG" property="tImg" jdbcType="VARCHAR" />
+    <result column="T_COUNT" property="tCount" jdbcType="DECIMAL" />
+    <result column="T_CLASS" property="tClass" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getCarType" resultMap="BaseResultMap" parameterType="cn.com.pojo.Cartype" >
+  select * from cartype where t_id=#{tId}
+  </select>
+  <select id="getCarTypeByCount" resultMap="BaseResultMap">
+  select rownum,b.*  from (select * from cartype order by t_count desc)b  where rownum&lt;7
+  </select>
+  <select id="getAllCarType" resultMap="BaseResultMap">
+  select * from cartype where 1=1
+  </select>
+  <insert id="insert" parameterType="cn.com.pojo.Cartype" >
+    insert into CARTYPE (T_ID, T_NAME, T_IMG, 
+      T_COUNT, T_CLASS)
+    values (#{tId,jdbcType=DECIMAL}, #{tName,jdbcType=VARCHAR}, #{tImg,jdbcType=VARCHAR}, 
+      #{tCount,jdbcType=DECIMAL}, #{tClass,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Cartype" >
+    insert into CARTYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+     
+        T_ID,
+      
+      <if test="tName != null" >
+        T_NAME,
+      </if>
+      <if test="tImg != null" >
+        T_IMG,
+      </if>
+      <if test="tCount != null" >
+        T_COUNT,
+      </if>
+      <if test="tClass != null" >
+        T_CLASS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    
+        seq_type.nextval,
+     
+      <if test="tName != null" >
+        #{tName,jdbcType=VARCHAR},
+      </if>
+      <if test="tImg != null" >
+        #{tImg,jdbcType=VARCHAR},
+      </if>
+      <if test="tCount != null" >
+        #{tCount,jdbcType=DECIMAL},
+      </if>
+      <if test="tClass != null" >
+        #{tClass,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteCarType" parameterType="cn.com.pojo.Cartype">
+  delete from cartype where t_id=#{tId}
+  </delete>
+  <update id="updateType" parameterType="cn.com.pojo.Cartype">
+  update cartype set t_name=#{tName},t_count=#{tCount},t_class=#{tClass} where t_id=#{tId}
+  </update>
+  <select id="queryPersonCarCount" resultType="java.lang.Long" >
+  select count(*) from cartype where 1=1 
+  </select>
+  <select id="showPersonCarList" resultMap="BaseResultMap" parameterType="hashmap">
+  select * from(select rownum rn , b.* from(select   a.* from cartype  a  where 1=1 
+   order by t_count desc ) b  where rownum&lt;=(#{curPage})*(#{rowsPrePage})) where rn&gt;((#{curPage}-1)*(#{rowsPrePage}))
+  </select>
+</mapper>

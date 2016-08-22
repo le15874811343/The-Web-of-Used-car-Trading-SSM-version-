@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/aop 
+	 http://www.springframework.org/schema/aop/spring-aop.xsd
+	 http://www.springframework.org/schema/tx 
+   http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	   http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	 ">
+
+	 <!-- 配置组件 -->
+		<!-- 数据源组件 bean -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<!-- 注入数据库连接信息 -->
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url"
+			value="jdbc:oracle:thin:@127.0.0.1:1521:orcl" />
+		<property name="username" value="lejia" />
+		<property name="password" value="le353480" />
+		<property name="initialSize" value="20"></property>
+		<property name="maxActive" value="50"></property>
+		<property name="maxIdle" value="30"></property>
+		<property name="minIdle" value="20"></property>
+		<property name="maxWait" value="3000"></property>
+	</bean>
+
+	<!-- 创建SqlSessionFactory，同时指定数据源 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:Mybatis.cfg.xml"></property>
+	</bean>
+	<!-- 创建sqlSessionTemplate，同时指定sqlSessionFactory 构造 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+
+
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.cn.hnust.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+	<!-- 配置事务管理 器 trnasactionManager -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+	<!-- 配置声明式事务Spring ================= -->
+	<tx:advice id="advice" transaction-manager="transactionManager">
+		<!-- 哪些方法需要什么 样的事务去管理 -->
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delele*" propagation="REQUIRED" />
+			<tx:method name="query*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 当前系统 中哪些类中的方法需要事务去管理 -->
+	<aop:config>
+		<!-- 配置切入点 -->
+		<aop:pointcut id="pointcut"
+			expression="execution(public * cn.com.dao.impl.*.*(..) )"></aop:pointcut>
+		<!-- 建立事务与切入点的关联 -->
+		<aop:advisor advice-ref="advice" pointcut-ref="pointcut" />
+		<!-- 配置通知类型 -->
+	</aop:config>
+
+
+	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射  -->
+	<context:component-scan base-package="cn.com.controller"></context:component-scan>
+	<context:component-scan base-package="cn.com.pojo"></context:component-scan>
+	<context:component-scan base-package="cn.com.dao"></context:component-scan>
+	<context:component-scan base-package="cn.com.dao.impl"></context:component-scan>
+	<context:component-scan base-package="cn.com.service"></context:component-scan>
+	<context:component-scan base-package="cn.com.service.impl"></context:component-scan>
+	
+	
+	
+
+	
+	
+	</beans>
+	

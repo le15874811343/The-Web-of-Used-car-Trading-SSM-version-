@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.TrendsMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Trends" >
+    <result column="TR_ID" property="trId" jdbcType="DECIMAL" />
+    <result column="TR_TITLE" property="trTitle" jdbcType="VARCHAR" />
+    <result column="TR_TEXT" property="trText" jdbcType="VARCHAR" />
+    <result column="TR_DATE" property="trDate" jdbcType="DATE" />
+    <result column="TR_TYPE" property="trType" jdbcType="VARCHAR" />
+    <result column="TR_IMG" property="trImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getITrendsByTime" resultMap="BaseResultMap" parameterType="hashmap">
+  select * from(select rownum rn , b.* from (select   a.* from trends  a  where a.tr_type=#{trType} order by tr_date desc ) b  where rownum&lt;#{rows})
+  </select>
+  <select id="getTrendsByWhere"  resultMap="BaseResultMap" parameterType="cn.com.pojo.Trends">
+  select   a.* from trends  a  where 1=1  
+  <if test="trId !=null">
+   and tr_id=#{trId}
+  </if>
+ 
+  </select>
+  <select id="queryPersonCarCount" resultType="java.lang.Long" parameterType="cn.com.pojo.Trends">
+  select count(*) from trends where 1=1
+   <if test="trType !=null">
+   and tr_type=#{trType}
+  </if>
+  </select>
+  <select id="showPersonCarList" resultMap="BaseResultMap" parameterType="cn.com.pojo.Trends">
+  select * from(select rownum rn , b.* from(select   a.* from trends  a  where 1=1 
+  <if test="trType !=null">
+   and tr_type=#{trType}
+  </if>
+  order by tr_date desc ) b  where rownum&lt;=(#{curPage})*(#{rowsPrePage})) where rn&gt;((#{curPage})-1)*(#{rowsPrePage})
+  </select>
+  <insert id="insert" parameterType="cn.com.pojo.Trends" >
+    insert into TRENDS (TR_ID, TR_TITLE, TR_TEXT, 
+      TR_DATE, TR_TYPE, TR_IMG)
+    values (#{trId,jdbcType=DECIMAL}, #{trTitle,jdbcType=VARCHAR}, #{trText,jdbcType=VARCHAR}, 
+      #{trDate,jdbcType=DATE}, #{trType,jdbcType=VARCHAR}, #{trImg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Trends" >
+    insert into TRENDS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="trId != null" >
+        TR_ID,
+      </if>
+      <if test="trTitle != null" >
+        TR_TITLE,
+      </if>
+      <if test="trText != null" >
+        TR_TEXT,
+      </if>
+      <if test="trDate != null" >
+        TR_DATE,
+      </if>
+      <if test="trType != null" >
+        TR_TYPE,
+      </if>
+      <if test="trImg != null" >
+        TR_IMG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="trId != null" >
+        #{trId,jdbcType=DECIMAL},
+      </if>
+      <if test="trTitle != null" >
+        #{trTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="trText != null" >
+        #{trText,jdbcType=VARCHAR},
+      </if>
+      <if test="trDate != null" >
+        #{trDate,jdbcType=DATE},
+      </if>
+      <if test="trType != null" >
+        #{trType,jdbcType=VARCHAR},
+      </if>
+      <if test="trImg != null" >
+        #{trImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

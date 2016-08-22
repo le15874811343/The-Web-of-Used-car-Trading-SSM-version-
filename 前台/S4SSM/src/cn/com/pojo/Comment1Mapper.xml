@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.Comment1Mapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Comment1" >
+    <result column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="C_TEXT" property="cText" jdbcType="VARCHAR" />
+    <result column="C_DATE" property="cDate" jdbcType="TIMESTAMP"/>
+    <result column="C_ID" property="cId" jdbcType="DECIMAL" />
+    <result column="C_IMG" property="cImg" jdbcType="VARCHAR" />
+    <result column="C_BT" property="cBt" jdbcType="VARCHAR" />
+    <result column="C_ADMIN" property="cAdmin" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getComment" resultMap="BaseResultMap" parameterType="cn.com.pojo.Comment1">
+  select * from comment1 where c_id=#{cId}
+  </select>
+  <select id="getTheTowComment"  resultMap="BaseResultMap" parameterType="hashmap">
+  select * from(select rownum rn , b.* from(select  to_char(a.c_date,'yyyy-mm-dd HH24:mi:ss') as cDate,a.u_id,a.c_text,a.c_id,a.c_img,a.c_bt,a.c_admin from comment1  a  where c_admin=#{cAdmin} order by c_date desc ) b  where rownum&lt;=#{max}) where rn&gt;#{min}
+  </select>
+  <select id="queryPersonCarCount" resultType="java.lang.Long">
+  select count(*) from comment1 where 1=1
+  </select>
+  <select id="showPersonCarList" resultMap="BaseResultMap" parameterType="hashmap">
+  select * from(select rownum rn , b.* from(select    to_char(a.c_date,'yyyy-mm-dd HH24:mi:ss') as cDate,a.u_id,a.c_text,a.c_id,a.c_img,a.c_bt,a.c_admin from comment1  a  where 1=1 order by c_date desc ) b  where rownum&lt;=(#{curPage})*(#{rowsPrePage})) where rn&gt;((#{curPage})-1)*(#{rowsPrePage})
+  </select>
+  <insert id="insert" parameterType="cn.com.pojo.Comment1" >
+    insert into COMMENT1 (U_ID, C_TEXT, C_DATE, 
+      C_ID, C_IMG, C_BT, C_ADMIN
+      )
+    values (#{uId,jdbcType=DECIMAL}, #{cText,jdbcType=VARCHAR}, #{cDate,jdbcType=DATE}, 
+      #{cId,jdbcType=DECIMAL}, #{cImg,jdbcType=VARCHAR}, #{cBt,jdbcType=VARCHAR}, #{cAdmin,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Comment1" >
+    insert into COMMENT1
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+    C_ID,
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="cText != null" >
+        C_TEXT,
+      </if>
+      <if test="cDate != null" >
+        C_DATE,
+      </if>
+     
+      <if test="cImg != null" >
+        C_IMG,
+      </if>
+      <if test="cBt != null" >
+        C_BT,
+      </if>
+      <if test="cAdmin != null" >
+        C_ADMIN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    SEQ_com.nextval,
+      <if test="uId != null" >
+        #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="cText != null" >
+        #{cText,jdbcType=VARCHAR},
+      </if>
+      <if test="cDate != null" >
+       to_date(#{cDate},'yyyy-mm-dd HH24:mi:ss'),
+      </if>
+     
+      <if test="cImg != null" >
+        #{cImg,jdbcType=VARCHAR},
+      </if>
+      <if test="cBt != null" >
+        #{cBt,jdbcType=VARCHAR},
+      </if>
+      <if test="cAdmin != null" >
+        #{cAdmin,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteComment"  parameterType="cn.com.pojo.Comment1">
+  delete from comment1 where c_id=#{cId}
+  </delete>
+</mapper>

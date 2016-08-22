@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.PriceMapper" >
+<resultMap id="BaseResultMap" type="cn.com.pojo.Price" >
+    <result column="c_price" property="c_sum" jdbcType="DECIMAL" />
+    <result column="c_mcsj" property="c_selltime" jdbcType="DATE" />
+  </resultMap>
+  <select id="yearmonthday" resultMap="BaseResultMap" parameterType="hashmap">
+  select sum(c_price) as c_sum ,to_char(c_mcsj,'HH24:mi:ss') as c_selltime  from carinfo where to_char(c_mcsj,'YYYY-MM-DD')=#{time}
+  group by to_char(c_mcsj,'HH24:mi:ss')
+  </select>
+  <select id="yearmonth" resultMap="BaseResultMap" parameterType="hashmap">
+  select sum(c_price) as c_sum,to_char(c_mcsj,'yyyy-mm-dd') as c_selltime from carinfo where to_char(c_mcsj,'YYYY-MM')=#{time}
+  group by to_char(c_mcsj,'yyyy-mm-dd') order by to_char(c_mcsj,'yyyy-mm-dd')
+  
+  </select>
+  <select id="year" resultMap="BaseResultMap" parameterType="hashmap">
+  select sum(c_price) as c_sum,to_char(c_mcsj,'YYYY-mm') as c_selltime from carinfo where to_char(c_mcsj,'YYYY')=#{year} group by to_char(c_mcsj,'YYYY-mm') order by to_char(c_mcsj,'YYYY-mm') 
+  </select>
+  <select id="getsellinfo" resultMap="BaseResultMap" >
+  select sum(c_price) as c_sum,to_char(c_mcsj,'YYYY') as c_selltime  from carinfo where to_char(c_mcsj,'YYYY')>0 group by to_char(c_mcsj,'YYYY') order by to_char(c_mcsj,'YYYY')
+  </select>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.CarchartMapper" >
+ <resultMap id="BaseResultMap" type="cn.com.pojo.Carchart" >
+    <result column="c_brand" property="c_brand" jdbcType="VARCHAR" />
+    <result column="c_count" property="c_count" jdbcType="DECIMAL" />
+    <result column="c_mcsj" property="c_selltime" jdbcType="DATE" />
+    
+  </resultMap>
+  <select id="yearmonth" resultMap="BaseResultMap" parameterType="hashmap">
+  select c_brand,count(*) as c_count,to_char(c_mcsj,'YYYY-MM-DD') as c_selltime from carinfo where to_char(c_mcsj,'YYYY-MM')=#{time}
+  
+  
+  
+ group by c_brand,to_char(c_mcsj,'YYYY-MM-DD') order by to_char(c_mcsj,'YYYY-MM-DD')
+  </select>
+  <select id="chartinfo" resultMap="BaseResultMap"  >
+  select c_brand,count(*) as c_count,to_char(c_mcsj,'YYYY') as c_selltime from carinfo  where to_char(c_mcsj,'YYYY')>0 group by c_brand,to_char(c_mcsj,'YYYY') order by to_char(c_mcsj,'YYYY')
+  
+  </select>
+  <select id="yearmonthday"  resultMap="BaseResultMap" parameterType="hashmap">
+  select c_brand,count(*) as c_count ,to_char(c_mcsj,'HH24:mi:ss') as c_selltime from carinfo where to_char(c_mcsj,'YYYY-MM-DD')=#{time}
+ 
+    group by c_brand,to_char(c_mcsj,'HH24:mi:ss')
+  
+  </select>
+  <select id="year" resultMap="BaseResultMap" parameterType="hashmap">
+  select c_brand,count(*) as c_count ,to_char(c_mcsj,'YYYY-mm') as c_selltime from carinfo where to_char(c_mcsj,'YYYY')=#{year,jdbcType=VARCHAR} group by c_brand,to_char(c_mcsj,'YYYY-mm')
+  </select>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.EmissionstandardMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Emissionstandard" >
+    <result column="E_ID" property="eId" jdbcType="DECIMAL" />
+    <result column="E_NAME" property="eName" jdbcType="VARCHAR" />
+    <result column="E_COUNT" property="eCount" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="getEmissionstandardByCount" resultMap="BaseResultMap">
+  select * from(select rownum rn , b.* from (select  a.* from emissionstandard  a order by e_count desc) b  where rownum&lt;6)
+  </select>
+  <insert id="insert" parameterType="cn.com.pojo.Emissionstandard" >
+    insert into EMISSIONSTANDARD (E_ID, E_NAME, E_COUNT
+      )
+    values (#{eId,jdbcType=DECIMAL}, #{eName,jdbcType=VARCHAR}, #{eCount,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Emissionstandard" >
+    insert into EMISSIONSTANDARD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+    
+        E_ID,
+      
+      <if test="eName != null" >
+        E_NAME,
+      </if>
+      <if test="eCount != null" >
+        E_COUNT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+       seq_emis.nextval,
+      <if test="eName != null" >
+        #{eName,jdbcType=VARCHAR},
+      </if>
+      <if test="eCount != null" >
+        #{eCount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteEmissionstandard" parameterType="cn.com.pojo.Emissionstandard" >
+  delete from emissionstandard where e_id=#{eId}
+  </delete>
+  <update id="updateEmissionstandard" parameterType="cn.com.pojo.Emissionstandard">
+  update emissionstandard set e_name=#{eName},e_count=#{eCount} where e_id=#{eId} 
+  </update>
+  <select id="getEmissionstandard" resultMap="BaseResultMap" parameterType="cn.com.pojo.Emissionstandard" >
+  select * from emissionstandard where e_id=#{eId}
+  </select>
+  <select id="queryPersonCarCount" resultType="java.lang.Long" >
+  select count(*) from emissionstandard where 1=1 
+  </select>
+  <select id="showPersonCarList" resultMap="BaseResultMap" parameterType="hashmap">
+  select * from(select rownum rn , b.* from(select   a.* from emissionstandard  a  where 1=1 
+   order by e_count desc ) b  where rownum&lt;=(#{curPage})*(#{rowsPrePage})) where rn&gt;((#{curPage}-1)*(#{rowsPrePage}))
+  </select>
+</mapper>

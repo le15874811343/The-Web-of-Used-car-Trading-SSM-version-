@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.CarinfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Carinfo" >
+    <id column="C_ID" property="cId" jdbcType="DECIMAL" />
+    <result column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="C_BRAND" property="cBrand" jdbcType="VARCHAR" />
+    <result column="C_SERIES" property="cSeries" jdbcType="VARCHAR" />
+    <result column="C_RELEASEYEAR" property="cReleaseyear" jdbcType="DECIMAL" />
+    <result column="C_VOLUME" property="cVolume" jdbcType="DECIMAL" />
+    <result column="C_GEARTYPE" property="cGeartype" jdbcType="VARCHAR" />
+    <result column="C_CODE" property="cCode" jdbcType="VARCHAR" />
+    <result column="C_MODEL" property="cModel" jdbcType="VARCHAR" />
+    <result column="C_LICENCETIME" property="cLicencetime" jdbcType="DATE" />
+    <result column="C_DISTANCE" property="cDistance" jdbcType="DECIMAL" />
+    <result column="C_EMISSIONSTANDARD" property="cEmissionstandard" jdbcType="VARCHAR" />
+    <result column="C_PRICE" property="cPrice" jdbcType="DECIMAL" />
+    <result column="C_COUNT" property="cCount" jdbcType="DECIMAL" />
+    <result column="C_IMG" property="cImg" jdbcType="VARCHAR" />
+    <result column="C_SJTIME" property="cSjtime" jdbcType="TIMESTAMP" />
+    <result column="C_TYPE" property="cType" jdbcType="VARCHAR" />
+    <result column="C_STATE" property="cState" jdbcType="VARCHAR" />
+    <result column="C_SCCOUNT" property="cSccount" jdbcType="DECIMAL" />
+    <result column="C_CZZX" property="cCzzx" jdbcType="VARCHAR" />
+    <result column="NEWPRICE" property="newprice" jdbcType="DECIMAL" />
+    <result column="C_MCSJ" property="cMcsj" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    C_ID, U_ID, C_BRAND, C_SERIES, C_RELEASEYEAR, C_VOLUME, C_GEARTYPE, C_CODE, C_MODEL, 
+    C_LICENCETIME, C_DISTANCE, C_EMISSIONSTANDARD, C_PRICE, C_COUNT, C_IMG, C_SJTIME, 
+    C_TYPE, C_STATE, C_SCCOUNT, C_CZZX, NEWPRICE, C_MCSJ
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from CARINFO
+    where C_ID = #{cId,jdbcType=DECIMAL}
+  </select>
+  <select id="getCarInfoByCountDesc" resultMap="BaseResultMap" parameterType="cn.com.pojo.Carinfo">
+select * from(select rownum rn , b.* from (select  to_char(a.C_licencetime,'yyyy-mm') as C_licencetime,a.C_ID,a.U_ID,a.C_BRAND,a.C_SERIES,a.C_RELEASEYEAR,
+a.C_VOLUME,a.C_GEARTYPE, a.C_CODE, a.C_MODEL, 
+    a.C_DISTANCE, a.C_EMISSIONSTANDARD, a.C_PRICE, a.C_COUNT, a.C_IMG, a.C_SJTIME, 
+    a.C_TYPE, a.C_STATE, a.C_SCCOUNT, a.C_CZZX, NEWPRICE, a.C_MCSJ
+
+  from carinfo  a where a.c_state=#{cState} order by c_count desc) b  where rownum &lt;5)
+              
+  </select>
+  <select id="checkcarinfouser"  resultMap="BaseResultMap" parameterType="cn.com.pojo.Carinfo" >
+  select to_char(a.C_licencetime,'yyyy-mm') as C_licencetime,a.C_ID,a.U_ID,a.C_BRAND,a.C_SERIES,a.C_RELEASEYEAR,
+a.C_VOLUME,a.C_GEARTYPE, a.C_CODE, a.C_MODEL, 
+    a.C_DISTANCE, a.C_EMISSIONSTANDARD, a.C_PRICE, a.C_COUNT, a.C_IMG, a.C_SJTIME, 
+    a.C_TYPE, a.C_STATE, a.C_SCCOUNT, a.C_CZZX, NEWPRICE, a.C_MCSJ from carinfo a where u_id=#{uId}
+  </select>
+  <select id="getTenBrandCar"  resultMap="BaseResultMap" parameterType="cn.com.pojo.Carinfo">
+ select rownum, a.* from( select  count(*) c,c_brand from carinfo b where c_state='交易完成' group by c_brand )  a where rownum&lt;11
+  
+  </select>
+  <select id="getTenCount" resultMap="BaseResultMap" parameterType="cn.com.pojo.Carinfo" >
+  
+  select * from (select  rownum ,to_char(a.C_licencetime,'yyyy-mm') as C_licencetime,a.C_ID,a.U_ID,a.C_BRAND,a.C_SERIES,a.C_RELEASEYEAR,
+a.C_VOLUME,a.C_GEARTYPE, a.C_CODE, a.C_MODEL, 
+    a.C_DISTANCE, a.C_EMISSIONSTANDARD, a.C_PRICE, a.C_COUNT, a.C_IMG, a.C_SJTIME, 
+    a.C_TYPE, a.C_STATE, a.C_SCCOUNT, a.C_CZZX, NEWPRICE, a.C_MCSJ from carinfo a  where c_state='在售'  order by c_count desc ) where rownum &lt;11
+  </select>
+  <select id="getCarInfoByBrandCountDesc" resultMap="BaseResultMap" parameterType="cn.com.pojo.Carinfo" >
+  select * from(select rownum rn , b.* from (select  to_char(a.C_licencetime,'yyyy-mm') as C_licencetime,a.C_ID,a.U_ID,a.C_BRAND,a.C_SERIES,a.C_RELEASEYEAR,
+a.C_VOLUME,a.C_GEARTYPE, a.C_CODE, a.C_MODEL, 
+    a.C_DISTANCE, a.C_EMISSIONSTANDARD, a.C_PRICE, a.C_COUNT, a.C_IMG, a.C_SJTIME, 
+    a.C_TYPE, a.C_STATE, a.C_SCCOUNT, a.C_CZZX, NEWPRICE, a.C_MCSJ from carinfo  a where a.c_brand=#{cBrand} and a.c_state=#{cState} order by c_count desc) b  where rownum&lt;5)
+  </select>
+  <select id="getCarInfoBySjTime" resultMap="BaseResultMap" parameterType="cn.com.pojo.Carinfo">
+  select * from(select rownum rn , b.* from (select   to_char(a.C_licencetime,'yyyy-mm') as C_licencetime,a.C_ID,a.U_ID,a.C_BRAND,a.C_SERIES,a.C_RELEASEYEAR,
+a.C_VOLUME,a.C_GEARTYPE, a.C_CODE, a.C_MODEL, 
+    a.C_DISTANCE, a.C_EMISSIONSTANDARD, a.C_PRICE, a.C_COUNT, a.C_IMG, a.C_SJTIME, 
+    a.C_TYPE, a.C_STATE, a.C_SCCOUNT, a.C_CZZX, NEWPRICE, a.C_MCSJ from carinfo  a  where a.c_state=#{cState} order by c_sjtime desc ) b  where rownum&lt;4)
+  </select>
+  <select id="getFourthCarInfoBySjTime"  resultMap="BaseResultMap" parameterType="cn.com.pojo.Carinfo">
+  select  rownum rn ,b.* from(select * from(select rownum rn , b.* from(select to_char(a.C_licencetime,'yyyy-mm') as C_licencetime,a.C_ID,a.U_ID,a.C_BRAND,a.C_SERIES,a.C_RELEASEYEAR,
+a.C_VOLUME,a.C_GEARTYPE, a.C_CODE, a.C_MODEL, 
+    a.C_DISTANCE, a.C_EMISSIONSTANDARD, a.C_PRICE, a.C_COUNT, a.C_IMG, a.C_SJTIME, 
+    a.C_TYPE, a.C_STATE, a.C_SCCOUNT, a.C_CZZX, NEWPRICE, a.C_MCSJ from carinfo  a where a.c_state=#{cState} order by c_sjtime desc) b  where rownum&lt;5))b where rn&gt;3
+  </select>
+  <select id="getCarInfoByTypeCountDesc"   resultMap="BaseResultMap" parameterType="cn.com.pojo.Carinfo">
+  select * from(select  rownum rn , b.* from (select  to_char(a.C_licencetime,'yyyy-mm') as C_licencetime,a.C_ID,a.U_ID,a.C_BRAND,a.C_SERIES,a.C_RELEASEYEAR,
+a.C_VOLUME,a.C_GEARTYPE, a.C_CODE, a.C_MODEL, 
+    a.C_DISTANCE, a.C_EMISSIONSTANDARD, a.C_PRICE, a.C_COUNT, a.C_IMG, a.C_SJTIME, 
+    a.C_TYPE, a.C_STATE, a.C_SCCOUNT, a.C_CZZX, NEWPRICE, a.C_MCSJ from carinfo  a where a.c_type=#{cType} and a.c_state=#{cState} order by c_count desc) b  where rownum&lt;5)
+  </select>
+  <select id="getCarInfoByBrand" resultMap="BaseResultMap" parameterType="cn.com.pojo.Carinfo" >
+  select  to_char(a.C_licencetime,'yyyy-mm') as C_licencetime,a.C_ID,a.U_ID,a.C_BRAND,a.C_SERIES,a.C_RELEASEYEAR,
+a.C_VOLUME,a.C_GEARTYPE, a.C_CODE, a.C_MODEL, 
+    a.C_DISTANCE, a.C_EMISSIONSTANDARD, a.C_PRICE, a.C_COUNT, a.C_IMG, a.C_SJTIME, 
+    a.C_TYPE, a.C_STATE, a.C_SCCOUNT, a.C_CZZX, NEWPRICE, a.C_MCSJ from carinfo where a c_brand=#{cBrand}
+  </select>
+  <select id="getCarInfoByType" resultMap="BaseResultMap" parameterType="cn.com.pojo.Carinfo" >
+  select to_char(a.C_licencetime,'yyyy-mm') as C_licencetime,a.C_ID,a.U_ID,a.C_BRAND,a.C_SERIES,a.C_RELEASEYEAR,
+a.C_VOLUME,a.C_GEARTYPE, a.C_CODE, a.C_MODEL, 
+    a.C_DISTANCE, a.C_EMISSIONSTANDARD, a.C_PRICE, a.C_COUNT, a.C_IMG, a.C_SJTIME, 
+    a.C_TYPE, a.C_STATE, a.C_SCCOUNT, a.C_CZZX, NEWPRICE, a.C_MCSJ from carinfo a where c_type=#{cType}
+  </select>
+  <select id="getCarByWhere" resultMap="BaseResultMap" parameterType="cn.com.pojo.Carinfo" >
+  select to_char(a.C_licencetime,'yyyy-mm') as C_licencetime,a.C_ID,a.U_ID,a.C_BRAND,a.C_SERIES,a.C_RELEASEYEAR,
+a.C_VOLUME,a.C_GEARTYPE, a.C_CODE, a.C_MODEL, 
+    a.C_DISTANCE, a.C_EMISSIONSTANDARD, a.C_PRICE, a.C_COUNT, a.C_IMG, a.C_SJTIME, 
+    a.C_TYPE, a.C_STATE, a.C_SCCOUNT, a.C_CZZX, NEWPRICE, a.C_MCSJ from carinfo a where 1=1
+  <if test="cBrand !=null">
+   and c_brand=#{cBrand}
+  </if>
+   <if test="cSeries !=null">
+   and c_series=#{cSeries}
+  </if>
+   <if test="cId !=null">
+   and c_id=#{cId}
+  </if>
+   <if test="uId !=null">
+   and u_id=#{uId}
+  </if>
+   <if test="cState !=null">
+   and c_state=#{cState}
+  </if>
+  </select>
+  <select id="queryMsgCount" resultType="java.lang.Long" parameterType="hashmap">
+  select count(*) from carinfo where 1=1
+  <if test="cBrand !=null">
+    and c_brand=#{cBrand,jdbcType=VARCHAR}
+  </if>
+  <if test="cSeries !=null">
+   and c_series=#{cSeries,jdbcType=VARCHAR}
+  </if>
+  <if test="cType !=null">
+   and c_type=#{cType,jdbcType=VARCHAR}
+  </if>
+  <if test="cState !=null">
+   and c_state=#{cState,jdbcType=VARCHAR}
+  </if>
+  <if test="cEmissionstandard !=null">
+   and c_emissionstandard=#{cEmissionstandard,jdbcType=VARCHAR}
+  </if>
+ <if test="minPrice!=null">
+  and c_price&gt;#{minPrice,jdbcType=DECIMAL}
+ 
+ </if>
+ <if test="maxPrice!=null">
+  and c_price&lt;#{maxPrice,jdbcType=DECIMAL}
+ 
+ </if>
+ <if test="minDis!=null">
+  and c_distance&gt;#{minDis,jdbcType=DECIMAL}
+ 
+ </if>
+ <if test="maxDis!=null">
+  and c_distance&lt;#{maxDis,jdbcType=DECIMAL}
+ 
+ </if>
+ <if test="minAge!=null">
+  and to_number(to_char(sysdate,'yyyy.mm'))-to_number(to_char(C_licencetime,'yyyy.mm'))&gt;#{minAge,jdbcType=DECIMAL}
+ 
+ </if>
+ <if test="maxAge!=null">
+  and to_number(to_char(sysdate,'yyyy.mm'))-to_number(to_char(C_licencetime,'yyyy.mm'))&lt;#{maxAge,jdbcType=DECIMAL}
+ 
+ </if>
+		
+  
+  </select>
+  <select id="showMsgInfoList" resultMap="BaseResultMap" parameterType="hashmap">
+   select * from( select to_char(a.C_licencetime,'yyyy-mm') as C_licencetime,a.C_ID,a.U_ID,a.C_BRAND,a.C_SERIES,a.C_RELEASEYEAR,
+a.C_VOLUME,a.C_GEARTYPE, a.C_CODE, a.C_MODEL, 
+    a.C_DISTANCE, a.C_EMISSIONSTANDARD, a.C_PRICE, a.C_COUNT, a.C_IMG, a.C_SJTIME, 
+    a.C_TYPE, a.C_STATE, a.C_SCCOUNT, a.C_CZZX, NEWPRICE, a.C_MCSJ,rownum rn from (select * from carinfo where 1=1
+     <if test="cBrand !=null">
+    and c_brand=#{cBrand,jdbcType=VARCHAR}
+  </if>
+  <if test="cSeries !=null">
+   and c_series=#{cSeries,jdbcType=VARCHAR}
+  </if>
+  <if test="cType !=null">
+   and c_type=#{cType}
+  </if>
+  <if test="cState !=null">
+   and c_state=#{cState,jdbcType=VARCHAR}
+  </if>
+  <if test="cEmissionstandard !=null">
+   and c_emissionstandard=#{cEmissionstandard,jdbcType=VARCHAR}
+  </if>
+ <if test="minPrice !=null">
+  and c_price&gt;#{minPrice,jdbcType=DECIMAL}
+ 
+ </if>
+ <if test="maxPrice !=null">
+  and c_price&lt;#{maxPrice,jdbcType=DECIMAL}
+ 
+ </if>
+ <if test="minDis !=null">
+  and c_distance&gt;#{minDis,jdbcType=DECIMAL}
+ 
+ </if>
+ <if test="maxDis !=null">
+  and c_distance&lt;#{maxDis,jdbcType=DECIMAL}
+ 
+ </if>
+ <if test="minAge !=null">
+  and to_number(to_char(sysdate,'yyyy.mm'))-to_number(to_char(C_licencetime,'yyyy.mm'))&gt;#{minAge,jdbcType=DECIMAL}
+ 
+ </if>
+ <if test="maxAge !=null">
+  and to_number(to_char(sysdate,'yyyy.mm'))-to_number(to_char(C_licencetime,'yyyy.mm'))&lt;#{maxAge,jdbcType=DECIMAL}
+ 
+ </if>
+ <if test="order !=null">
+ order by ${order}
+ <if test="order =='c_count'">
+ desc
+ </if>
+  <if test="order =='c_sccount'">
+ desc
+ </if>
+ </if>
+ )a where rownum&lt;=(#{curPage}*#{rowsPrePage}))
+ where rn&gt;(#{curPage}-1)*#{rowsPrePage}
+  </select>
+  <select id="getCarInfoByUMN" resultMap="BaseResultMap"  parameterType="cn.com.pojo.Carinfo">
+  select * from(select rownum rn , b.* from (select  a.* from carinfo  a where a.u_id=#{uId} order by c_sjtime desc) b  where rownum&lt;2)
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="cn.com.pojo.Carinfo" >
+    delete from CARINFO
+    where C_ID = #{cId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deletecarinfouser" parameterType="cn.com.pojo.Carinfo" >
+  delete from carinfo where u_id=#{uId}
+  </delete>
+  <insert id="insert" parameterType="cn.com.pojo.Carinfo" >
+    insert into CARINFO (C_ID, U_ID, C_BRAND, 
+      C_SERIES, C_RELEASEYEAR, C_VOLUME, 
+      C_GEARTYPE, C_CODE, C_MODEL, 
+      C_LICENCETIME, C_DISTANCE, C_EMISSIONSTANDARD, 
+      C_PRICE, C_COUNT, C_IMG, 
+      C_SJTIME, C_TYPE, C_STATE, 
+      C_SCCOUNT, C_CZZX, NEWPRICE, 
+      C_MCSJ)
+    values (#{cId,jdbcType=DECIMAL}, #{uId,jdbcType=DECIMAL}, #{cBrand,jdbcType=VARCHAR}, 
+      #{cSeries,jdbcType=VARCHAR}, #{cReleaseyear,jdbcType=DECIMAL}, #{cVolume,jdbcType=DECIMAL}, 
+      #{cGeartype,jdbcType=VARCHAR}, #{cCode,jdbcType=VARCHAR}, #{cModel,jdbcType=VARCHAR}, 
+      #{cLicencetime,jdbcType=DATE}, #{cDistance,jdbcType=DECIMAL}, #{cEmissionstandard,jdbcType=VARCHAR}, 
+      #{cPrice,jdbcType=DECIMAL}, #{cCount,jdbcType=DECIMAL}, #{cImg,jdbcType=VARCHAR}, 
+      #{cSjtime,jdbcType=DATE}, #{cType,jdbcType=VARCHAR}, #{cState,jdbcType=VARCHAR}, 
+      #{cSccount,jdbcType=DECIMAL}, #{cCzzx,jdbcType=VARCHAR}, #{newprice,jdbcType=DECIMAL}, 
+      #{cMcsj,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Carinfo" >
+    insert into CARINFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+     
+        C_ID,
+      
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="cBrand != null" >
+        C_BRAND,
+      </if>
+      <if test="cSeries != null" >
+        C_SERIES,
+      </if>
+      <if test="cReleaseyear != null" >
+        C_RELEASEYEAR,
+      </if>
+      <if test="cVolume != null" >
+        C_VOLUME,
+      </if>
+      <if test="cGeartype != null" >
+        C_GEARTYPE,
+      </if>
+      <if test="cCode != null" >
+        C_CODE,
+      </if>
+      <if test="cModel != null" >
+        C_MODEL,
+      </if>
+      <if test="cLicencetime != null" >
+        C_LICENCETIME,
+      </if>
+      <if test="cDistance != null" >
+        C_DISTANCE,
+      </if>
+      <if test="cEmissionstandard != null" >
+        C_EMISSIONSTANDARD,
+      </if>
+      <if test="cPrice != null" >
+        C_PRICE,
+      </if>
+      <if test="cCount != null" >
+        C_COUNT,
+      </if>
+      <if test="cImg != null" >
+        C_IMG,
+      </if>
+      <if test="cSjtime != null" >
+        C_SJTIME,
+      </if>
+      <if test="cType != null" >
+        C_TYPE,
+      </if>
+      <if test="cState != null" >
+        C_STATE,
+      </if>
+      <if test="cSccount != null" >
+        C_SCCOUNT,
+      </if>
+      <if test="cCzzx != null" >
+        C_CZZX,
+      </if>
+      <if test="newprice != null" >
+        NEWPRICE,
+      </if>
+      <if test="cMcsj != null" >
+        C_MCSJ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    
+        seq_carinfo.nextval,
+     
+      <if test="uId != null" >
+        #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="cBrand != null" >
+        #{cBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="cSeries != null" >
+        #{cSeries,jdbcType=VARCHAR},
+      </if>
+      <if test="cReleaseyear != null" >
+        #{cReleaseyear,jdbcType=DECIMAL},
+      </if>
+      <if test="cVolume != null" >
+        #{cVolume,jdbcType=DECIMAL},
+      </if>
+      <if test="cGeartype != null" >
+        #{cGeartype,jdbcType=VARCHAR},
+      </if>
+      <if test="cCode != null" >
+        #{cCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cModel != null" >
+        #{cModel,jdbcType=VARCHAR},
+      </if>
+      <if test="cLicencetime != null" >
+       to_date(#{cLicencetime},'yyyy/mm'),
+      </if>
+      <if test="cDistance != null" >
+        #{cDistance,jdbcType=DECIMAL},
+      </if>
+      <if test="cEmissionstandard != null" >
+        #{cEmissionstandard,jdbcType=VARCHAR},
+      </if>
+      <if test="cPrice != null" >
+        #{cPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="cCount != null" >
+        #{cCount,jdbcType=DECIMAL},
+      </if>
+      <if test="cImg != null" >
+        #{cImg,jdbcType=VARCHAR},
+      </if>
+      <if test="cSjtime != null" >
+         to_date(#{cSjtime},'yyyy/mm/dd HH24:mi:ss'),
+      </if>
+      <if test="cType != null" >
+        #{cType,jdbcType=VARCHAR},
+      </if>
+      <if test="cState != null" >
+        #{cState,jdbcType=VARCHAR},
+      </if>
+      <if test="cSccount != null" >
+        #{cSccount,jdbcType=DECIMAL},
+      </if>
+      <if test="cCzzx != null" >
+        #{cCzzx,jdbcType=VARCHAR},
+      </if>
+      <if test="newprice != null" >
+        #{newprice,jdbcType=DECIMAL},
+      </if>
+      <if test="cMcsj != null" >
+        #{cMcsj,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.pojo.Carinfo" >
+    update CARINFO
+    <set >
+      <if test="uId != null" >
+        U_ID = #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="cBrand != null" >
+        C_BRAND = #{cBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="cSeries != null" >
+        C_SERIES = #{cSeries,jdbcType=VARCHAR},
+      </if>
+      <if test="cReleaseyear != null" >
+        C_RELEASEYEAR = #{cReleaseyear,jdbcType=DECIMAL},
+      </if>
+      <if test="cVolume != null" >
+        C_VOLUME = #{cVolume,jdbcType=DECIMAL},
+      </if>
+      <if test="cGeartype != null" >
+        C_GEARTYPE = #{cGeartype,jdbcType=VARCHAR},
+      </if>
+      <if test="cCode != null" >
+        C_CODE = #{cCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cModel != null" >
+        C_MODEL = #{cModel,jdbcType=VARCHAR},
+      </if>
+      <if test="cLicencetime != null" >
+        C_LICENCETIME =  to_date(#{cLicencetime},'yyyy/mm'),
+      </if>
+      <if test="cDistance != null" >
+        C_DISTANCE = #{cDistance,jdbcType=DECIMAL},
+      </if>
+      <if test="cEmissionstandard != null" >
+        C_EMISSIONSTANDARD = #{cEmissionstandard,jdbcType=VARCHAR},
+      </if>
+      <if test="cPrice != null" >
+        C_PRICE = #{cPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="cCount != null" >
+        C_COUNT = #{cCount,jdbcType=DECIMAL},
+      </if>
+      <if test="cImg != null" >
+        C_IMG = #{cImg,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="cType != null" >
+        C_TYPE = #{cType,jdbcType=VARCHAR},
+      </if>
+      <if test="cState != null" >
+        C_STATE = #{cState,jdbcType=VARCHAR},
+      </if>
+      <if test="cSccount != null" >
+        C_SCCOUNT = #{cSccount,jdbcType=DECIMAL},
+      </if>
+      <if test="cCzzx != null" >
+        C_CZZX = #{cCzzx,jdbcType=VARCHAR},
+      </if>
+      <if test="newprice != null" >
+        NEWPRICE = #{newprice,jdbcType=DECIMAL},
+      </if>
+      <if test="cMcsj != null" >
+        C_MCSJ = #{cMcsj,jdbcType=DATE},
+      </if>
+    </set>
+    where C_ID = #{cId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.pojo.Carinfo" >
+    update CARINFO
+    set U_ID = #{uId,jdbcType=DECIMAL},
+      C_BRAND = #{cBrand,jdbcType=VARCHAR},
+      C_SERIES = #{cSeries,jdbcType=VARCHAR},
+      C_RELEASEYEAR = #{cReleaseyear,jdbcType=DECIMAL},
+      C_VOLUME = #{cVolume,jdbcType=DECIMAL},
+      C_GEARTYPE = #{cGeartype,jdbcType=VARCHAR},
+      C_CODE = #{cCode,jdbcType=VARCHAR},
+      C_MODEL = #{cModel,jdbcType=VARCHAR},
+      C_LICENCETIME = #{cLicencetime,jdbcType=DATE},
+      C_DISTANCE = #{cDistance,jdbcType=DECIMAL},
+      C_EMISSIONSTANDARD = #{cEmissionstandard,jdbcType=VARCHAR},
+      C_PRICE = #{cPrice,jdbcType=DECIMAL},
+      C_COUNT = #{cCount,jdbcType=DECIMAL},
+      C_IMG = #{cImg,jdbcType=VARCHAR},
+      C_SJTIME = #{cSjtime,jdbcType=DATE},
+      C_TYPE = #{cType,jdbcType=VARCHAR},
+      C_STATE = #{cState,jdbcType=VARCHAR},
+      C_SCCOUNT = #{cSccount,jdbcType=DECIMAL},
+      C_CZZX = #{cCzzx,jdbcType=VARCHAR},
+      NEWPRICE = #{newprice,jdbcType=DECIMAL},
+      C_MCSJ = #{cMcsj,jdbcType=DATE}
+    where C_ID = #{cId,jdbcType=DECIMAL}
+  </update>
+  
+</mapper>

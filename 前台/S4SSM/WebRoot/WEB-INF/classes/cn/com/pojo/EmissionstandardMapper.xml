@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.EmissionstandardMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Emissionstandard" >
+    <result column="E_ID" property="eId" jdbcType="DECIMAL" />
+    <result column="E_NAME" property="eName" jdbcType="VARCHAR" />
+    <result column="E_COUNT" property="eCount" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="getEmissionstandardByCount" resultMap="BaseResultMap">
+  select * from(select rownum rn , b.* from (select  a.* from emissionstandard  a order by e_count desc) b  where rownum&lt;6)
+  </select>
+  <insert id="insert" parameterType="cn.com.pojo.Emissionstandard" >
+    insert into EMISSIONSTANDARD (E_ID, E_NAME, E_COUNT
+      )
+    values (#{eId,jdbcType=DECIMAL}, #{eName,jdbcType=VARCHAR}, #{eCount,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Emissionstandard" >
+    insert into EMISSIONSTANDARD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        E_ID,
+      </if>
+      <if test="eName != null" >
+        E_NAME,
+      </if>
+      <if test="eCount != null" >
+        E_COUNT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        #{eId,jdbcType=DECIMAL},
+      </if>
+      <if test="eName != null" >
+        #{eName,jdbcType=VARCHAR},
+      </if>
+      <if test="eCount != null" >
+        #{eCount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>

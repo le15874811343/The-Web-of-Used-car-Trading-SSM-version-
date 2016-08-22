@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.PersonneedMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Personneed" >
+    <result column="P_ID" property="pId" jdbcType="DECIMAL" />
+    <result column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="P_BRAND" property="pBrand" jdbcType="VARCHAR" />
+    <result column="P_SERIES" property="pSeries" jdbcType="VARCHAR" />
+    <result column="P_AGE" property="pAge" jdbcType="VARCHAR" />
+    <result column="P_PRICE" property="pPrice" jdbcType="VARCHAR" />
+    <result column="P_TIME" property="pTime" jdbcType="DATE" />
+    <result column="P_MIAOSHU" property="pMiaoshu" jdbcType="VARCHAR" />
+    <result column="P_STATE" property="pState" jdbcType="VARCHAR" />
+    <result column="P_TJTIME" property="pTjtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="getPerSonNeed" resultMap="BaseResultMap" parameterType="cn.com.pojo.Personneed">
+  select to_char(p_tjtime,'yyyy-mm-dd HH24:mi:ss') p_tjtime, to_char(p_time,'yyyy-mm') p_time, P_ID,U_ID,P_BRAND
+  ,P_SERIES,P_AGE,P_PRICE,P_MIAOSHU,P_STATE
+  
+   from personneed where 1=1 
+  <if test="uId !=null">
+  and u_id=#{uId}
+  </if>
+  <if test="pBrand !=null">
+  and p_brand=#{pBrand}
+  </if>
+  <if test="pAge !=null">
+  and p_age=#{pAge}
+  </if>
+  <if test="pSeries !=null">
+  and p_series=#{pSeries}
+  </if>
+  <if test="pMiaoshu !=''">
+  and p_miaoshu=#{pMiaoshu}
+  </if>
+  <if test="pTime !=null">
+  and to_char(p_time,'yyyy-mm')=#{pTime}
+  </if>
+  <if test="pPrice !=null">
+  and p_price=#{pPrice}
+  </if>
+  <if test="pState !=null">
+  and p_state=#{pState}
+  </if>
+ 
+  </select>
+  <select id="queryPersonCarCount" resultType="java.lang.Long" parameterType="cn.com.pojo.Personneed">
+  select count(*) from personneed where 1=1 
+  <if test="uId !=null">
+  and u_id=#{uId}
+  </if>
+  </select>
+  <select id="showPersonCarList" resultMap="BaseResultMap" parameterType="hashmap">
+  select * from(select rownum rn , b.* from(select    to_char(a.p_tjtime,'yyyy-mm-dd HH24:mi:ss') p_tjtime, to_char(a.p_time,'yyyy-mm') p_time, a.P_ID,a.U_ID,a.P_BRAND
+  ,a.P_SERIES,a.P_AGE,a.P_PRICE,a.P_MIAOSHU,a.P_STATE from personneed  a  where 1=1
+  <if test="uId !=null">
+  and u_id=#{uId}
+  </if>
+   order by p_tjtime desc ) b  where rownum&lt;=(#{curPage})*(#{rowsPrePage})) where rn&gt;((#{curPage})-1)*(#{rowsPrePage})
+  </select>
+  <insert id="insert" parameterType="cn.com.pojo.Personneed" >
+    insert into PERSONNEED (P_ID, U_ID, P_BRAND, 
+      P_SERIES, P_AGE, P_PRICE, 
+      P_TIME, P_MIAOSHU, P_STATE, 
+      P_TJTIME)
+    values (#{pId,jdbcType=DECIMAL}, #{uId,jdbcType=DECIMAL}, #{pBrand,jdbcType=VARCHAR}, 
+      #{pSeries,jdbcType=VARCHAR}, #{pAge,jdbcType=VARCHAR}, #{pPrice,jdbcType=VARCHAR}, 
+      #{pTime,jdbcType=DATE}, #{pMiaoshu,jdbcType=VARCHAR}, #{pState,jdbcType=VARCHAR}, 
+      #{pTjtime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Personneed" >
+    insert into PERSONNEED
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+   
+        P_ID,
+      
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="pBrand != null" >
+        P_BRAND,
+      </if>
+      <if test="pSeries != null" >
+        P_SERIES,
+      </if>
+      <if test="pAge != null" >
+        P_AGE,
+      </if>
+      <if test="pPrice != null" >
+        P_PRICE,
+      </if>
+      <if test="pTime != null" >
+        P_TIME,
+      </if>
+      <if test="pMiaoshu != null" >
+        P_MIAOSHU,
+      </if>
+      <if test="pState != null" >
+        P_STATE,
+      </if>
+      <if test="pTjtime != null" >
+        P_TJTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      SEQ_PERSONNEED.nextval,
+      <if test="uId != null" >
+        #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="pBrand != null" >
+        #{pBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="pSeries != null" >
+        #{pSeries,jdbcType=VARCHAR},
+      </if>
+      <if test="pAge != null" >
+        #{pAge,jdbcType=VARCHAR},
+      </if>
+      <if test="pPrice != null" >
+        #{pPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="pTime != null" >
+        to_date(#{pTime},'yyyy/mm'),
+      </if>
+      <if test="pMiaoshu != null" >
+        #{pMiaoshu,jdbcType=VARCHAR},
+      </if>
+      <if test="pState != null" >
+        #{pState,jdbcType=VARCHAR},
+      </if>
+      <if test="pTjtime != null" >
+        to_date(#{pTjtime},'yyyy/mm/dd HH24:mi:ss'),
+      </if>
+    </trim>
+  </insert>
+  <delete id="deletePersonNeed" parameterType="cn.com.pojo.Personneed">
+  delete from personneed where 1=1 
+  <if test="pId !=null">
+  and p_id=#{pId,jdbcType=DECIMAL}
+  </if>
+   <if test="uId !=null">
+  and u_id=#{uId,jdbcType=DECIMAL}
+  </if>
+  
+  </delete>
+  <update id="updatePersonNeed"  parameterType="cn.com.pojo.Personneed">
+  update personneed set p_state=#{pState} where p_id=#{pId}
+  </update>
+  <select id="chekUidPerson" resultMap="BaseResultMap" parameterType="cn.com.pojo.Personneed"  >
+  select * from personneed where u_id=#{uId}
+  </select>
+  <delete id="deleteUidPerson" parameterType="cn.com.pojo.Personneed"  >
+  delete from personneed where u_id=#{uId}
+  </delete>
+</mapper>

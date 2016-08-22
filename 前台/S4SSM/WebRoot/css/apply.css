@@ -1,0 +1,50 @@
+.applyBan .wrap{width:862px;margin-top:70px;text-align: left;}
+.applyForm{background: #fff;padding:15px;margin:15px 0;}
+.applyForm h2,.loanBox h2{font-size:19px;color:#1c50a8;padding-bottom:5px;}
+.fSubmit{display:block;width:174px;height:150px;background:url(../images/applyBtn.jpg) no-repeat;cursor:pointer;}
+.fLeft{width:636px;}
+.applyForm form{margin-top:15px;}
+.applyForm .fDl{padding:15px 8px;background:#f2f2f2;box-shadow:0 0 8px rgba(0,0,0,0.3) inset;border:1px solid #c8c8c8;margin-bottom:7px;}
+.applyForm .fDl .fut{display:block;background:none;width:100%;color:#012464;font-family:'Microsoft Yahei';}
+.applyForm .fDl textarea.fut{height:61px;}
+.loanBox{background: #fff;padding:15px;}
+.loanDiv{position:relative; background:url(../images/loanBg.jpg) no-repeat;height:162px;margin-top:5px;background-size:100% 100%;}
+.send_phone{position: absolute;right:17px;bottom:20px;background:#0261bf;width:120px;height:40px;line-height:40px;color:#fff;text-align: center;font-size:14px;font-weight: bold;}
+.send_phone:hover{background:#f60;color:#fff;}
+.select{padding:15px;}
+.select p{float:left;width:226px;color:#fff;}
+.select p input,.select p select{margin-top:3px; border:none;border-radius:0px; height:39px;line-height:39px;display:block;width:100%;background:#fff;}
+.select p.right{float:right;margin-right:0;}
+.select p select{border-radius:0;}
+.loanPrice{color:#fff;padding:20px 0 0 15px;}
+.loanPrice span{font-size:18px;}
+.loanPrice span b{font-size:22px;}
+
+.apy-a{background:url(../images/ay1.jpg) no-repeat;height:483px;width:100%;margin-bottom:35px;}
+.apy-a .wrap{padding-top:80px;}
+.apy-a dt{width:717px;padding-top:90px;color:#fff;}
+.apy-a dt h2{font-size:53px;font-weight:normal;}
+.apy-a dt p{font-size:22px;}
+.apy-a dd{width:470px;}
+.apy-a dd .applyForm{width:auto;}
+.apy-a dd .applyForm .fLeft {width:440px;}
+.apy-a dd .applyForm .fSubmit{width:145px;height:39px;background:url(../images/applyBtn1.jpg) no-repeat;cursor:pointer;text-align:center;line-height:39px;color:#fff;font-size:16px;font-family:'Microsoft Yahei'}
+.apy-a dd .applyForm .fDl textarea.fut{height:80px;}
+.apy-b dl.dl1{background:#f4f4f4 url(../images/apy1.jpg) no-repeat right top;height:472px;padding:44px 545px 0 35px;}
+.apy-b dl h2{font-size:30px;font-weight:normal;color:#0050a4;}
+.apy-b dl p{line-height:20px;color:#272727;padding:15px 0 30px 0;}
+.apy-b dl .yh-a{padding:35px 0 15px 0;}
+.apy-b dl .yh-a a{display:inline-block;margin-right:5px;margin-bottom:10px;}
+.apy-b dl.dl2{background:#f4f4f4 url(../images/apy3.jpg) no-repeat left top;height:391px;padding:100px 36px 0 570px;}
+.apy-b dl.dl2 .yh-a,.apy-b dl.dl3 .yh-a{padding-top:5px;}
+.apy-b dl.dl3{height:475px;background:#f4f4f4 url(../images/apy4.jpg) no-repeat right top;}
+.apy-b dl.dl3 h2{padding-top:55px;}
+.apy-c .loanBox {width:914px;background:#009cd5;height:170px;}
+.apy-c .loanBox .loanDiv{background:none;width:830px;margin:0 auto;}
+.popForm{background:#fff;width:400px;height:260px;position:absolute;left:50%;top:50%;margin-left:-200px;margin-top:-130px;}
+.popForm form{padding:20px;}
+.popForm p{padding:0 5px;border:1px solid #ddd;margin-top:25px;}
+ input{padding:8px 0;width: 100%;font-family:'Microsoft Yahei'}
+.popForm  a.getCode{display:block;background: #0261bf;color: #fff;text-align: center;font-family:'Microsoft Yahei';padding:10px 0;font-size:14px;}
+.closed{position:absolute;right:0;top:0;width:35px;line-height:35px;height:35px;text-align:center;background:#0261bf;color:#fff;font-size:17px;font-family:'宋体';font-weight: bold;}
+.closed:hover{opacity:.8;color:#fff;}

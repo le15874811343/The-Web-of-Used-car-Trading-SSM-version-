@@ -1,0 +1,76 @@
+﻿@charset "utf-8";
+
+ul,li{list-style-type:none;}
+hgroup{clear:both;overflow:hidden;}
+.bai{color:#fff;}
+.hei{color:#000}
+.none{display:none;}
+.fl{float:left;}
+.fr{float:right;}
+.clearfix1{display:block;clear:both;}
+.clearfix1{*zoom:1;}
+.clearfix1:after{display:block; overflow:hidden;clear:both;height:0;visibility:hidden;content:".";}
+hgroup h2.fr{font-weight:normal;}
+.ul-bor{border-bottom:1px dashed #e4e4e4}
+input:-webkit-autofill{box-shadow:0 0 0 1000px white inset;}/*清除表单自完成背景*/
+em,a{font-style:normal;transition:all .6s;}
+.art-tab .hd a{transition:none;}
+
+/*其他*/
+.jz,.bd img{/*图片加载*/
+	background:url(../sucai/bx_loader.gif) center center no-repeat #fff;
+	
+}
+.jz{
+	border:1px solid #CCC;
+	padding:1px;
+	transition:all .5s;
+}
+.jz:hover{
+	box-shadow:0 0 5px #999;
+}
+.lb li{/*列表标点*/
+	background:url(../sucai/biaodian.gif) no-repeat left center;
+	padding-left:10px;
+}
+.pngbg{/*背景半黑*/
+    background:rgba(0,0,0,.6)!important;/*ie9+any*/
+	background:#000;/*ie678*/
+	filter:alpha(opacity=60);/*ie6789*/
+	/*_background:url(../sucai/tubg.png);/*ie6*/
+}
+:root .pngbg {filter:alpha(opacity=100)\9;/*ie9*/}
+/*多栏居中通用*/
+.list-cn{
+	text-align:center;
+	font-size:0;
+}
+.list-left{
+	text-align:left;
+	font-size:0;
+}
+.list-cn li{
+	font-size:12px;
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+}
+/*download by www.sucaijiayuan.com*/
+#play {width:592px;text-align:center;position:relative;overflow:hidden;margin:5px auto;}
+#play .change_a {width:50%;height:100%;position:absolute;top:0;z-index:1;cursor:pointer;display:block;overflow:hidden;background:url(about:blank);}
+#play .prev_a {left:0;}
+#play .next_a {right:0}
+#play .change_a span {width:24px;height:43px;display:block;position:absolute;top:50%;margin-top:-21px;display:none}
+#play .prev_a span {background:url(../images/s_gallery_2012110702.png) no-repeat 0px -50px;left:0;}
+#play .next_a span {background:url(../images/s_gallery_2012110702.png) no-repeat -30px -50px;right:0;}
+#play .img_ul {position:relative;z-index:1;}
+.img_hd  {width:592px;background-color:#eee;overflow:hidden;height:66px;padding:2px 0;margin-top:15px;margin:5px auto;position:relative;}
+.img_hd ul {position:absolute;z-index:1}
+.img_hd ul li {float:left;width:80px;height:60px;border:3px solid #eee;cursor:pointer;margin:0 3px 0 1px;overflow:hidden;*display:inline;padding:1px;text-align:center}
+.img_hd ul li img {height:60px;}
+.img_hd ul li.on{ border-color:rgb(45, 150, 233);}
+.img_hd .bottom_a {background:url(../images/s_gallery_2012110702.png) no-repeat;width:22px;height:22px;position:absolute;display:block;top:50%;margin-top:-11px;cursor:pointer;z-index:10}
+.img_hd .prev_a { background-position:0 -24px;left:5px;}
+.img_hd .next_a { background-position:-30px -24px;right:5px;}
+
+

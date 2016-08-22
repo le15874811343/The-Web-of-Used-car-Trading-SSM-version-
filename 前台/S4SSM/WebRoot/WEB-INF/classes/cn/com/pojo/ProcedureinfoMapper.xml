@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.pojo.ProcedureinfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.pojo.Procedureinfo" >
+    <result column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="C_ID" property="cId" jdbcType="DECIMAL" />
+    <result column="PURCHASETAX" property="purchasetax" jdbcType="VARCHAR" />
+    <result column="DRIVINGLICENSE" property="drivinglicense" jdbcType="VARCHAR" />
+    <result column="NCW" property="ncw" jdbcType="VARCHAR" />
+    <result column="REGISTRATION" property="registration" jdbcType="VARCHAR" />
+    <result column="NEWINVOICE" property="newinvoice" jdbcType="VARCHAR" />
+    <result column="KEY" property="key" jdbcType="DECIMAL" />
+    <result column="TRANSFERTIMES" property="transfertimes" jdbcType="DECIMAL" />
+    <result column="TRANSFERTICKET" property="transferticket" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getAllProcedureInfo" resultMap="BaseResultMap">
+  select * from procedureinfo
+  </select>
+  <select id="getProcedureInfoById" resultType="cn.com.pojo.Procedureinfo" parameterType="cn.com.pojo.Carinfo">
+  select * from procedureinfo where u_id=#{uId} and c_id=#{cId}
+  </select>
+  <insert id="insert" parameterType="cn.com.pojo.Procedureinfo" >
+    insert into PROCEDUREINFO (U_ID, C_ID, PURCHASETAX, 
+      DRIVINGLICENSE, NCW, REGISTRATION, 
+      NEWINVOICE, KEY, TRANSFERTIMES, 
+      TRANSFERTICKET)
+    values (#{uId,jdbcType=DECIMAL}, #{cId,jdbcType=DECIMAL}, #{purchasetax,jdbcType=VARCHAR}, 
+      #{drivinglicense,jdbcType=VARCHAR}, #{ncw,jdbcType=VARCHAR}, #{registration,jdbcType=VARCHAR}, 
+      #{newinvoice,jdbcType=VARCHAR}, #{key,jdbcType=DECIMAL}, #{transfertimes,jdbcType=DECIMAL}, 
+      #{transferticket,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.pojo.Procedureinfo" >
+    insert into PROCEDUREINFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="cId != null" >
+        C_ID,
+      </if>
+      <if test="purchasetax != null" >
+        PURCHASETAX,
+      </if>
+      <if test="drivinglicense != null" >
+        DRIVINGLICENSE,
+      </if>
+      <if test="ncw != null" >
+        NCW,
+      </if>
+      <if test="registration != null" >
+        REGISTRATION,
+      </if>
+      <if test="newinvoice != null" >
+        NEWINVOICE,
+      </if>
+      <if test="key != null" >
+        KEY,
+      </if>
+      <if test="transfertimes != null" >
+        TRANSFERTIMES,
+      </if>
+      <if test="transferticket != null" >
+        TRANSFERTICKET,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasetax != null" >
+        #{purchasetax,jdbcType=VARCHAR},
+      </if>
+      <if test="drivinglicense != null" >
+        #{drivinglicense,jdbcType=VARCHAR},
+      </if>
+      <if test="ncw != null" >
+        #{ncw,jdbcType=VARCHAR},
+      </if>
+      <if test="registration != null" >
+        #{registration,jdbcType=VARCHAR},
+      </if>
+      <if test="newinvoice != null" >
+        #{newinvoice,jdbcType=VARCHAR},
+      </if>
+      <if test="key != null" >
+        #{key,jdbcType=DECIMAL},
+      </if>
+      <if test="transfertimes != null" >
+        #{transfertimes,jdbcType=DECIMAL},
+      </if>
+      <if test="transferticket != null" >
+        #{transferticket,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateProcedureInfo" parameterType="cn.com.pojo.Procedureinfo">
+  
+  update  procedureinfo set purchaseTax= #{purchasetax,jdbcType=VARCHAR},drivingLicense=#{drivinglicense,jdbcType=VARCHAR},ncw= #{ncw,jdbcType=VARCHAR},registration=#{registration,jdbcType=VARCHAR},newInvoice=#{newinvoice,jdbcType=VARCHAR},key=#{key,jdbcType=DECIMAL},transferTimes=#{transfertimes,jdbcType=DECIMAL},transferTicket=#{transferticket,jdbcType=VARCHAR} where u_id= #{uId,jdbcType=DECIMAL} and c_id= #{cId,jdbcType=DECIMAL} 
+  </update>
+</mapper>
