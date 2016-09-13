@@ -37,7 +37,7 @@
   <select id="queryPersonCarCount" resultType="java.lang.Long" parameterType="cn.com.pojo.Userinfo3">
   select count(*) from userinfo3 where 1=1 
   <if test="uAdmin !=null">
-     and u_admin=#{uAdmin}
+     and u_admin=#{uAdmin} 
   </if>
 
   </select>
