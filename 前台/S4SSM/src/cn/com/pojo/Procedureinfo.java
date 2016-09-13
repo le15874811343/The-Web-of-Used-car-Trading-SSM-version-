@@ -1,27 +1,30 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ * 手续信息类
+ * @author  lej
+ */
 public class Procedureinfo implements Serializable{
-    private Long uId;
+    private Long uId; //车主编号
 
-    private Long cId;
+    private Long cId; //车辆编号
 
-    private String purchasetax;
+    private String purchasetax;  //购置税
 
-    private String drivinglicense;
+    private String drivinglicense; //行驶证
 
-    private String ncw;
+    private String ncw; //新车质保
 
-    private String registration;
+    private String registration;  //登记证
 
-    private String newinvoice;
+    private String newinvoice;  //新车发票
 
-    private int key;
+    private int key; //钥匙
 
-    private int transfertimes;
+    private int transfertimes;  //过户次数
 
-    private String transferticket;
+    private String transferticket; //过户票
 
     public Long getuId() {
         return uId;
