@@ -21,7 +21,7 @@
   <if test="uId !=null">
   and u_id=#{uId}
   </if>
-  <if test="pBrand !=null">
+  <if test="pBrand !=null"> 
   and p_brand=#{pBrand}
   </if>
   <if test="pAge !=null">
