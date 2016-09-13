@@ -60,7 +60,7 @@
         D_NAME = #{dName,jdbcType=VARCHAR},
       </if>
       <if test="dCount != null" >
-        D_COUNT = #{dCount,jdbcType=DECIMAL},
+        D_COUNT = #{dCount,jdbcType=DECIMAL}, 
       </if>
     </set>
     where D_ID = #{dId,jdbcType=DECIMAL}
