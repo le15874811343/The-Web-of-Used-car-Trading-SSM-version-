@@ -25,7 +25,7 @@
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
     select 
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" /> 
     from MODEL
     where M_ID = #{mId,jdbcType=DECIMAL}
   </select>
