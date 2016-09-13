@@ -81,6 +81,6 @@
   delete from comment1 where c_id=#{cId}
   </delete>
   <update id="updateComment" parameterType="cn.com.pojo.Comment1" >
-  update comment1 set c_bt=#{cBt},c_img=#{cImg},c_admin=#{cAdmin} where c_id=#{cId}
+  update comment1 set c_bt=#{cBt},c_img=#{cImg},c_admin=#{cAdmin} where c_id=#{cId} 
   </update>
 </mapper>
