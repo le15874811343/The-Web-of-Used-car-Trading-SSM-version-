@@ -1,13 +1,16 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ * 行驶距离类
+ * @author  lej
+ */
 public class Distance implements Serializable{
-    private Long dId;
+    private Long dId; //行驶距离编号
 
-    private String dName;
+    private String dName;  //行驶距离名称
 
-    private Long dCount;
+    private Long dCount; //热度
 
     public Long getdId() {
         return dId;
