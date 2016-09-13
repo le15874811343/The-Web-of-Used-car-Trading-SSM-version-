@@ -1,27 +1,31 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ * 
+ * 用户信息类
+ * @author lej
+ */
 public class Userinfo3 implements Serializable {
-    private Long uId;
+    private Long uId;  //用户编号
 
-    private Long uTel;
+    private Long uTel; //用户手机（账号）
 
-    private String uPwd;
+    private String uPwd;   //用户密码
 
-    private Long uCard;
+    private Long uCard;  //用户身份证
 
-    private String uAdr;
+    private String uAdr;   //用户地址
 
-    private Long uQq;
+    private Long uQq; //用户QQ
 
-    private String uEmail;
+    private String uEmail; //用户邮箱
 
-    private String uName;
+    private String uName; //用户姓名
+ 
+    private String uSex; //用户性别
 
-    private String uSex;
-
-    private String uAdmin;
+    private String uAdmin; //用户权限
 
     public Long getuId() {
         return uId;
