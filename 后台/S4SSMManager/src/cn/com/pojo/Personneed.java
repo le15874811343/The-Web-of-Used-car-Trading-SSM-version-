@@ -2,27 +2,30 @@ package cn.com.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * 个人需求信息类
+ *@author lej
+ */
 public class Personneed implements Serializable{
-    private Long pId;
+    private Long pId; //需求编号
 
-    private Long uId;
+    private Long uId; //用户编号
 
-    private String pBrand;
+    private String pBrand;  //需求品牌
 
-    private String pSeries;
+    private String pSeries;   //需求车系
 
-    private String pAge;
+    private String pAge; //需求车龄
 
-    private String pPrice;
+    private String pPrice;  //需求价格
 
-    private String pTime;
+    private String pTime; //需求购车时间
 
-    private String pMiaoshu;
+    private String pMiaoshu; //需求描叙
 
-    private String pState;
+    private String pState;  //需求状态
 
-    private String pTjtime;
+    private String pTjtime; //需求提交时间
 
     public Long getpId() {
         return pId;
