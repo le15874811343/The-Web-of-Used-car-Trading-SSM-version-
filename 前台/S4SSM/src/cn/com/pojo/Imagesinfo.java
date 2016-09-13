@@ -1,11 +1,14 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ *车辆照片信息类 
+ * @author lej
+ */
 public class Imagesinfo  implements Serializable{
-    private Long cId;
+    private Long cId; //车辆编号
 
-    private Long uId;
+    private Long uId; //车主编号
 
     private String image1;
 
