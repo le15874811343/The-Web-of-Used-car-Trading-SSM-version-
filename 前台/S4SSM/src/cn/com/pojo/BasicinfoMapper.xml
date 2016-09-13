@@ -41,7 +41,7 @@ select to_char(a.aidd,'yyyy-mm') as aidd,to_char(a.srdt,'yyyy-mm') as srdt ,to_c
       <if test="aidd != null" >
         AIDD,
       </if>
-      <if test="srdt != null" >
+      <if test="srdt != null" > 
         SRDT,
       </if>
       <if test="bodycolor != null" >
