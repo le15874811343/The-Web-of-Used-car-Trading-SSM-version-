@@ -54,7 +54,7 @@
   <select id="getPersonList" resultMap="BaseResultMap" parameterType="hashmap">
   select * from (select rownum rn , b. * from (select rownum  ,a.* from  (select * from personcar where 1=1 
  
-  and u_id=#{uId}
+  and u_id=#{uId} 
   
   
   and p_state=#{pState}
