@@ -3,51 +3,55 @@ package cn.com.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 车辆概要信息类
+ * @author lej
+ */
 
 public class Carinfo implements Serializable {
-    private Long cId;
+    private Long cId;  //车辆编号
+ 
+    private Long uId; //车主编号
 
-    private Long uId;
+    private String cBrand; //品牌
 
-    private String cBrand;
+    private String cSeries;  //车系
 
-    private String cSeries;
+    private Integer cReleaseyear; //款式年限
 
-    private Integer cReleaseyear;
+    private Double cVolume;  //排量
 
-    private Double cVolume;
+    private String cGeartype; //挂档类型
 
-    private String cGeartype;
+    private String cCode; //编号
 
-    private String cCode;
+    private String cModel; //型号
 
-    private String cModel;
+    private String cLicencetime; //上牌时间
 
-    private String cLicencetime;
+    private Double cDistance; //行驶距离
 
-    private Double cDistance;
+    private String cEmissionstandard;  //排放标准
 
-    private String cEmissionstandard;
+    private Double cPrice;  //价格 
 
-    private Double cPrice;
+    private Long cCount; //热度
 
-    private Long cCount;
+    private String cImg; //头图片
 
-    private String cImg;
+    private String cSjtime; //上架时间
 
-    private String cSjtime;
+    private String cType; //车体形式
 
-    private String cType;
+    private String cState;   //状态
 
-    private String cState;
+    private Long cSccount; //收藏量
 
-    private Long cSccount;
+    private String cCzzx; //详情描叙
 
-    private String cCzzx;
+    private Double newprice;  //新车价
 
-    private Double newprice;
-
-    private String cMcsj;
+    private String cMcsj; //卖出时间
 
     public Long getcId() {
         return cId;
