@@ -24,7 +24,7 @@
 		IMAGE2, IMAGE3, IMAGE4,
 		IMAGE5, IMAGE6, IMAGE7,
 		IMAGE8, IMAGE9, IMAGE10
-		)
+		) 
 		values (#{cId,jdbcType=DECIMAL}, #{uId,jdbcType=DECIMAL},
 		#{image1,jdbcType=VARCHAR},
 		#{image2,jdbcType=VARCHAR}, #{image3,jdbcType=VARCHAR}, #{image4,jdbcType=VARCHAR},
