@@ -37,7 +37,7 @@
 		SEATNUMBER, FUELFORM,
 		CVT, DRIVINGMETHOD, PKE,
 		KEYLESSGO, SUNROOF,
-		LEATHERSEAT
+		LEATHERSEAT 
 		)
 		values (#{uId,jdbcType=DECIMAL}, #{cId,jdbcType=DECIMAL},
 		#{consolelcdscreen,jdbcType=VARCHAR},
