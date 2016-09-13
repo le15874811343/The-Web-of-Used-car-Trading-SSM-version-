@@ -20,4 +20,4 @@
   <select id="getsellinfo" resultMap="BaseResultMap" >
   select sum(c_price) as c_sum,to_char(c_mcsj,'YYYY') as c_selltime  from carinfo where to_char(c_mcsj,'YYYY')>0 group by to_char(c_mcsj,'YYYY') order by to_char(c_mcsj,'YYYY')
   </select>
-</mapper>
+</mapper> 
