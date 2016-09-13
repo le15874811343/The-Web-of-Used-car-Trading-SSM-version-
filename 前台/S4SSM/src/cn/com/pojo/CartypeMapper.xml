@@ -37,7 +37,7 @@
       </if>
       <if test="tClass != null" >
         T_CLASS,
-      </if>
+      </if> 
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="tId != null" >
