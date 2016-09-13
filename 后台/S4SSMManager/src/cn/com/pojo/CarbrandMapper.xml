@@ -40,7 +40,7 @@
       </if>
       <if test="bImg != null" >
         B_IMG,
-      </if>
+      </if> 
       <if test="bSzm != null" >
         B_SZM,
       </if>
