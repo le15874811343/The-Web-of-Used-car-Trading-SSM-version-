@@ -20,7 +20,7 @@
 		<result column="SUNROOF" property="sunroof" jdbcType="VARCHAR" />
 		<result column="LEATHERSEAT" property="leatherseat" jdbcType="VARCHAR" />
 	</resultMap>
-	<select id="getAllHardwareConfig" resultMap="BaseResultMap">
+	<select id="getAllHardwareConfig" resultMap="BaseResultMap"> 
 		select * from
 		hardwareconfig
 	</select>
