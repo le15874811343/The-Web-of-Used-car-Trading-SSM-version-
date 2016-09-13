@@ -23,7 +23,7 @@
     delete from MODEL
     where M_ID = #{mId,jdbcType=DECIMAL}
   </delete>
-  <insert id="insert" parameterType="cn.com.pojo.Model" >
+  <insert id="insert" parameterType="cn.com.pojo.Model" > 
     insert into MODEL (M_ID, B_ID, M_NAME
       )
     values (#{mId,jdbcType=DECIMAL}, #{bId,jdbcType=DECIMAL}, #{mName,jdbcType=VARCHAR}
