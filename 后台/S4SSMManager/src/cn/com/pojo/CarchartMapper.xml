@@ -21,7 +21,7 @@
   <select id="yearmonthday"  resultMap="BaseResultMap" parameterType="hashmap">
   select c_brand,count(*) as c_count ,to_char(c_mcsj,'HH24:mi:ss') as c_selltime from carinfo where to_char(c_mcsj,'YYYY-MM-DD')=#{time}
  
-    group by c_brand,to_char(c_mcsj,'HH24:mi:ss')
+    group by c_brand,to_char(c_mcsj,'HH24:mi:ss') 
   
   </select>
   <select id="year" resultMap="BaseResultMap" parameterType="hashmap">
