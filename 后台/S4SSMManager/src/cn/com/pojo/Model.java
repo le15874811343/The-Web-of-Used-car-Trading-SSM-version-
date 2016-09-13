@@ -3,13 +3,16 @@ package cn.com.pojo;
 import java.io.Serializable;
 
 
-
+/**
+ * 车系信息类
+ * @author lej
+ */
 public class Model implements Serializable{
-    private int mId;
+    private int mId;  //车系ID
 
-    private int bId;
+    private int bId;  //品牌ID
 
-    private String mName;
+    private String mName;  //车型名称
 
     public int getmId() {
         return mId;
