@@ -2,25 +2,29 @@ package cn.com.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/** 
+  * 汽车基本信息类 
+  * @author le 
+  * 
+  */ 
 public class Basicinfo implements Serializable {
-    private Long uId;
+    private Long uId; //车主编号
 
-    private Long cId;
+    private Long cId;  //汽车编号
 
-    private String aidd;
+    private String aidd; //年检到期时间
 
-    private String srdt;
+    private String srdt; //强险到期时间
 
-    private String bodycolor;
+    private String bodycolor;  //车身颜色
+ 
+    private String interiorcolor;  //内饰颜色
+ 
+    private String domf; //出厂日期
 
-    private String interiorcolor;
+    private String orgin;  //产地
 
-    private String domf;
-
-    private String orgin;
-
-    private String cimd;
+    private String cimd; //商业险到期日期
 
     public Long getuId() {
         return uId;
