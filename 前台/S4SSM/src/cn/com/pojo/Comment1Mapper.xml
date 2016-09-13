@@ -33,7 +33,7 @@
   <insert id="insertSelective" parameterType="cn.com.pojo.Comment1" >
     insert into COMMENT1
     <trim prefix="(" suffix=")" suffixOverrides="," >
-    C_ID,
+    C_ID, 
       <if test="uId != null" >
         U_ID,
       </if>
