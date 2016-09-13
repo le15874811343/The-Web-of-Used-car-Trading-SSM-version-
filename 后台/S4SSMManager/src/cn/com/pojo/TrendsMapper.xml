@@ -22,7 +22,7 @@
   <select id="queryPersonCarCount" resultType="java.lang.Long" parameterType="cn.com.pojo.Trends">
   select count(*) from trends where 1=1
    <if test="trType !=null">
-   and tr_type=#{trType}
+   and tr_type=#{trType} 
   </if>
   </select>
   <select id="showPersonCarList" resultMap="BaseResultMap" parameterType="cn.com.pojo.Trends">
