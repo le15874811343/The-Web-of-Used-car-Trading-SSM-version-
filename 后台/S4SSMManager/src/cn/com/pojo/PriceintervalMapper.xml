@@ -37,7 +37,7 @@
         #{pCount,jdbcType=DECIMAL},
       </if>
     </trim>
-  </insert>
+  </insert> 
   <delete id="deletePriceInterval" parameterType="cn.com.pojo.Priceinterval" >
   delete from priceinterval where p_id=#{pId}
   </delete>
