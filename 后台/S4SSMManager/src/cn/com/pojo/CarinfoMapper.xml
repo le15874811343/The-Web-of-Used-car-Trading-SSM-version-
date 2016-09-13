@@ -22,7 +22,7 @@
     <result column="C_STATE" property="cState" jdbcType="VARCHAR" />
     <result column="C_SCCOUNT" property="cSccount" jdbcType="DECIMAL" />
     <result column="C_CZZX" property="cCzzx" jdbcType="VARCHAR" />
-    <result column="NEWPRICE" property="newprice" jdbcType="DECIMAL" />
+    <result column="NEWPRICE" property="newprice" jdbcType="DECIMAL" /> 
     <result column="C_MCSJ" property="cMcsj" jdbcType="DATE" />
   </resultMap>
   <sql id="Base_Column_List" >
