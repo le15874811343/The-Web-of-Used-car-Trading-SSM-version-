@@ -1,17 +1,20 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ * 销售信息类
+ * @author lej
+ */
 public class Sellinfo implements Serializable {
-    private Long uId;
+    private Long uId;   //车主编号
 
-    private Long cId;
+    private Long cId;  //车辆编号
 
-    private String pricetype;
+    private String pricetype; //价格类型
 
-    private String transferfee;
+    private String transferfee; //含过户费
 
-    private String stage;
+    private String stage;    //支持分期
 
     public Long getuId() {
         return uId;
