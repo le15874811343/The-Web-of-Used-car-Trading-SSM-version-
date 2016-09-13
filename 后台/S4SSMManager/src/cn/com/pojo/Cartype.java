@@ -1,17 +1,21 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
+/**
+ * 车型信息类
+ * @author  lej
+ */
 
 public class Cartype implements Serializable{
-    private Long tId;
+    private Long tId; //车型编号
 
-    private String tName;
+    private String tName; //车型名称
 
-    private String tImg;
+    private String tImg;  //车型logo
 
-    private Long tCount;
+    private Long tCount;  //热度
 
-    private String tClass;
+    private String tClass; //车型logo
 
     public Long gettId() {
         return tId;
