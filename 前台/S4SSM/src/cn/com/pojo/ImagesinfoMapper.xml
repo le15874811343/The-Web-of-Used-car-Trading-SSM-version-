@@ -31,7 +31,7 @@
 		#{image5,jdbcType=VARCHAR}, #{image6,jdbcType=VARCHAR},
 		#{image7,jdbcType=VARCHAR},
 		#{image8,jdbcType=VARCHAR}, #{image9,jdbcType=VARCHAR}, #{image10,jdbcType=VARCHAR}
-		)
+		) 
 	</insert>
 	<insert id="insertSelective" parameterType="cn.com.pojo.Imagesinfo">
 		insert into IMAGESINFO
