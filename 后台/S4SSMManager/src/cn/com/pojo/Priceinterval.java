@@ -1,13 +1,16 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ * 价格区间信息类
+ * @author lej
+ */
 public class Priceinterval implements Serializable {
-    private Long pId;
+    private Long pId; //价格编号
 
-    private String pName;
+    private String pName; //价格名称
 
-    private Long pCount;
+    private Long pCount; //热度
 
     public Long getpId() {
         return pId;
