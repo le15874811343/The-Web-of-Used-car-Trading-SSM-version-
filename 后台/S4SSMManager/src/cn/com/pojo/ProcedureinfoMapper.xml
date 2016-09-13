@@ -38,7 +38,7 @@
       <if test="cId != null" >
         C_ID,
       </if>
-      <if test="purchasetax != null" >
+      <if test="purchasetax != null" > 
         PURCHASETAX,
       </if>
       <if test="drivinglicense != null" >
