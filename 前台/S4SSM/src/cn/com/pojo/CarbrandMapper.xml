@@ -33,7 +33,7 @@
         B_ID,
       </if>
       <if test="bName != null" >
-        B_NAME,
+        B_NAME, 
       </if>
       <if test="bCount != null" >
         B_COUNT,
