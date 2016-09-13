@@ -37,7 +37,7 @@
 		RSM, RVMH, ESS)
 		values (#{uId,jdbcType=DECIMAL}, #{cId,jdbcType=DECIMAL},
 		#{guidancesystem,jdbcType=VARCHAR},
-		#{alb,jdbcType=VARCHAR}, #{fpg,jdbcType=VARCHAR}, #{rpg,jdbcType=VARCHAR},
+		#{alb,jdbcType=VARCHAR}, #{fpg,jdbcType=VARCHAR}, #{rpg,jdbcType=VARCHAR}, 
 		#{rcpa,jdbcType=VARCHAR},
 		#{dsea,jdbcType=VARCHAR}, #{fsea,jdbcType=VARCHAR}, #{dlcc,jdbcType=VARCHAR},
 		#{hfs,jdbcType=VARCHAR},
