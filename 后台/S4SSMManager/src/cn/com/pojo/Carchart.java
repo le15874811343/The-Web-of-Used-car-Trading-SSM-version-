@@ -1,11 +1,14 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ * 品牌销量处理类
+ * 
+ */
 public class Carchart implements Serializable {
-private String c_brand;
-private Long c_count;
-private String c_selltime;
+private String c_brand; //品牌名
+private Long c_count; //销量
+private String c_selltime; //交易时间
 public String getC_brand() {
 	return c_brand;
 }
