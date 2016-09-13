@@ -39,5 +39,5 @@
         #{pCount,jdbcType=DECIMAL},
       </if>
     </trim>
-  </insert>
+  </insert> 
 </mapper>
