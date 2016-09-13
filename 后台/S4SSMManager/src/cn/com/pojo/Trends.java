@@ -2,19 +2,22 @@ package cn.com.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * 公司动态信息类
+ * @author lej
+ */
 public class Trends  implements Serializable{
-    private Long trId;
+    private Long trId;  //动态信息编号
 
-    private String trTitle;
+    private String trTitle;   //动态信息标题
 
-    private String trText;
+    private String trText;   //动态信息正文
 
-    private String trDate;
+    private String trDate;  //动态信息日期
 
-    private String trType;
+    private String trType;  //动态信息配图
 
-    private String trImg;
+    private String trImg;  //动态信息类型
 
     public Long getTrId() {
         return trId;
