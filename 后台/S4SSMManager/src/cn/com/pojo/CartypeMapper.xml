@@ -35,7 +35,7 @@
       <if test="tImg != null" >
         T_IMG,
       </if>
-      <if test="tCount != null" >
+      <if test="tCount != null" > 
         T_COUNT,
       </if>
       <if test="tClass != null" >
