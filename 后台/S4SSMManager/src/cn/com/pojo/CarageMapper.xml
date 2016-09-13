@@ -26,7 +26,7 @@
       </if>
       <if test="aCount != null" >
         A_COUNT,
-      </if>
+      </if> 
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
      
