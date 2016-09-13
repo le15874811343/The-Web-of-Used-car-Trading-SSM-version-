@@ -1,13 +1,16 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ * 车龄信息类
+ * @author lej
+ */
 public class Carage  implements Serializable{
-    private Long aId;
+    private int aId;  //车龄编号
+ 
+    private String aName;  //车龄名称
 
-    private String aName;
-
-    private Long aCount;
+    private Long aCount;  //热度
 
     public Long getaId() {
         return aId;
