@@ -1,17 +1,20 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ * 个人汽车订单类
+ * @author lej
+ */
 public class Personcar implements Serializable {
-    private Long pId;
+    private Long pId; //个人汽车订单编号
 
-    private Long uId;
+    private Long uId; //用户编号
 
-    private Long cUid;
+    private Long cUid;  //车主编号
 
-    private Long cId;
+    private Long cId; //车辆编号
 
-    private String pState;
+    private String pState; //订单状态
 
     public Long getpId() {
         return pId;
