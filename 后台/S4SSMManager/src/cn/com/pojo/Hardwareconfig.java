@@ -1,37 +1,40 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ * 车辆硬件配置信息类
+ * @author  lej
+ */
 public class Hardwareconfig implements Serializable{
-    private Long uId;
+    private Long uId; //车主编号
+ 
+    private Long cId; //车辆编号
 
-    private Long cId;
+    private String consolelcdscreen;  //中控台液晶屏
 
-    private String consolelcdscreen;
+    private String autolight; //自动头灯
 
-    private String autolight;
+    private String headlights; //氙气大灯
 
-    private String headlights;
+    private String lightwash; //大灯清洗 
 
-    private String lightwash;
+    private String efgv; //电动折叠后视镜
 
-    private String efgv;
+    private int seatnumber;  //座位数
 
-    private int seatnumber;
+    private String fuelform; //燃料形式
 
-    private String fuelform;
+    private String cvt; //变速箱
 
-    private String cvt;
+    private String drivingmethod; //驱动方式
+ 
+    private String pke;  //无钥匙进入
 
-    private String drivingmethod;
+    private String keylessgo;   //无钥匙启动
 
-    private String pke;
+    private String sunroof; //全景天窗
 
-    private String keylessgo;
-
-    private String sunroof;
-
-    private String leatherseat;
+    private String leatherseat; //真皮座椅
 
     public Long getuId() {
         return uId;
