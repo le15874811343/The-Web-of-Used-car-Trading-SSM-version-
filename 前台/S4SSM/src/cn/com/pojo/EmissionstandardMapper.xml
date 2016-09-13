@@ -33,7 +33,7 @@
         #{eId,jdbcType=DECIMAL},
       </if>
       <if test="eName != null" >
-        #{eName,jdbcType=VARCHAR},
+        #{eName,jdbcType=VARCHAR}, 
       </if>
       <if test="eCount != null" >
         #{eCount,jdbcType=DECIMAL},
