@@ -1,17 +1,20 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ *品牌信息类 
+ * @author lej
+ */
 public class Carbrand  implements Serializable{
-    private Long bId;
+    private Long bId; //品牌编号
 
-    private String bName;
+    private String bName; //品牌名称
 
-    private Long bCount;
+    private Long bCount; //热度
 
-    private String bImg;
-
-    private String bSzm;
+    private String bImg; //品牌LOGO
+ 
+    private String bSzm; //品牌首字母
 
     public Long getbId() {
         return bId;
