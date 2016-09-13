@@ -28,7 +28,7 @@
         A_COUNT,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    <trim prefix="values (" suffix=")" suffixOverrides="," > 
       <if test="aId != null" >
         #{aId,jdbcType=DECIMAL},
       </if>
