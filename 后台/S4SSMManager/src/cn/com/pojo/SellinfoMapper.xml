@@ -23,7 +23,7 @@
   <insert id="insertSelective" parameterType="cn.com.pojo.Sellinfo" >
     insert into SELLINFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="uId != null" >
+      <if test="uId != null" > 
         U_ID,
       </if>
       <if test="cId != null" >
