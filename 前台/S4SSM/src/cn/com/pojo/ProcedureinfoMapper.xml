@@ -29,7 +29,7 @@
       #{newinvoice,jdbcType=VARCHAR}, #{key,jdbcType=DECIMAL}, #{transfertimes,jdbcType=DECIMAL}, 
       #{transferticket,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.com.pojo.Procedureinfo" >
+  <insert id="insertSelective" parameterType="cn.com.pojo.Procedureinfo" > 
     insert into PROCEDUREINFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="uId != null" >
