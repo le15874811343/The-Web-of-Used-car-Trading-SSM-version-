@@ -1,10 +1,13 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ * 营业额处理类
+ * 
+ */
 public class Price implements Serializable {
-private double c_sum;
-private String c_selltime;
+private double c_sum; //营业额
+private String c_selltime; //交易时间
 public double getC_sum() {
 	return c_sum;
 }
