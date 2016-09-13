@@ -25,7 +25,7 @@
   </select>
   <sql id="Base_Column_List" >
     U_ID, U_TEL, U_PWD, U_CARD, U_ADR, U_QQ, U_EMAIL, U_NAME, U_SEX, U_ADMIN
-  </sql>
+  </sql> 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
