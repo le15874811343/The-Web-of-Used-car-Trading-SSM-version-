@@ -23,7 +23,7 @@
   </if>
   <if test="pBrand !=null">
   and p_brand=#{pBrand}
-  </if>
+  </if> 
   <if test="pAge !=null">
   and p_age=#{pAge}
   </if>
