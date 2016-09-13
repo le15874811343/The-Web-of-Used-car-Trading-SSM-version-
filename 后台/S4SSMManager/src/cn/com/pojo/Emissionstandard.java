@@ -1,13 +1,16 @@
 package cn.com.pojo;
 
 import java.io.Serializable;
-
+/**
+ * 排放标准信息类
+ * @author lej
+ */
 public class Emissionstandard implements Serializable {
-    private Long eId;
+    private Long eId; //排放标准编号
 
-    private String eName;
+    private String eName; //排放标准名称
 
-    private Long eCount;
+    private Long eCount; //热度
 
     public Long geteId() {
         return eId;
