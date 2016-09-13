@@ -8,21 +8,24 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 
-
+/**
+ * 评价信息类
+ * @author lej
+ */
 public class Comment1  implements Serializable {
-    private Long uId;
+    private Long uId; //用户编号
 
-    private String cText;
+    private String cText; //评价正文
  
-    private String cDate;
+    private String cDate; //评价日期
 
-    private Long cId;
+    private Long cId; //评价编号
 
-    private String cImg;
+    private String cImg;  //评价图片
 
-    private String cBt;
-
-    private String cAdmin;
+    private String cBt; //评价标题
+ 
+    private String cAdmin;  //评价等级
 
     public Long getuId() {
         return uId;
