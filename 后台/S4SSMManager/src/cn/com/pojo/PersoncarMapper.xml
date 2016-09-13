@@ -39,7 +39,7 @@
   <select id="getPersoncar" resultMap="BaseResultMap" parameterType="cn.com.pojo.Personcar">
   select * from Personcar where 1=1
   <if test="uId !=null">
-  and u_id=#{uId}
+  and u_id=#{uId} 
   </if>
    <if test="pState !=null">
   and p_state=#{pState}
