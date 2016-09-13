@@ -28,7 +28,7 @@
         E_COUNT,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    <trim prefix="values (" suffix=")" suffixOverrides="," > 
        seq_emis.nextval,
       <if test="eName != null" >
         #{eName,jdbcType=VARCHAR},
