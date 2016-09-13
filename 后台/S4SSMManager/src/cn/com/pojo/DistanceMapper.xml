@@ -24,7 +24,7 @@
   </delete>
   <insert id="insert" parameterType="cn.com.pojo.Distance" >
     insert into DISTANCE (D_ID, D_NAME, D_COUNT
-      )
+      ) 
     values (#{dId,jdbcType=DECIMAL}, #{dName,jdbcType=VARCHAR}, #{dCount,jdbcType=DECIMAL}
       )
   </insert>
