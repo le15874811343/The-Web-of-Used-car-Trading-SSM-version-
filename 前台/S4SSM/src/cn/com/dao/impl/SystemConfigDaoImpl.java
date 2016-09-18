@@ -8,34 +8,22 @@ import org.springframework.stereotype.Repository;
 import cn.com.pojo.*;
 
 import cn.com.dao.ISystemConfigDao;
-
+/**
+ * 
+ * 
+ * 汽车系统配置信息操作实现类
+ * @author lej
+ */ 
 @Repository
 public class SystemConfigDaoImpl extends BaseDao implements ISystemConfigDao{
-	/**
-	 * ��ȡ����ϵͳ��Ϣ
-	 * @return
+        /**
+	 * 获取所有系统信息
+	 * @return Map<Long, SystemConfig>
 	 */
 	@Override
 	public Map<Long, Systemconfig> getAllSystemConfig() {
 		// TODO Auto-generated method stub
-//		 private long u_id;
-//		 private long c_id;
-//		 private String guidanceSystem;
-//		 private String alb;
-//		 private String fpg;
-//		 private String rpg;
-//		 private String rcpa;
-//		 private String dsea;
-//		 private String fsea;
-//		 private String dlcc;
-//		 private String hfs;
-//		 private String hrs;
-//		 private String fsv;
-//		 private String rsv;
-//		 private String fsm;
-//		 private String rsm;
-//		 private String rvmh;
-//		 private String ess;
+
 		Map<Long, Systemconfig> systemConfigMap=new HashMap<Long, Systemconfig>();
 	
 		try {
@@ -50,7 +38,9 @@ public class SystemConfigDaoImpl extends BaseDao implements ISystemConfigDao{
 		return systemConfigMap;
 	}
 /**
- * ͨ����Ż�ȡSystemConfig��Ϣ
+ * 通过Id获取系统信息
+ * @param systemConfig
+ * @return carInfo
  */
 	@Override
 	public Systemconfig getSystemConfigById(Carinfo carInfo) {
@@ -67,6 +57,11 @@ public class SystemConfigDaoImpl extends BaseDao implements ISystemConfigDao{
 		}
 		return systemConfig2;
 	}
+/**
+ * 添加汽车系统配置信息的方法
+ * @param systemConfig
+ *@return int 
+ */
 @Override
 public int addSystemConfig(Systemconfig systemConfig) {
 	// TODO Auto-generated method stub
@@ -81,12 +76,15 @@ public int addSystemConfig(Systemconfig systemConfig) {
 	 }
 	return count;
 }
+/**
+ * 修改汽车系统配置信息的方法
+ *  @param systemConfig
+ * @return int 
+ */
 @Override
 public int updateSystemConfig(Systemconfig systemConfig) {
 	// TODO Auto-generated method stub
-
-	
-	
+	//返回受影响的行数
 	return super.getSqlSessionTemplate().update("cn.com.pojo.SystemconfigMapper.updateSystemConfig", systemConfig);
 }
 
