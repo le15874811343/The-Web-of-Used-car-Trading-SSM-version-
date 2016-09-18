@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 import cn.com.pojo.*;
 import cn.com.service.*;
 import cn.com.dao.*;
+/**
+ * 个人需求信息服务实现类
+ *@author 
+ */
 @Service
 public class PersonNeedServiceImpl implements IPersonNeedService,IPageDao{
 	@Resource
-private IPersonNeedDao personNeedDao=null;
+private IPersonNeedDao personNeedDao=null; //个人需求操作接口的引用
 	@Resource(name = "personNeedDaoImpl" )
-private IPageDao pagePersn=null;
+private IPageDao pagePersn=null;  //分页处理操作接口的引用
 	public IPersonNeedDao getPersonNeedDao() {
 	return personNeedDao;
 }
@@ -28,6 +32,11 @@ public IPageDao getPagePersn() {
 public void setPagePersn(IPageDao pagePersn) {
 	this.pagePersn = pagePersn;
 }
+  /**
+   * 
+   * 添加个人需求信息的服务
+   *@return boolean 
+   */
 	public boolean addPersonNeed(Personneed personNeed) {
 		// TODO Auto-generated method stub
 		boolean flag=false;
@@ -36,6 +45,11 @@ public void setPagePersn(IPageDao pagePersn) {
 		}
 		return flag;
 	}
+  /**
+   * 
+   * 删除个人需求信息的服务
+   *@return boolean 
+   */
 	public boolean deletePersonNeed(Personneed personNeed) {
 		// TODO Auto-generated method stub
 		boolean flag=false;
@@ -44,6 +58,11 @@ public void setPagePersn(IPageDao pagePersn) {
 		}
 		return flag;
 	}
+  /**
+   * 
+   * 获取个人需求信息的服务
+   *@return PersonNeed
+   */
 	@Override
 	public Personneed getPerSonNeed(Personneed personNeed) {
 		// TODO Auto-generated method stub
@@ -62,11 +81,22 @@ public void setPagePersn(IPageDao pagePersn) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+        /**
+	 * 获取个人需求总记录条数
+	 * 
+	 *@return int
+	 */
 	@Override
 	public Long queryPersonCarCount(Object object) {
 		// TODO Auto-generated method stub
 		return pagePersn.queryPersonCarCount(object);
 	}
+	/**
+	 * 分页获取个人需求信息
+	 * @param curPage 当前页
+	 * @param rowsPrePage 每页显示记录条数
+	 * @return Map<Long,Object>
+	 */
 	@Override
 	public Map<Long, Object> showPersonCarList(int curPage, int rowsPrePage,
 			Object object) {
