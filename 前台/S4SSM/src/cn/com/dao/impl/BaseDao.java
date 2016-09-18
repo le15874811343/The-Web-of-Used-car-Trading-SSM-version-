@@ -5,7 +5,9 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * 持久化模板技能
+ */
 @Component
 public class BaseDao {
   @Resource
