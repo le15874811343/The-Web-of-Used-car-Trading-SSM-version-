@@ -10,10 +10,15 @@ import cn.com.pojo.*;
 
 import cn.com.dao.ISellInfoDao;
 import cn.com.service.ISellInfoService;
+/**
+  * 
+  * é”€å”®ä¿¡æ¯æœåŠ¡å®ç°ç±»
+  * @author lej
+  */
 @Service
 public class SellInfoServiceImpl implements ISellInfoService{
 	@Resource
-private ISellInfoDao sellInfoDao=null;
+private ISellInfoDao sellInfoDao=null;//é”€å”®ä¿¡æ¯æ“ä½œæ¥å£çš„å¼•ç”¨
 
 	public ISellInfoDao getSellInfoDao() {
 	return sellInfoDao;
@@ -22,27 +27,29 @@ private ISellInfoDao sellInfoDao=null;
 public void setSellInfoDao(ISellInfoDao sellInfoDao) {
 	this.sellInfoDao = sellInfoDao;
 }
-
-	@Override
-	/**
-	 * »ñÈ¡ËùÓĞÏúÊÛĞÅÏ¢ÒµÎñ
+        /**
+	 * è·å–æ‰€æœ‰é”€å”®ä¿¡æ¯
+	 * @return   Map<Long, SellInfo>
 	 */
+	@Override
 	public Map<Long, Sellinfo> getAllSellInfo() {
 		// TODO Auto-generated method stub
 		return sellInfoDao.getAllSellInfo();
 	}
-
+/**
+ * æ ¹æ®è½¦ç¼–å·è·å–é”€å”®ä¿¡æ¯
+ * @return SellInfo
+ */
 	@Override
-	/**
-	 * ¸ù¾İ³µ±àºÅ»ñÈ¡ÏúÊÛÇé¿öÒµÎñ
-	 */
 	public Sellinfo getSellInfoById(Carinfo carInfo) {
 		// TODO Auto-generated method stub
 		return sellInfoDao.getSellInfoById(carInfo);
 	}
-	/**
-	 * Ôö¼ÓÏúÊÛÇé¿öÒµÎñ
-	 */
+/**
+ * å¢åŠ é”€å”®ä¿¡æ¯
+ * @param sellInfo
+ * @return boolean
+ */
 	@Override
 	public boolean addSellInfo(Sellinfo sellInfo) {
 		// TODO Auto-generated method stub
@@ -52,15 +59,21 @@ public void setSellInfoDao(ISellInfoDao sellInfoDao) {
 		}
 		return flag;
 	}
-	/**
-	 * É¾³ıÏúÊÛÇé¿öÒµÎñ
-	 */
+/**
+ * åˆ é™¤é”€å”®ä¿¡æ¯
+ * @param sellInfo
+ * @return int
+ */
 	@Override
 	public int deleteSellInfo(Sellinfo sellInfo) {
 		// TODO Auto-generated method stub
 		return sellInfoDao.deleteSellInfo(sellInfo);
 	}
-
+/**
+ * ä¿®æ”¹é”€å”®ä¿¡æ¯
+ * @param sellInfo
+ * @return boolean
+ */
 	@Override
 	public boolean updateSellInfo(Sellinfo sellInfo) {
 		// TODO Auto-generated method stub
