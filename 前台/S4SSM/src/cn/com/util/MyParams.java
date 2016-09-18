@@ -1,8 +1,11 @@
 package cn.com.util;
-
+/**
+ * 过程参数工具类
+ * @author lej
+ */
 public class MyParams {
- private String type;
- private Object value;
+ private String type; //类型
+ private Object value; //值
 public String getType() {
 	return type;
 }
