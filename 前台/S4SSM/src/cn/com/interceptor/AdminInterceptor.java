@@ -8,7 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
+/**
+ * 权限拦截器
+ * @author lej
+ */
 public class AdminInterceptor implements HandlerInterceptor {
 
 	@Override
@@ -29,20 +32,16 @@ public class AdminInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest arg0, HttpServletResponse arg1,
 			Object arg2) throws Exception {
-		System.out.println("ok");
+	
 		// TODO Auto-generated method stub
 		boolean  flag=false;
 		HttpSession  session=arg0.getSession();
 		Object obj=session.getAttribute("userinfo");
-		if(obj!=null)
+		if(obj!=null)  //验证session中用户对象是否为空
 		{
-			flag=true;
+			flag=true;  //不为空则返回为真
 		}
-		else{
-			
-			flag=false;
-		}
-	
+		
 		return flag;
 	}
 
