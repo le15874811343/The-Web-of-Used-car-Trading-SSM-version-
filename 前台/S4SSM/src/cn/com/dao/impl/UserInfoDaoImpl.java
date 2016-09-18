@@ -7,10 +7,16 @@ import org.springframework.stereotype.Repository;
 
 import cn.com.pojo.*;
 import cn.com.dao.*;
-
+/**
+ * 用户信息操作实现类
+ * @author
+ */
 @Repository
 public class UserInfoDaoImpl extends BaseDao implements IUserInfoDao, IPageDao {
-
+  /**
+   * 登录的方法
+   * @return UserInfo
+   */
 	@Override
 	public Userinfo3 login(Userinfo3 userInfo) {
 		// TODO Auto-generated method stub
@@ -28,7 +34,10 @@ public class UserInfoDaoImpl extends BaseDao implements IUserInfoDao, IPageDao {
 		}
 		return _userInfo;
 	}
-
+  /**
+   * 按唯一条件获取用户信息的方法
+   *@return UserInfo 
+   */
 	@Override
 	public Userinfo3 getUserInfoByUnique(Userinfo3 userInfo) {
 		// TODO Auto-generated method stub
@@ -48,7 +57,10 @@ public class UserInfoDaoImpl extends BaseDao implements IUserInfoDao, IPageDao {
 		}
 		return _userInfo;
 	}
-
+  /**
+   * 添加用户信息的方法
+   *@return int 
+   */
 	@Override
 	public int addUserInfo(Userinfo3 userInfo) {
 		// TODO Auto-generated method stub
@@ -63,7 +75,10 @@ public class UserInfoDaoImpl extends BaseDao implements IUserInfoDao, IPageDao {
 
 		return count;
 	}
-
+  /**
+   * 修改用户信息的方法
+   *@return int 
+   */
 	@Override
 	public int updateUserInfo(Userinfo3 userInfo) {
 		// TODO Auto-generated method stub
@@ -71,7 +86,10 @@ public class UserInfoDaoImpl extends BaseDao implements IUserInfoDao, IPageDao {
 
 		return super.getSqlSessionTemplate().update("cn.com.pojo.Userinfo3Mapper.updateByPrimaryKeySelective", userInfo);
 	}
-
+  /**
+   * 修改用户密码的方法
+   *@return int 
+   */
 	@Override
 	public int updateUserPwd(Userinfo3 userInfo) {
 		// TODO Auto-generated method stub
@@ -92,7 +110,11 @@ public class UserInfoDaoImpl extends BaseDao implements IUserInfoDao, IPageDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+    /**
+     * 获取用户记录条数
+     * 
+     * @return int
+     */
 	@Override
 	public Long queryPersonCarCount(Object object) {
 		// TODO Auto-generated method stub
@@ -107,13 +129,19 @@ public class UserInfoDaoImpl extends BaseDao implements IUserInfoDao, IPageDao {
 		}
 		return count;
 	}
-
+/**
+ * 分页获取用户信息
+ * @param curPage 当前页
+ * @param rowsPrePage 每页显示记录条数
+ * 
+ * @return Map<Long,Object>
+ */
 	@Override
 	public Map<Long, Object> showPersonCarList(int curPage, int rowsPrePage,
 			Object object) {
 		// TODO Auto-generated method stub
 		Userinfo3 userInfo = (Userinfo3) object;
-		
+		//加入参数集合
 		Map<Long, Object> userMap = new HashMap<Long, Object>();
 		Map<String, Object> parmas=new HashMap<String, Object>();
 		parmas.put("uAdmin", userInfo.getuAdmin());
