@@ -7,10 +7,14 @@ import java.util.*;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Repository;
+/**
+ * 个人汽车订单信息操作实现类
+ * @author lej
+ */
 @Repository
 public class PersonCarDaoImpl extends BaseDao  implements IPersonCarDao,IPageDao {
 	@Resource
-    private ICarInfoDao carInfoDao=null;
+    private ICarInfoDao carInfoDao=null; //汽车概要信息操作接口的引用
     
 	public ICarInfoDao getCarInfoDao() {
 		return carInfoDao;
@@ -19,7 +23,10 @@ public class PersonCarDaoImpl extends BaseDao  implements IPersonCarDao,IPageDao
 	public void setCarInfoDao(ICarInfoDao carInfoDao) {
 		this.carInfoDao = carInfoDao;
 	}
-
+       /**
+        * 根据条件获取用户订单信息数量
+        * @return int
+        */
 	@Override
 	public Long getCarCountByWhere(Personcar perSonCar) {
 		// TODO Auto-generated method stub
@@ -34,7 +41,10 @@ public class PersonCarDaoImpl extends BaseDao  implements IPersonCarDao,IPageDao
 		}
 		return count;
 	}
-
+       /**
+        * 根据条件获取用户订单信息集合
+        * @return  Map<Long, PerSonCar>
+        */
 	@Override
 	public Map<Long, Personcar> getPerSonCarMapByWhere(Personcar perSonCar) {
 		// TODO Auto-generated method stub
@@ -58,14 +68,22 @@ public class PersonCarDaoImpl extends BaseDao  implements IPersonCarDao,IPageDao
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+       /**
+        * 根据条件获取用户订单信息数量
+        * @return int
+        */
 	@Override
 	public Long queryPersonCarCount(Object object) {
 		// TODO Auto-generated method stub
 		Personcar perSonCar=(Personcar) object;
 		return getCarCountByWhere(perSonCar);
 	}
-
+        /**
+	 * 根据条件分页获取用户订车详情集合
+	 * @param curPage 当前页
+	 * @param rowsPrePage 每页面记录数
+	 * @return Map<Long,Object>
+	 */
 	@Override
 	public Map<Long, Object> showPersonCarList(int curPage, int rowsPrePage,
 			Object object) {
@@ -73,7 +91,8 @@ public class PersonCarDaoImpl extends BaseDao  implements IPersonCarDao,IPageDao
 		// TODO Auto-generated method stub
 		Personcar perSonCar=(Personcar) object;
 		Map<Long, Object> carMap=new HashMap<Long, Object>();
-   Map<Long, Personcar>	perSonMap=	getPersonList(curPage,rowsPrePage,perSonCar);
+   Map<Long, Personcar>	perSonMap=	getPersonList(curPage,rowsPrePage,perSonCar); //获取个人汽车订单集合
+    //获取该用户所订车的详细信息
    for(Long key:perSonMap.keySet()){
 	   Carinfo carInfo=new Carinfo();
 	 
@@ -86,28 +105,29 @@ public class PersonCarDaoImpl extends BaseDao  implements IPersonCarDao,IPageDao
   
 		return carMap;
 	}
-
+/**
+ * 分页获取个人汽车订单信息
+ * @param curPage当前页
+ * @param rowsPrePage 每页显示条数
+ * @return Map<Long,PerSonCar>
+ */
 	private Map<Long, Personcar> getPersonList(int curPage, int rowsPrePage,Personcar perSonCar){
 		
 		 Map<Long, Personcar> perSonMap=new HashMap<Long, Personcar>();
-		
-Map<String, Object> params=new HashMap<String, Object>();
-
-		
-			
-				params.put("uId",perSonCar.getuId());
-			
-			
-			
-				params.put("pState",perSonCar.getpState());
-			
-		   params.put("curPage", curPage);
+		//加入参数集合
+             Map<String, Object> params=new HashMap<String, Object>();
+		params.put("uId",perSonCar.getuId());
+		params.put("pState",perSonCar.getpState());
+		params.put("curPage", curPage);
 		 params.put("rowsPrePage", rowsPrePage);
 		  perSonMap=super.getSqlSessionTemplate().selectMap("cn.com.pojo.PersoncarMapper.getPersonList", params, "pId");
 		 
 			return perSonMap;
 	}
-
+       /**
+        *  添加用户订单信息
+        * @return int
+        */
 	@Override
 	public int addPerSonCar(Personcar perSonCar) {
 		// TODO Auto-generated method stub
@@ -123,7 +143,10 @@ Map<String, Object> params=new HashMap<String, Object>();
 		}
 		return count;
 	}
-
+       /**
+        *  删除用户订单信息
+        * @return int
+        */
 	@Override
 	public int deletePerSoncar(Personcar perSonCar) {
 		// TODO Auto-generated method stub
@@ -137,8 +160,11 @@ Map<String, Object> params=new HashMap<String, Object>();
 			 e.printStackTrace();
 		}
 		return count;
-	}
-
+ 	}
+       /**
+        *  修改用户订单信息
+        * @return int
+        */
 	@Override
 	public int updatePerSoncar(Personcar perSonCar,String state) {
 		// TODO Auto-generated method stub
@@ -151,7 +177,10 @@ Map<String, Object> params=new HashMap<String, Object>();
 		parmas.put("pState", perSonCar.getpState());
 		return super.getSqlSessionTemplate().update("cn.com.pojo.PersoncarMapper.updatePerSoncar", parmas);
 	}
-
+       /**
+        *  修改用户订单信息(状态作为条件)
+        * @return int
+        */
 	@Override
 	public int updatePerSonCarByState(Personcar perSonCar, String state) {
 		// TODO Auto-generated method stub
@@ -161,7 +190,10 @@ Map<String, Object> params=new HashMap<String, Object>();
 		parmas.put("cId", perSonCar.getcId());
 		parmas.put("pState", perSonCar.getpState());
 		return super.getSqlSessionTemplate().update("cn.com.pojo.PersoncarMapper.updatePerSonCarByState", parmas);	}
-
+   /**
+    * 获取个人汽车订单信息的方法
+    * @return Personcar
+    */
 	@Override
 	public Personcar getPersoncar(Personcar personcar) {
 		// TODO Auto-generated method stub
