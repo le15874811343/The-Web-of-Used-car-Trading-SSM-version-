@@ -8,10 +8,17 @@ import org.springframework.stereotype.Repository;
 import cn.com.pojo.*;
 
 import cn.com.dao.IHardwareConfig;
-
+/**
+ * 汽车硬件配置信息操作实现类
+ *@author lej 
+ */
 @Repository
 public class HardwareConfigDaoImpl extends BaseDao implements IHardwareConfig {
-
+  /**
+   * 
+   * 获取所有汽车硬件配置信息的方法
+   *@return Map<Long,HardwareConfig> 
+   */
 	@Override
 	public Map<Long, Hardwareconfig> getAllHardwareConfig() {
 		// TODO Auto-generated method stub
@@ -20,7 +27,11 @@ public class HardwareConfigDaoImpl extends BaseDao implements IHardwareConfig {
 	hardMap=super.getSqlSessionTemplate().selectMap("cn.com.pojo.HardwareconfigMapper.getAllHardwareConfig","cId");
 		return hardMap;
 	}
-
+/**
+ * 按编号获取汽车硬件配置信息的方法
+ * @parma carInfo
+ * @return HardwareConfig 
+ */
 	@Override
 	public Hardwareconfig getHardwareConfigById(Carinfo carInfo) {
 		// TODO Auto-generated method stub
@@ -34,7 +45,11 @@ public class HardwareConfigDaoImpl extends BaseDao implements IHardwareConfig {
 		}
 		return hardwareConfig2;
 	}
-
+/**
+ * 添加汽车硬件配置信息的方法
+ * @parma hardwareConfig
+ * @return int
+ */
 	@Override
 	public int addHardwareConfig(Hardwareconfig hardwareConfig) {
 		// TODO Auto-generated method stub
@@ -49,11 +64,15 @@ public class HardwareConfigDaoImpl extends BaseDao implements IHardwareConfig {
 		}
 		return count;
 	}
-
+/**
+ * 修改汽车硬件配置信息的方法
+ * @parma hardwareConfig
+ * @return int
+ */
 	@Override
 	public int updateHardwareConfig(Hardwareconfig hardwareConfig) {
 		// TODO Auto-generated method stub
-		
+		//返回受影响的行数
 		return  super.getSqlSessionTemplate().update("cn.com.pojo.HardwareconfigMapper.updateHardwareConfig", hardwareConfig);
 
 	}
