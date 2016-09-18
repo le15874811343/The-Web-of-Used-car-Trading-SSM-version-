@@ -10,10 +10,17 @@ import org.springframework.stereotype.Repository;
 import cn.com.pojo.*;
 import cn.com.dao.ICommentDao;
 import cn.com.dao.IPageDao;
-
+/**
+ * 评论操作实现类
+ * @author lej
+ */
 @Repository
 public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
-
+          /**
+           * 添加评论的方法
+           * @parma comment
+           * @return int
+           */
 	@Override
 	public int addComment(Comment1 comment) {
 		// TODO Auto-generated method stub
@@ -28,7 +35,11 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
 		}
 		return count;
 	}
-
+          /**
+           * 删除评论的方法
+           * @parma comment
+           * @return int
+           */
 	@Override
 	public int deleteComment(Comment1 comment) {
 		// TODO Auto-generated method stub
@@ -43,7 +54,11 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
 		}
 		return count;
 	}
-
+          /**
+           * 获取评论的方法
+           * @parma comment
+           * @return Comment
+           */
 	@Override
 	public Comment1 getComment(Comment1 comment) {
 		// TODO Auto-generated method stub
@@ -57,7 +72,13 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
 		}
 		return _comment;
 	}
-
+          /**
+           * 获取两条最新的评论的方法
+           * @parma comment
+           * @parma min 最小行
+           * @parma max 最大行
+           * @return Map<Long,Comment>
+           */
 	@Override
 	public Map<Long, Comment1> getTheTowComment(Comment1 comment, int min, int max) {
 		// TODO Auto-generated method stub
@@ -87,7 +108,10 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+          /**
+           * 获取评论总记录条数的方法
+           * @return int
+           */
 	@Override
 	public Long queryPersonCarCount(Object object) {
 		// TODO Auto-generated method stub
@@ -96,7 +120,12 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
 	 count=(Long) super.getSqlSessionTemplate().selectList("cn.com.pojo.Comment1Mapper.queryPersonCarCount").get(0);
 		return count;
 	}
-
+          /**
+           * 分页获取评论信息
+           * @param curPage 当前页
+           * @param rowsPrePage 每页展示条数
+           * @return Map<Long, Object> 
+           */
 	@Override
 	public Map<Long, Object> showPersonCarList(int curPage, int rowsPrePage,
 			Object object) {
