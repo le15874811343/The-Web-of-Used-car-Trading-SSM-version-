@@ -10,23 +10,20 @@ import org.springframework.stereotype.Repository;
 import cn.com.pojo.*;
 
 import cn.com.dao.IProcedureInfoDao;
-
+/**
+ * 手续信息操作实现类
+ * @author lej
+ */
 @Repository
 public class ProcedureInfoDaoImpl extends BaseDao implements IProcedureInfoDao{
-
+ /**
+   * 
+   * 获取所有手续信息的方法
+   *@return Map<Long,ProcedureInfo> 
+   */
 	@Override
 	public Map<Long, Procedureinfo> getAllProcedureInfo() {
 		// TODO Auto-generated method stub
-//		private long u_id;
-//		 private long c_id;
-//		 private String purchaseTax;
-//		 private String drivingLicense;
-//		 private String ncw;
-//		 private String registration;
-//		 private String newInvoice;
-//		 private int key;
-//		 private int transferTimes;
-//		 private String transferTicket;
 	
 		Map<Long, Procedureinfo> procedureInfoMap=new HashMap<Long, Procedureinfo>();
 	
@@ -34,7 +31,11 @@ public class ProcedureInfoDaoImpl extends BaseDao implements IProcedureInfoDao{
 
 		return procedureInfoMap;
 	}
-
+  /**
+   * 
+   * 根据编号获取手续信息的方法
+   *@return ProcedureInfo
+   */
 	@Override
 	public Procedureinfo getProcedureInfoById(Carinfo carInfo) {
 		// TODO Auto-generated method stub
@@ -49,7 +50,11 @@ public class ProcedureInfoDaoImpl extends BaseDao implements IProcedureInfoDao{
 		}
 		return procedureInfo2;
 	}
-
+  /**
+   * 
+   * 添加手续信息的方法
+   *@return int
+   */
 	@Override
 	public int addProcedureInfo(Procedureinfo procedureInfo) {
 		// TODO Auto-generated method stub
@@ -66,13 +71,17 @@ public class ProcedureInfoDaoImpl extends BaseDao implements IProcedureInfoDao{
 		
 		return count;
 	}
-
+  /**
+   * 
+   * 修改手续信息的方法
+   *@return  int
+   */
 	@Override
 	public int updateProcedureInfo(Procedureinfo procedureInfo) {
 		// TODO Auto-generated method stub
 
 	
-		
+		 //返回受影响的行数
 		return super.getSqlSessionTemplate().update("cn.com.pojo.ProcedureinfoMapper.updateProcedureInfo", procedureInfo);
 	}
 
