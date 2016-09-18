@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import cn.com.pojo.Model;
 import cn.com.service.IModelService;
 import cn.com.util.DbUtil;
-
+/**
+ * 车系操作控制器类
+ * 
+ */
 @Controller
 public class ModelController {
 	@Resource
-	  private IModelService modelService=null;
+	  private IModelService modelService=null; //车系信息服务接口的引用
 
 	public IModelService getModelService() {
 		return modelService;
@@ -28,6 +31,10 @@ public class ModelController {
 	public void setModelService(IModelService modelService) {
 		this.modelService = modelService;
 	}
+/**
+ * 获取某品牌下的车系的action
+ * 
+ */
 	@RequestMapping("/Model.action")
 	public void execute(HttpServletRequest request,HttpServletResponse response)  {
 		// TODO Auto-generated method stub
@@ -43,7 +50,7 @@ public class ModelController {
 	  response.setContentType("text/html;charset=utf-8");
 	  try {
 		response.getWriter().println(jsonArray);
-		 response.getWriter().flush();//��ջ���,ˢ��
+		 response.getWriter().flush();//Çå¿Õ»º´æ,Ë¢ÐÂ
 		  response.getWriter().close();
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
