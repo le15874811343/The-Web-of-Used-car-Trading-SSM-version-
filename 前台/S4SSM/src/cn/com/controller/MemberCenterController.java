@@ -2,75 +2,49 @@ package cn.com.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import cn.com.dao.IPageDao;
-import cn.com.pojo.Basicinfo;
-import cn.com.pojo.Carinfo;
-import cn.com.pojo.Cartype;
-import cn.com.pojo.Comment1;
-import cn.com.pojo.Hardwareconfig;
-import cn.com.pojo.Imagesinfo;
-import cn.com.pojo.Personcar;
-import cn.com.pojo.Personneed;
-import cn.com.pojo.Procedureinfo;
-import cn.com.pojo.Sellinfo;
-import cn.com.pojo.Systemconfig;
-import cn.com.pojo.Userinfo3;
-import cn.com.service.IBasicInfoService;
-import cn.com.service.ICarImagesInfoService;
-import cn.com.service.ICarInfoService;
-import cn.com.service.ICarTypeService;
-import cn.com.service.ICommentService;
-import cn.com.service.IHardwareConfigService;
-import cn.com.service.IPerSonCarService;
-import cn.com.service.IPersonNeedService;
-import cn.com.service.IProcedureInfoService;
-import cn.com.service.ISellInfoService;
-import cn.com.service.ISystemConfigService;
-import cn.com.service.impl.BasicInfoServiceImpl;
-import cn.com.service.impl.PersonNeedServiceImpl;
-import cn.com.util.DbUtil;
-import cn.com.util.PageUtil;
-
+import cn.com.dao.*;
+import cn.com.pojo.*;
+import cn.com.service.*;
+import cn.com.util.*;
+/**
+ * ä¼šå‘˜ä¸­å¿ƒæ“ä½œæ§åˆ¶å™¨ç±»
+ *@author lej
+ */
 @Controller
 public class MemberCenterController {
 	@Resource
-	private IPerSonCarService perSonCarService = null;
+	private IPerSonCarService perSonCarService = null;   //ä¸ªäººæ±½è½¦è®¢å•æœåŠ¡æ¥å£çš„å¼•ç”¨
 	@Resource(name = "personCarServiceImpl")
-	private IPageDao personCarPage = null;
+	private IPageDao personCarPage = null; //åˆ†é¡µå¤„ç†æ“ä½œæ¥å£çš„å¼•ç”¨ï¼ˆæŒ‡å‘ä¸ªäººæ±½è½¦è®¢å•æ“ä½œå®ç°ç±»ï¼‰
 	@Resource
-	private ICarInfoService carInfoService = null;
+	private ICarInfoService carInfoService = null; //æ±½è½¦æ¦‚è¦ä¿¡æ¯æœåŠ¡æ¥å£çš„å¼•ç”¨
 	@Resource
-	private IPersonNeedService personNeedService = null;
-	@Resource(name = "personNeedServiceImpl")
+	private IPersonNeedService personNeedService = null; //ä¸ªäººéœ€æ±‚ä¿¡æ¯æœåŠ¡æ¥å£çš„å¼•ç”¨
+	@Resource(name = "personNeedServiceImpl") //åˆ†é¡µå¤„ç†æ“ä½œæ¥å£çš„å¼•ç”¨ï¼ˆæŒ‡å‘ä¸ªäººéœ€æ±‚æ“ä½œå®ç°ç±»ï¼‰
 	private IPageDao personNeedPage = null;
 	@Resource
-	private ICarTypeService carTypeService = null;
+	private ICarTypeService carTypeService = null; //è½¦å‹æœåŠ¡æ¥å£çš„å¼•ç”¨
 	@Resource
-	private IBasicInfoService basicInfoService = new BasicInfoServiceImpl();
+	private IBasicInfoService basicInfoService = null;  //æ±½è½¦åŸºç¡€ä¿¡æ¯æœåŠ¡æ¥å£çš„å¼•ç”¨	
 	@Resource
-	private IHardwareConfigService hardwareConfigService = null;
+	private IHardwareConfigService hardwareConfigService = null; //æ±½è½¦ç¡¬ä»¶é…ç½®ä¿¡æ¯æœåŠ¡æ¥å£çš„å¼•ç”¨
 	@Resource
-	private ISystemConfigService systemConfigService = null;
+	private ISystemConfigService systemConfigService = null; //æ±½è½¦ç³»ç»Ÿé…ç½®ä¿¡æ¯æœåŠ¡æ¥å£çš„å¼•ç”¨
 	@Resource
-	private IProcedureInfoService procedureInfoService = null;
+	private IProcedureInfoService procedureInfoService = null; //æ‰‹ç»­è¿‡ç¨‹ä¿¡æ¯æœåŠ¡æ¥å£çš„å¼•ç”¨
 	@Resource
-	private ISellInfoService sellInfoService = null;
+	private ISellInfoService sellInfoService = null; //é”€å”®ä¿¡æ¯æœåŠ¡æ¥å£çš„å¼•ç”¨
 	@Resource
-	private ICarImagesInfoService carImagesInfoService = null;
+	private ICarImagesInfoService carImagesInfoService = null; //æ±½è½¦å›¾ç‰‡ä¿¡æ¯æœåŠ¡æ¥å£çš„å¼•ç”¨
 	@Resource
-	private ICommentService commentServiceImpl = null;
+	private ICommentService commentServiceImpl = null; //è¯„è®ºä¿¡æ¯æœåŠ¡æ¥å£çš„å¼•ç”¨
 	public IPerSonCarService getPerSonCarService() {
 		return perSonCarService;
 	}
@@ -150,16 +124,20 @@ public class MemberCenterController {
 	public void setCommentServiceImpl(ICommentService commentServiceImpl) {
 		this.commentServiceImpl = commentServiceImpl;
 	}
+/**
+ * å±•ç¤ºä¼šå‘˜ä¿¡æ¯çš„action
+ * 
+ */
 	@RequestMapping("/MemberCenter_showmenber.action")
 	public String showmenber(HttpSession session,HttpServletRequest request)  {	
 		// TODO Auto-generated method stub
 		if(chekUser(session)!=null){
 			Personcar perSonCar = new Personcar();
 			perSonCar.setuId(chekUser(session).getuId());
-			perSonCar.setpState("ÊÕ²Ø");
+			perSonCar.setpState("æ”¶è—");
 	 long scCount=perSonCarService.getCarCountByWhere(perSonCar);
 
-	 perSonCar.setpState("ÒÑ¶¨");
+	 perSonCar.setpState("å·²å®š");
 	 long ydCount=perSonCarService.getCarCountByWhere(perSonCar);
 
 	 request.setAttribute("scCount", scCount);
@@ -172,13 +150,16 @@ public class MemberCenterController {
 		}
 		
 	}
+/**
+ * å±•ç¤ºä¼šå‘˜æ”¶è—çš„è½¦action
+ */
 	@RequestMapping("/MemberCenter_showmenberSc.action")
 	public String showmenberSc(HttpSession session,HttpServletRequest request)  {
 		// TODO Auto-generated method stub
 		if(chekUser(session)!=null){
 			Personcar perSonCar=new Personcar();
 			perSonCar.setuId(chekUser(session).getuId());
-			perSonCar.setpState("ÊÕ²Ø");
+			perSonCar.setpState("æ”¶è—");
 	     fenye(request, perSonCar);
 
 	         return "admin/memberMySc";
@@ -188,13 +169,17 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * å±•ç¤ºä¼šå‘˜å·²è®¢çš„è½¦action
+ * 
+ */
 	@RequestMapping("/MemberCenter_showmenberOrder.action")
 	public String showmenberOrder(HttpSession session,HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		if(chekUser(session)!=null){
 			Personcar perSonCar=new Personcar();
 			perSonCar.setuId(chekUser(session).getuId());
-			perSonCar.setpState("ÒÑ¶¨");
+			perSonCar.setpState("å·²å®š");
 			 fenye(request,  perSonCar);
 	     
 	        return "admin/memberMyOrder";
@@ -204,13 +189,17 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * å±•ç¤ºä¼šå‘˜å‡ºå”®çš„è½¦action
+ * 
+ */
 	@RequestMapping("/MemberCenter_showmenberMc.action")
 	public String showmenberMc(HttpSession session,HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		if(chekUser(session)!=null){
 			Personcar perSonCar=new Personcar();
 			perSonCar.setuId(chekUser(session).getuId());
-			perSonCar.setpState("³öÊÛ");
+			perSonCar.setpState("å‡ºå”®");
 			 fenye(request,  perSonCar);
 	           DbUtil.closeAll();
 	         
@@ -221,13 +210,17 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * å±•ç¤ºä¼šå‘˜å·²ä¹°è¿›çš„è½¦çš„action
+ * 
+ */
 	@RequestMapping("/MemberCenter_showmenberYbcar.action")
 	public String showmenberYbcar(HttpSession session,HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		if(chekUser(session)!=null){
 			Personcar perSonCar=new Personcar();
 			 perSonCar.setuId(chekUser(session).getuId());
-				perSonCar.setpState("½»Ò×Íê³É");
+				perSonCar.setpState("äº¤æ˜“å®Œæˆ");
 				 fenye(request,  perSonCar);
 		           DbUtil.closeAll();
 		          
@@ -238,13 +231,16 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * å±•ç¤ºä¼šå‘˜å®¡æ ¸ä¸­çš„è½¦çš„action
+ */
 	@RequestMapping("/MemberCenter_showmenberSh.action")
 	public String showmenberSh(HttpSession session,HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		if(chekUser(session)!=null){
 			Personcar perSonCar=new Personcar();
 			perSonCar.setuId(chekUser(session).getuId());
-			perSonCar.setpState("ÉóºËÖĞ");
+			perSonCar.setpState("å®¡æ ¸ä¸­");
 			 fenye(request, perSonCar);
 	           DbUtil.closeAll();
 	          
@@ -255,13 +251,17 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * å±•ç¤ºä¼šå‘˜æœªé€šè¿‡å®¡æ ¸çš„è½¦action
+ * 
+ */
 	@RequestMapping("/MemberCenter_showmenberbjj.action")
 	public String showmenberbjj(HttpSession session,HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		if(chekUser(session)!=null){
 			Personcar perSonCar=new Personcar();
 			perSonCar.setuId(chekUser(session).getuId());
-			perSonCar.setpState("Î´Í¨¹ı");
+			perSonCar.setpState("æœªé€šè¿‡");
 			 fenye(request,  perSonCar);
 	           DbUtil.closeAll();
 	        return "admin/memberMyBjj";
@@ -271,13 +271,17 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * å±•ç¤ºä¼šå‘˜äº¤æ˜“ä¸­çš„è½¦action
+ * 
+ */
 	@RequestMapping("/MemberCenter_showmenberJyz.action")
 	public String showmenberJyz(HttpSession session,HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		if(chekUser(session)!=null){
 			Personcar perSonCar=new Personcar();
 			perSonCar.setuId(chekUser(session).getuId());
-			perSonCar.setpState("±»¶¨");
+			perSonCar.setpState("è¢«å®š");
 			 fenye(request,  perSonCar);
 	           DbUtil.closeAll();
 	       
@@ -288,13 +292,17 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * å±•ç¤ºä¼šå‘˜å·²å–å‡ºçš„è½¦action
+ * 
+ */
 	@RequestMapping("/MemberCenter_showmenberymw.action")
 	public String showmenberymw(HttpSession session,HttpServletRequest request)  {
 		// TODO Auto-generated method stub
 		if(chekUser(session)!=null){
 			Personcar perSonCar=new Personcar();
 			perSonCar.setuId(chekUser(session).getuId());
-			perSonCar.setpState("Âô³öÍê³É");
+			perSonCar.setpState("å–å‡ºå®Œæˆ");
 			 fenye(request,  perSonCar);
 	           DbUtil.closeAll();
 	        
@@ -305,13 +313,17 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * å±•ç¤ºä¼šå‘˜å–æ¶ˆä¹°è¿›çš„è½¦action
+ * 
+ */
 	@RequestMapping("/MemberCenter_showmenberzzmr.action")
 	public String showmenberzzmr(HttpSession session,HttpServletRequest request)  {
 		// TODO Auto-generated method stub
 		if(chekUser(session)!=null){
 			Personcar perSonCar=new Personcar();
 			perSonCar.setuId(chekUser(session).getuId());
-			perSonCar.setpState("ÔİÍ£½»Ò×");
+			perSonCar.setpState("æš‚åœäº¤æ˜“");
 			 fenye(request, perSonCar);
 		       DbUtil.closeAll();
 		    
@@ -322,13 +334,17 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * å±•ç¤ºä¼šå‘˜ä¸‹æ¶çš„è½¦action
+ * 
+ */
 	@RequestMapping("/MemberCenter_showmenberXj.action")
 	public String showmenberXj(HttpSession session,HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		if(chekUser(session)!=null){
 			Personcar perSonCar=new Personcar();
 			perSonCar.setuId(chekUser(session).getuId());
-			perSonCar.setpState("ÏÂ¼Ü");
+			perSonCar.setpState("ä¸‹æ¶");
 			 fenye(request, perSonCar);
 	           DbUtil.closeAll();
 	          
@@ -339,6 +355,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜ä¸Šæ¶è½¦action
+ * 
+ */
 	@RequestMapping("/MemberCenter_showmenberSj.action")
 	public String showmenberSj(HttpSession session,HttpServletRequest request)  {
 		// TODO Auto-generated method stub
@@ -346,9 +366,9 @@ public class MemberCenterController {
 			 Carinfo carInfo=new Carinfo();
 			 Personcar perSonCar=new Personcar();
 				this.finishop(request, perSonCar, chekUser(session),carInfo);
-			   perSonCar.setpState("ÏÂ¼Ü");
-			   carInfo.setcState("ÔÚÊÛ");
-				if(perSonCarService.updatePerSoncar(perSonCar, "³öÊÛ")){
+			   perSonCar.setpState("ä¸‹æ¶");
+			   carInfo.setcState("åœ¨å”®");
+				if(perSonCarService.updatePerSoncar(perSonCar, "å‡ºå”®")){
 					if(carInfoService.updateCarInfo(carInfo)){
 						return "forward:/MemberCenter_showmenberMc.action";
 				
@@ -367,13 +387,17 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜å–æ¶ˆæ”¶è—action
+ * 
+ */
 	@RequestMapping("/MemberCenter_qxsc.action")
 	public String qxsc(HttpSession session,HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		if(chekUser(session)!=null){
 			Personcar perSonCar=new Personcar();
 			this.finishop(request, perSonCar, chekUser(session),null);
-			perSonCar.setpState("ÊÕ²Ø");
+			perSonCar.setpState("æ”¶è—");
 		  perSonCar=perSonCarService.getPersoncar(perSonCar);
 			if(perSonCarService.deletePerSoncar(perSonCar)){
 			
@@ -389,6 +413,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜ç¡®è®¤æ”¶è´§action
+ * 
+ */
 	@RequestMapping("/MemberCenter_qrsh.action")
 	public String qrsh(HttpSession session,HttpServletRequest request)  {
 		// TODO Auto-generated method stub
@@ -397,17 +425,17 @@ public class MemberCenterController {
 			Carinfo carInfo=new Carinfo();
 	        
 			this.finishop(request, perSonCar, chekUser(session),carInfo);
-		   perSonCar.setpState("ÒÑ¶¨");
-		   carInfo.setcState("½»Ò×Íê³É");
+		   perSonCar.setpState("å·²å®š");
+		   carInfo.setcState("äº¤æ˜“å®Œæˆ");
 		  
 		   DateFormat dateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		    Date date=new Date();
 		   carInfo.setcMcsj( dateFormat.format(date));
-			if(perSonCarService.updatePerSoncar(perSonCar, "½»Ò×Íê³É")){
+			if(perSonCarService.updatePerSoncar(perSonCar, "äº¤æ˜“å®Œæˆ")){
 				if(carInfoService.updateCarInfo(carInfo)){
 					perSonCar.setuId(perSonCar.getcUid());
-					perSonCar.setpState("±»¶¨");
-					if(perSonCarService.updatePerSoncar(perSonCar, "Âô³öÍê³É")){
+					perSonCar.setpState("è¢«å®š");
+					if(perSonCarService.updatePerSoncar(perSonCar, "å–å‡ºå®Œæˆ")){
 						  return "forward:/MemberCenter_showmenberYbcar.action";
 					}
 					else{
@@ -427,6 +455,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜å–æ¶ˆè®¢å•action
+ * 
+ */
 	@RequestMapping("/MemberCenter_qxdd.action")
 	public String qxdd(HttpSession session,HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -435,13 +467,13 @@ public class MemberCenterController {
 			Carinfo carInfo=new Carinfo();
 	        
 			this.finishop(request, perSonCar, chekUser(session),carInfo);
-		   perSonCar.setpState("ÒÑ¶¨");
+		   perSonCar.setpState("å·²å®š");
 		 
-			if(perSonCarService.updatePerSoncar(perSonCar, "ÔİÍ£½»Ò×")){
+			if(perSonCarService.updatePerSoncar(perSonCar, "æš‚åœäº¤æ˜“")){
 				
 					perSonCar.setuId(perSonCar.getcUid());
-					perSonCar.setpState("±»¶¨");
-					if(perSonCarService.updatePerSoncar(perSonCar, "ÔİÍ£½»Ò×")){
+					perSonCar.setpState("è¢«å®š");
+					if(perSonCarService.updatePerSoncar(perSonCar, "æš‚åœäº¤æ˜“")){
 						return "forward:/MemberCenter_showmenberzzmr.action";
 				
 					}
@@ -458,6 +490,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 		}
+	/**
+	 * ä¼šå‘˜é‡æ–°æäº¤å®¡æ ¸action
+	 * 
+	 */
 	@RequestMapping("/MemberCenter_tjbjj.action")
 	public String tjbjj(HttpSession session,HttpServletRequest request)  {
 		// TODO Auto-generated method stub
@@ -465,9 +501,9 @@ public class MemberCenterController {
 			Personcar perSonCar=new Personcar();
 			Carinfo carInfo=new Carinfo();
 	   	 this.finishop(request, perSonCar, chekUser(session),carInfo);
-	        perSonCar.setpState("Î´Í¨¹ı");
-	        carInfo.setcState("ÉóºËÖĞ");
-	        if(perSonCarService.updatePerSoncar(perSonCar, "ÉóºËÖĞ")){
+	        perSonCar.setpState("æœªé€šè¿‡");
+	        carInfo.setcState("å®¡æ ¸ä¸­");
+	        if(perSonCarService.updatePerSoncar(perSonCar, "å®¡æ ¸ä¸­")){
 				if(carInfoService.updateCarInfo(carInfo)){
 					  return "forward:/MemberCenter_showmenberSh.action";
 	       	
@@ -485,6 +521,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜æ”¶è—æ“ä½œaction
+ * 
+ */
 	@RequestMapping("/MemberCenter_needsc.action")
 	public String needsc(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -495,7 +535,7 @@ public class MemberCenterController {
 				perSonCar.setcUid(Long.parseLong(c_uid));
 				perSonCar.setcId(Long.parseLong(c_id));
 					perSonCar.setuId(chekUser(session).getuId());
-					perSonCar.setpState("ÊÕ²Ø");
+					perSonCar.setpState("æ”¶è—");
 					Carinfo carInfo=new Carinfo();
 					carInfo.setcId(Long.parseLong(c_id));
 					carInfo.setuId(Long.parseLong(c_uid));
@@ -506,22 +546,22 @@ public class MemberCenterController {
 				
 				if(!chekUser(session).getuId().toString().equals(carInfo.getuId().toString()))
 				 {if(perSonCarService.getPerSonCarMapByWhere(perSonCar).size()>0){
-					 scmessage="±§Ç¸!:ÄãÒÑ¾­ÊÕ²Ø¹ıÕâÁ¾³µÁË,È¥»áÔ±ÖĞĞÄ-ÎÒµÄĞèÇó-ÎÒµÄÊÕ²ØÖĞ¿´¿´°É";
+					 scmessage="æŠ±æ­‰!:ä½ å·²ç»æ”¶è—è¿‡è¿™è¾†è½¦äº†,å»ä¼šå‘˜ä¸­å¿ƒ-æˆ‘çš„éœ€æ±‚-æˆ‘çš„æ”¶è—ä¸­çœ‹çœ‹å§";
 				}
 				else{ 
 				if(perSonCarService.addPerSonCar(perSonCar)&&carInfoService.updateCarInfo(_car)){
-					 scmessage="¹§Ï²!:ÊÕ²Ø³É¹¦,È¥»áÔ±ÖĞĞÄ-ÎÒµÄĞèÇó-ÎÒµÄÊÕ²ØÖĞ¿´¿´°É";
+					 scmessage="æ­å–œ!:æ”¶è—æˆåŠŸ,å»ä¼šå‘˜ä¸­å¿ƒ-æˆ‘çš„éœ€æ±‚-æˆ‘çš„æ”¶è—ä¸­çœ‹çœ‹å§";
 					
 				 }
 				}
 				}
 				else{
-					scmessage="²»ÔÊĞíÊÕ²Ø×Ô¼ºµÄ³µ";
+					scmessage="ä¸å…è®¸æ”¶è—è‡ªå·±çš„è½¦";
 				}
 				response.setContentType("text/html;charset=utf-8");
 				 
 				response.getWriter().println(scmessage);
-				response.getWriter().flush();//Çå¿Õ»º´æ,Ë¢ĞÂ
+				response.getWriter().flush();//æ¸…ç©ºç¼“å­˜,åˆ·æ–°
 				response.getWriter().close();
 	        return null;
 
@@ -530,6 +570,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜è®¢è´­æ“ä½œaction
+ * 
+ */
 	@RequestMapping("/MemberCenter_needdg.action")
 	public String needdg(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -551,12 +595,12 @@ public class MemberCenterController {
 				
 				}
 				else{
-					scmessage="²»ÔÊĞí¹ºÂò×Ô¼ºµÄ³µ";
+					scmessage="ä¸å…è®¸è´­ä¹°è‡ªå·±çš„è½¦";
 				}
 				response.setContentType("text/html;charset=utf-8");
 				 
 				response.getWriter().print(scmessage);
-				response.getWriter().flush();//Çå¿Õ»º´æ,Ë¢ĞÂ
+				response.getWriter().flush();//æ¸…ç©ºç¼“å­˜,åˆ·æ–°
 				response.getWriter().close();
 			
 	        return null;
@@ -566,6 +610,9 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜ä»˜æ¬¾æ“ä½œaction
+ */
 	@RequestMapping("/MemberCenter_fukuan.action")
 	public String fukuan(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -579,35 +626,35 @@ public class MemberCenterController {
 			Carinfo carInfo1=new Carinfo();
 			carInfo1.setcId(Long.parseLong(cid));
 			carInfo1.setuId(Long.parseLong(uid));
-			if(carInfoService.getCarByWhere(carInfo1).get(carInfo1.getcId()).getcState().equals("ÔÚÊÛ")){
+			if(carInfoService.getCarByWhere(carInfo1).get(carInfo1.getcId()).getcState().equals("åœ¨å”®")){
 			perSonCar.setuId(chekUser(session).getuId());
 			perSonCar.setcUid(Long.parseLong(uid));
 			perSonCar.setcId(Long.parseLong(cid));
-			perSonCar.setpState("ÒÑ¶¨");
+			perSonCar.setpState("å·²å®š");
 			
-			carInfo1.setcState("ÒÑ¶¨");
+			carInfo1.setcState("å·²å®š");
 			
 			Personcar _PerSonCar=new Personcar();
 		 _PerSonCar.setuId(Long.parseLong(uid));
 		 _PerSonCar.setcId(Long.parseLong(cid));
 		 _PerSonCar.setcUid(Long.parseLong(uid));
-		 _PerSonCar.setpState("³öÊÛ");
-			if(perSonCarService.addPerSonCar(perSonCar)&&perSonCarService.updatePerSoncar(_PerSonCar, "±»¶¨")){
+		 _PerSonCar.setpState("å‡ºå”®");
+			if(perSonCarService.addPerSonCar(perSonCar)&&perSonCarService.updatePerSoncar(_PerSonCar, "è¢«å®š")){
 				if(carInfoService.updateCarInfo(carInfo1)){
-					meeag="¹§Ï²!:¶©³µ³É¹¦,È¥»áÔ±ÖĞĞÄ-ÎÒµÄĞèÇó-ÎÒµÄ¶©µ¥ÖĞ¿´¿´°É";
+					meeag="æ­å–œ!:è®¢è½¦æˆåŠŸ,å»ä¼šå‘˜ä¸­å¿ƒ-æˆ‘çš„éœ€æ±‚-æˆ‘çš„è®¢å•ä¸­çœ‹çœ‹å§";
 				}
 				else{
-					meeag="²úÉú´íÎóÁË";
+					meeag="äº§ç”Ÿé”™è¯¯äº†";
 				}
 			}
 			}
 			else{
 			
-				meeag="¸Ã³µÒÑ¾­±»±ğÈËÇÀÏÈ¶©µ¥À²,ÔÙ¿´¿´±ğµÄ³µ°É!";
+				meeag="è¯¥è½¦å·²ç»è¢«åˆ«äººæŠ¢å…ˆè®¢å•å•¦,å†çœ‹çœ‹åˆ«çš„è½¦å§!";
 			}
 			response.setContentType("text/html;charset=utf-8");
 			 response.getWriter().print(meeag);
-			 response.getWriter().flush();//Çå¿Õ»º´æ,Ë¢ĞÂ
+			 response.getWriter().flush();//æ¸…ç©ºç¼“å­˜,åˆ·æ–°
 			 response.getWriter().close();
 	        return null;
 
@@ -616,6 +663,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜ä¸‹æ¶action
+ * 
+ */
 	@RequestMapping("/MemberCenter_needxj.action")
 	public String needxj(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -627,26 +678,26 @@ public class MemberCenterController {
 			perSonCar.setuId(chekUser(session).getuId());
 			perSonCar.setcUid(Long.parseLong(uid));
 			perSonCar.setcId(Long.parseLong(cid));
-			perSonCar.setpState("³öÊÛ");
-			String state="ÏÂ¼Ü";
+			perSonCar.setpState("å‡ºå”®");
+			String state="ä¸‹æ¶";
 			Carinfo carInfo1=new Carinfo();
 			carInfo1.setcId(Long.parseLong(cid));
 			carInfo1.setuId(Long.parseLong(uid));
-			carInfo1.setcState("ÏÂ¼Ü");
+			carInfo1.setcState("ä¸‹æ¶");
 			String meeag=null;
 			if(perSonCarService.updatePerSoncar(perSonCar, state)){
 				
 				if(carInfoService.updateCarInfo(carInfo1)){
-					meeag="ÌáÊ¾:ÏÂ¼Ü³É¹¦,È¥»áÔ±ÖĞĞÄ-ÎÒµÄ³µ-ÏÂ¼ÜµÄ³µ¿´¿´°É";					}
+					meeag="æç¤º:ä¸‹æ¶æˆåŠŸ,å»ä¼šå‘˜ä¸­å¿ƒ-æˆ‘çš„è½¦-ä¸‹æ¶çš„è½¦çœ‹çœ‹å§";					}
 				else{
-					meeag="²úÉú´íÎóÁË";
+					meeag="äº§ç”Ÿé”™è¯¯äº†";
 				}
 		
 				
 				
 			}
 			 response.getWriter().print(meeag);
-			 response.getWriter().flush();//Çå¿Õ»º´æ,Ë¢ĞÂ
+			 response.getWriter().flush();//æ¸…ç©ºç¼“å­˜,åˆ·æ–°
 			 response.getWriter().close();
 	        return null;
 
@@ -655,6 +706,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜éœ€æ±‚å–è½¦çš„çš„action
+ * 
+ */
 	@RequestMapping("/MemberCenter_needmaiche.action")
 	public String needmaiche(HttpSession session,HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -672,6 +727,9 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜æäº¤å–è½¦åŸºç¡€ä¿¡æ¯çš„action
+ */
 	@RequestMapping("/MemberCenter_logincar.action")
 	public String logincar(HttpSession session,HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -695,6 +753,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜æäº¤å–è½¦è¯¦ç»†ä¿¡æ¯çš„action
+ * 
+ */
 	@RequestMapping("/MemberCenter_tjmc.action")
 	public String tjmc(HttpSession session,HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -707,7 +769,7 @@ public class MemberCenterController {
 				Carinfo carInfo=new Carinfo();
 				carInfo.setuId(chekUser(session).getuId());
 				carInfo.setcSccount(new Long(0));
-				carInfo.setcState("ÉóºËÖĞ");
+				carInfo.setcState("å®¡æ ¸ä¸­");
 				carInfo.setcCount(new Long(0));
 				
 				DateFormat dateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -912,13 +974,13 @@ public class MemberCenterController {
 							  carImagesInfo.setImage10("tepimages/"+image10+"");
 						  }
 						  if(carImagesInfoService.addCarImagesInfo(carImagesInfo)){
-							  perSonCar.setpState("ÉóºËÖĞ");
+							  perSonCar.setpState("å®¡æ ¸ä¸­");
 							  perSonCar.setuId(userInfo.getuId());
 							  perSonCar.setcUid(userInfo.getuId());
 							  perSonCar.setcId(_carInfo.getcId());
 							  if(perSonCarService.addPerSonCar(perSonCar)){
 								 
-								  request.setAttribute("xiaoxi", "Ìá½»³É¹¦,ÎÒÃÇ½«»áÂíÉÏ¶ÔÄúÌá¹©µÄĞÅÏ¢½øĞĞÉóºË,¿É½øÈë<a href='MemberCenter_showmenberSh.action'>»áÔ±ÖĞĞÄ-ÎÒµÄĞèÇó-ÉóºËÖĞµÄ³µ½øĞĞ²é¿´</a>");
+								  request.setAttribute("xiaoxi", "æäº¤æˆåŠŸ,æˆ‘ä»¬å°†ä¼šé©¬ä¸Šå¯¹æ‚¨æä¾›çš„ä¿¡æ¯è¿›è¡Œå®¡æ ¸,å¯è¿›å…¥<a href='MemberCenter_showmenberSh.action'>ä¼šå‘˜ä¸­å¿ƒ-æˆ‘çš„éœ€æ±‚-å®¡æ ¸ä¸­çš„è½¦è¿›è¡ŒæŸ¥çœ‹</a>");
 								 
 							  }
 						  }
@@ -943,6 +1005,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜éœ€æ±‚æ›´æ”¹å‡ºå”®è½¦çš„ä¿¡æ¯æ“ä½œ,åŒæäº¤è¯¦æƒ…æ“ä½œaction
+ * 
+ */
 	@RequestMapping("/MemberCenter_uptj.action")
 	public String uptj(HttpSession session,HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -1153,7 +1219,7 @@ public class MemberCenterController {
 							  carImagesInfo.setImage10(image10);
 						  }
 						  if(carImagesInfoService.updateCarImagesInfo(carImagesInfo)){
-							  request.setAttribute("xiaoxi", "ĞŞ¸Ä³É¹¦,Çë½øÈë<a href='MemberCenter_showmenberbjj.action'>»áÔ±ÖĞĞÄ-ÎÒµÄ³µ-ÉóºËÎ´Í¨¹ıµÄ³µÔÙ´ÎÌá½»°É</a>");
+							  request.setAttribute("xiaoxi", "ä¿®æ”¹æˆåŠŸ,è¯·è¿›å…¥<a href='MemberCenter_showmenberbjj.action'>ä¼šå‘˜ä¸­å¿ƒ-æˆ‘çš„è½¦-å®¡æ ¸æœªé€šè¿‡çš„è½¦å†æ¬¡æäº¤å§</a>");
 							
 							
 								
@@ -1177,6 +1243,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜æŸ¥çœ‹è½¦è¾†è¯¦æƒ…action
+ * 
+ */
 	@RequestMapping("/MemberCenter_showdea.action")
 	public String showdea(HttpSession session,HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -1192,6 +1262,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * 
+ * ä¼šå‘˜éœ€æ±‚æ›´æ”¹å–è½¦ä¿¡æ¯çš„action
+ */
 	@RequestMapping("/MemberCenter_upmc.action")
 	public String upmc(HttpSession session,HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -1232,6 +1306,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * ä¼šå‘˜æäº¤ç§äººå®šåˆ¶çš„action
+ * 
+ */
 	@RequestMapping("/MemberCenter_comment.action")
 	public String comment(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -1252,7 +1330,7 @@ public class MemberCenterController {
 	     
 	        personNeed.setpTime(p_time);
 	        personNeed.setpSeries(p_series);
-	        personNeed.setpState("´¦ÀíÖĞ");
+	        personNeed.setpState("å¤„ç†ä¸­");
 	      
 	        DateFormat dateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		    Date date=new Date();
@@ -1261,17 +1339,17 @@ public class MemberCenterController {
 		 
 		  if(personNeedService.getPerSonNeed(personNeed)==null){
 		  if(personNeedService.addPersonNeed(personNeed)){
-			  message="¹§Ï²£ºÌá½»³É¹¦,½øÈë»áÔ±ÖĞĞÄ¡ªÎÒµÄĞèÇó-Ë½ÈË¶¨ÖÆ¿´¿´°É";
+			  message="æ­å–œï¼šæäº¤æˆåŠŸ,è¿›å…¥ä¼šå‘˜ä¸­å¿ƒâ€”æˆ‘çš„éœ€æ±‚-ç§äººå®šåˆ¶çœ‹çœ‹å§";
 		  }
 		  else{
-			  message="±§Ç¸£º·¢ÉúÁËÒ»¸ö´íÎó";
+			  message="æŠ±æ­‰ï¼šå‘ç”Ÿäº†ä¸€ä¸ªé”™è¯¯";
 		  }
 		}
 		  else{
-			  message="Çë²»ÒªÖØ¸´Ìá½»";
+			  message="è¯·ä¸è¦é‡å¤æäº¤";
 		  }
 		  response.getWriter().print(message);
-		  response.getWriter().flush();//Çå¿Õ»º´æ,Ë¢ĞÂ
+		  response.getWriter().flush();//æ¸…ç©ºç¼“å­˜,åˆ·æ–°
 		  response.getWriter().close();
 	        return null;
 
@@ -1280,6 +1358,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * å±•ç¤ºä¼šå‘˜ç§äººå®šåˆ¶ä¿¡æ¯action
+ * 
+ */
 	@RequestMapping("/MemberCenter_showsrdz.action")
 	public String showsrdz(HttpSession session,HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -1296,6 +1378,10 @@ public class MemberCenterController {
 			return "forward:/CarInfo.action";
 		}
 	}
+/**
+ * 
+ * ä¼šå‘˜ç•™è¨€æ“ä½œaction
+ */
 	@RequestMapping("/MemberCenter_liuyan.action")
 	public String liuyan(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -1309,7 +1395,7 @@ public class MemberCenterController {
 		    if(commentServiceImpl.addComment(comment)){
 		    	response.setContentType("text/html;charset=utf-8");
 				 response.getWriter().print(1);
-				 response.getWriter().flush();//Çå¿Õ»º´æ,Ë¢ĞÂ
+				 response.getWriter().flush();//æ¸…ç©ºç¼“å­˜,åˆ·æ–°
 				 response.getWriter().close();
 		    
 		    }
@@ -1321,7 +1407,9 @@ public class MemberCenterController {
 		}
 	}
 
-
+ /**
+  * éªŒè¯ç”¨æˆ·æ˜¯å¦ç™»å½•çš„æ–¹æ³•
+  */
 	   private Userinfo3 chekUser(HttpSession session){
 		   Userinfo3 userinfo=null;
 			Object object = session.getAttribute("userinfo");
@@ -1330,6 +1418,10 @@ public class MemberCenterController {
 			}
 		   return userinfo;
 	   }
+	 /**
+	 * åˆ†é¡µå¤„ç†ä¸ªäººè½¦è¾†è®¢å•ä¿¡æ¯çš„æ–¹æ³•
+	 * 
+	 */
 	   private void fenye(HttpServletRequest req, Personcar perSonCar){
 			
 			
@@ -1342,9 +1434,9 @@ public class MemberCenterController {
 			
 	  
 		 long maxRowsCount=personCarPage.queryPersonCarCount(perSonCar);
-			//´¦Àí·ÖÒ³Âß¼­<=>µ÷ÓÃ
+			//å¤„ç†åˆ†é¡µé€»è¾‘<=>è°ƒç”¨
 			PageUtil pageUtil=new PageUtil(4, maxRowsCount);
-			// ´¦ÀíÒ³ÂëÂß¼­
+			// å¤„ç†é¡µç é€»è¾‘
 			if (curPage <= 1) {
 
 				pageUtil.setCurPage(1);
@@ -1377,6 +1469,10 @@ public class MemberCenterController {
 			
 			
 		 }
+         /**
+	  * åˆ†é¡µå¤„ç†ä¸ªäººéœ€æ±‚ä¿¡æ¯çš„æ–¹æ³•
+	  * 
+	  */
 	private void fenyepn(HttpServletRequest req, Personneed personNeed){
 			
 			
@@ -1389,9 +1485,9 @@ public class MemberCenterController {
 			
 	  
 		 long maxRowsCount=personNeedPage.queryPersonCarCount(personNeed);
-			//´¦Àí·ÖÒ³Âß¼­<=>µ÷ÓÃ
+			//å¤„ç†åˆ†é¡µé€»è¾‘<=>è°ƒç”¨
 			PageUtil pageUtil=new PageUtil(4, maxRowsCount);
-			// ´¦ÀíÒ³ÂëÂß¼­
+			// å¤„ç†é¡µç é€»è¾‘
 			if (curPage <= 1) {
 
 				pageUtil.setCurPage(1);
@@ -1424,6 +1520,11 @@ public class MemberCenterController {
 			
 			
 		 }
+	/**
+	  * ç»‘å®šè½¦è¾†æ¦‚è¦ä¿¡æ¯å¯¹è±¡å’Œä¸ªäººè½¦è¾†è®¢å•å¯¹è±¡ç¼–å·çš„æ–¹æ³•
+	  * 
+	  * 
+	  */
 		private void finishop(HttpServletRequest req,Personcar perSonCar,Userinfo3 userInfo,Carinfo carInfo){
 			String uid=req.getParameter("uid");
 			String cid=req.getParameter("cid");
