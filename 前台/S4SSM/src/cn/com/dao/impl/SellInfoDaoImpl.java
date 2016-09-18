@@ -10,17 +10,17 @@ import org.springframework.stereotype.Repository;
 import cn.com.pojo.*;
 
 import cn.com.dao.ISellInfoDao;
-
+ /**
+  * 
+  * é”€å”®ä¿¡æ¯æ“ä½œå®ç°ç±»
+  * @author lej
+  */
 @Repository
 public class SellInfoDaoImpl extends BaseDao implements ISellInfoDao{
-/**
- * »ñÈ¡ËùÓĞÏúÊÛĞÅÏ¢
- */
-//	private long u_id;
-//	 private long c_id;
-//	 private String priceType;
-//	 private String transferFee;
-//	 private String stage;
+        /**
+	 * è·å–æ‰€æœ‰é”€å”®ä¿¡æ¯
+	 * @return   Map<Long, SellInfo>
+	 */
 	@Override
 	public Map<Long, Sellinfo> getAllSellInfo() {
 		// TODO Auto-generated method stub
@@ -31,7 +31,8 @@ public class SellInfoDaoImpl extends BaseDao implements ISellInfoDao{
 		return sellInfoMap;
 	}
 /**
- * ¸ù¾İ³µ±àºÅ»ñÈ¡ÏúÊÛÇé¿ö
+ * æ ¹æ®è½¦ç¼–å·è·å–é”€å”®ä¿¡æ¯
+ * @return SellInfo
  */
 	@Override
 	public Sellinfo getSellInfoById(Carinfo carInfo) {
@@ -49,7 +50,9 @@ public class SellInfoDaoImpl extends BaseDao implements ISellInfoDao{
 		return sellInfo2;
 	}
 /**
- * Ôö¼ÓÏúÊÛÇé¿ö
+ * å¢åŠ é”€å”®ä¿¡æ¯
+ * @param sellInfo
+ * @return int
  */
 	@Override
 	public int addSellInfo(Sellinfo sellInfo) {
@@ -67,7 +70,9 @@ public class SellInfoDaoImpl extends BaseDao implements ISellInfoDao{
 		 return count;
 	}
 /**
- * É¾³ıÏúÊÛÇé¿ö
+ * åˆ é™¤é”€å”®ä¿¡æ¯
+ * @param sellInfo
+ * @return int
  */
 	@Override
 	public int deleteSellInfo(Sellinfo sellInfo) {
@@ -84,14 +89,15 @@ public class SellInfoDaoImpl extends BaseDao implements ISellInfoDao{
 		}
 		 return count;
 	}
+/**
+ * ä¿®æ”¹é”€å”®ä¿¡æ¯
+ * @param sellInfo
+ * @return int
+ */
 @Override
 public int updateSellInfo(Sellinfo sellInfo) {
 	// TODO Auto-generated method stub
-
-	
-	
-	
-	
+     //è¿”å›å—å½±å“çš„è¡Œæ•°
 	return super.getSqlSessionTemplate().update("cn.com.pojo.SellinfoMapper.updateSellInfo", sellInfo);
 }
 
