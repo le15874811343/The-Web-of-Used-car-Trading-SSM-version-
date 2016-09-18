@@ -6,25 +6,35 @@ import org.springframework.stereotype.Repository;
 
 import cn.com.pojo.*;
 import cn.com.dao.*;
-
+/**
+ * 汽车基本信息操作实现类
+ * @author lej
+ */
 @Repository
 public class BasicInfoDaoImpl extends BaseDao implements IBasicInfoDao{
-
+/**
+ * 获取所有基本信息的方法
+ * @return Map<Long, Basicinfo>
+*/
 	@Override
 	public Map<Long, Basicinfo> getAllBasic() {
 		// TODO Auto-generated method stub
 		Map<Long, Basicinfo> mapBasicInfo=new HashMap<Long, Basicinfo>();
-		
+		 //获取结果集
 		mapBasicInfo=    super.getSqlSessionTemplate().selectMap("cn.com.pojo.BasicinfoMapper.getAllBasic", "cId");
 		
 		return mapBasicInfo;
 	}
-
+/**
+ *根据编号获取汽车基本信息的方法 
+ *@return Basicinfo
+ */
 	@Override
 	public Basicinfo getAllBasicById(Carinfo carInfo) {
 		// TODO Auto-generated method stub
 		Basicinfo basicInfo2=null;
 	try{
+		//获取结果
 		basicInfo2=(Basicinfo) super.getSqlSessionTemplate().selectMap("cn.com.pojo.BasicinfoMapper.getAllBasicById",carInfo, "cId").get(carInfo.getcId());
 	}
 	catch (Exception e) {
@@ -33,13 +43,17 @@ public class BasicInfoDaoImpl extends BaseDao implements IBasicInfoDao{
 	}
 		return basicInfo2;
 	}
-
+/**
+ * 添加汽车基本信息的方法
+ * @return int
+ */
 	@Override
 	public int addBasicInfo(Basicinfo basicInfo) {
 		// TODO Auto-generated method stub
 	
 		int count=0;
 		try{
+			//添加进数据库中
 			super.getSqlSessionTemplate().insert("cn.com.pojo.BasicinfoMapper.insertSelective", basicInfo);
 		count=1;
 		}
@@ -48,14 +62,15 @@ public class BasicInfoDaoImpl extends BaseDao implements IBasicInfoDao{
 		}
 		return count;
 	}
-
+/**
+ * 修改汽车基本信息的方法
+ * @return int
+ */
 	@Override
 	public int updateBasicInfo(Basicinfo basicInfo) {
 		// TODO Auto-generated method stub
-	
-	
-	
-		return  super.getSqlSessionTemplate().update("cn.com.pojo.BasicinfoMapper.updateBasicInfo", basicInfo);
+	        //返回受影响的行数
+	  	return  super.getSqlSessionTemplate().update("cn.com.pojo.BasicinfoMapper.updateBasicInfo", basicInfo);
 	}
 
 }
