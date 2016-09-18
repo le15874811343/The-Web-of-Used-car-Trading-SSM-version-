@@ -1,38 +1,32 @@
 package cn.com.controller;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
-
+import java.util.*;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import cn.com.pojo.Userinfo3;
 import cn.com.service.IUserInfoService;
 import cn.com.util.DbUtil;
-
+/**
+ * ç”¨æˆ·ä¿¡æ¯å¤„ç†æ§åˆ¶å™¨
+ * 
+ * 
+ */
 @Controller
 public class UserInfoController {
 	@Resource
-	private IUserInfoService userInfoService=null;
- private String url;
+	private IUserInfoService userInfoService=null; //ç”¨æˆ·ä¿¡æ¯æœåŠ¡æ¥å£çš„å¼•ç”¨
+ private String url; //è·³è½¬åœ°å€
 	public IUserInfoService getUserInfoService() {
 		return userInfoService;
 	}
@@ -48,6 +42,9 @@ public class UserInfoController {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	/**
+	 *ç™»å½•action
+	 */
 @RequestMapping("/UserInfo.action")
 	public String execute(HttpServletRequest request,HttpSession session,HttpServletResponse resp)  {
 		// TODO Auto-generated method stub
@@ -97,12 +94,12 @@ public class UserInfoController {
 				String loginmessage=null;
 				 if(userInfoService.getUserInfoByUnique(userInfo)==null){
 					 DbUtil.closeAll();
-					 loginmessage="¸ÃÓÃ»§²»´æÔÚ";
+					 loginmessage="è¯¥ç”¨æˆ·ä¸å­˜åœ¨";
 					 String sRand= getYZM(request);
 					    session.setAttribute("sRand", sRand);
 				 }
 				 else{
-					 loginmessage="ÓÃ»§Ãû»òÃÜÂë´íÎó,ÇëÖØĞÂÊäÈë";
+					 loginmessage="ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯,è¯·é‡æ–°è¾“å…¥";
 					 String sRand= getYZM(request);
 					 session.setAttribute("sRand", sRand);
 				 }
@@ -112,7 +109,7 @@ public class UserInfoController {
 			}
 		}
 		 else{
-			 String	 loginmessage="ÄãÒÑ¾­µÇÂ½¹ıÒ»¸öÕË»§ÁË";
+			 String	 loginmessage="ä½ å·²ç»ç™»é™†è¿‡ä¸€ä¸ªè´¦æˆ·äº†";
 			 String sRand= getYZM(request);
 			 session.setAttribute("sRand", sRand);
 			 request.setAttribute("loginmessage", loginmessage);
@@ -121,6 +118,9 @@ public class UserInfoController {
 		
 		return this.url;
 	}
+	/**
+	 * ç”¨æˆ·éœ€è¦ç™»å½•çš„action
+	 */
 @RequestMapping("/UserInfo_needLogin.action")
 	public void needLogin(HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		 deleteYzm(session);
@@ -142,7 +142,7 @@ public class UserInfoController {
 		 
 	    try {
 			response.getWriter().println(sRand);
-			 response.getWriter().flush();//Çå¿Õ»º´æ,Ë¢ĞÂ
+			 response.getWriter().flush();//æ¸…ç©ºç¼“å­˜,åˆ·æ–°
 			    response.getWriter().close();
 			  
 		} catch (IOException e) {
@@ -151,6 +151,10 @@ public class UserInfoController {
 		}
 	  
 	}
+	/**
+	 * ç”¨æˆ·éœ€è¦æ³¨å†Œçš„action
+	 * 
+	 */
 @RequestMapping("/UserInfo_needReg.action")
 	public void needReg(HttpServletRequest request,HttpServletResponse response,HttpSession session) {
 		 deleteYzm(session);
@@ -162,7 +166,7 @@ public class UserInfoController {
 		
 		 try {
 			response.getWriter().println(sRand);
-			 response.getWriter().flush();//Çå¿Õ»º´æ,Ë¢ĞÂ
+			 response.getWriter().flush();//æ¸…ç©ºç¼“å­˜,åˆ·æ–°
 			 response.getWriter().close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -172,6 +176,9 @@ public class UserInfoController {
 		 
 		
 	}
+	/**
+	 * ç¡®è®¤æ³¨å†Œçš„action
+	 */
 @RequestMapping("/UserInfo_regUser.action")
 	public String regUser(HttpServletRequest request,HttpSession session)  {
 		deleteYzm(session);
@@ -186,7 +193,7 @@ public class UserInfoController {
 	    
 	     if(userInfoService.getUserInfoByUnique(userInfo)!=null){
 	    	 DbUtil.closeAll();
-	    	 regmessage="´ËÊÖ»úºÅÒÑ±»×¢²á,Çë½øÈëµÇÂ¼Ãæ°åÊÔÊÔÕÒ»ØÃÜÂë°É";
+	    	 regmessage="æ­¤æ‰‹æœºå·å·²è¢«æ³¨å†Œ,è¯·è¿›å…¥ç™»å½•é¢æ¿è¯•è¯•æ‰¾å›å¯†ç å§";
 	    	 String sRand= getYZM(request);
 	    	 session.setAttribute("sRand", sRand);
 	    	 
@@ -196,17 +203,17 @@ public class UserInfoController {
 		     userInfo.setuPwd(regpwd);
 		     userInfo.setuSex(sex);
 		  
-		     userInfo.setuAdmin("ÆÕÍ¨ÓÃ»§");
+		     userInfo.setuAdmin("æ™®é€šç”¨æˆ·");
 		     if(userInfoService.addUserInfo(userInfo)){
 		    	 DbUtil.closeAll();
-		    String	 loginmessage="×¢²á³É¹¦,ÏÖÔÚ¾Í¿ªÊ¼µÇÂ¼°É";
+		    String	 loginmessage="æ³¨å†ŒæˆåŠŸ,ç°åœ¨å°±å¼€å§‹ç™»å½•å§";
 		    String sRand= getYZM(request);
 	    	 session.setAttribute("sRand", sRand);
 		    request.setAttribute("loginmessage", loginmessage);
 		     }
 		     else{
 		    	 DbUtil.closeAll();
-		    	 regmessage="×¢²áÊ§°Ü";
+		    	 regmessage="æ³¨å†Œå¤±è´¥";
 		    	 String sRand= getYZM(request);
 		    	 session.setAttribute("sRand", sRand);
 		     }
@@ -215,6 +222,9 @@ public class UserInfoController {
 	    
 	     return this.url;
 	}
+	/**
+	 * æ›´æ”¹ç”¨æˆ·ä¿¡æ¯action
+	 */
 @RequestMapping("/UserInfo_update.action")
 	public String update(HttpServletRequest request,HttpSession session) {
 		deleteYzm(session);
@@ -257,6 +267,10 @@ public class UserInfoController {
 		 }
 		 
 	}
+	/**
+	 * æ›´æ”¹å¯†ç action
+	 * 
+	 */
 @RequestMapping("/UserInfo_updatePwd.action")
 	public String updatePwd(HttpServletRequest request,HttpSession session) {
 		deleteYzm(session);
@@ -268,7 +282,7 @@ public class UserInfoController {
 			  String npwd=request.getParameter("npwd");
 			  userInfo.setuPwd(npwd);
 			if(userInfoService.updateUserPwd(userInfo)){
-				 String updatemessage="ÃÜÂëĞŞ¸Ä³É¹¦";
+				 String updatemessage="å¯†ç ä¿®æ”¹æˆåŠŸ";
 				 request.setAttribute("updatemessage", updatemessage);
 				
 				 return "admin/memberMyAccount";
@@ -278,12 +292,16 @@ public class UserInfoController {
 			}
 		  }
 		  else{
-			  String updatemessage="µ±Ç°ÃÜÂë´íÎó,ÇëÖØĞÂÊäÈë";
+			  String updatemessage="å½“å‰å¯†ç é”™è¯¯,è¯·é‡æ–°è¾“å…¥";
 			  request.setAttribute("updatemessage", updatemessage);
 			
 			  return "admin/memberMyAccount";
 		  }
 	}
+	/**
+	 * æ¢éªŒè¯ç action
+	 * 
+	 */
 @RequestMapping("/UserInfo_updateYzm.action")
 	public void updateYzm(HttpServletRequest request,HttpSession session,HttpServletResponse response)  {
 		deleteYzm(session);
@@ -294,7 +312,7 @@ public class UserInfoController {
 		 try {
 			 
 			response.getWriter().println(sRand);
-			 response.getWriter().flush();//Çå¿Õ»º´æ,Ë¢ĞÂ
+			 response.getWriter().flush();//æ¸…ç©ºç¼“å­˜,åˆ·æ–°
 			 response.getWriter().close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -303,6 +321,9 @@ public class UserInfoController {
 	
 		
 	}
+	/**
+	 * å›åˆ°é¦–é¡µaction
+	 */
 @RequestMapping("/UserInfo_hsy.action")
 	public String hsy(HttpServletRequest request,HttpSession session){
 		deleteYzm(session);
@@ -314,6 +335,9 @@ public class UserInfoController {
 		
 		return this.url;
 	}
+	/**
+	 * æ³¨é”€æ“ä½œaction
+	 */
 @RequestMapping("/UserInfo_zhuXiao.action")
 	public String zhuXiao(HttpServletRequest request,HttpSession session) {
 	
@@ -324,6 +348,10 @@ public class UserInfoController {
 		
 		 return this.url;
 	}
+	/**
+	 *éªŒè¯ç èƒŒæ™¯é¢œè‰²è®¾ç½®çš„æ–¹æ³•
+	 * 
+	 */
 	private   Color getRandColor(int fc,int bc){  
         Random random = new Random();  
         if(fc > 255){  
@@ -337,21 +365,23 @@ public class UserInfoController {
         int b = fc +random.nextInt(bc-fc);  
         return new Color(r,g,b);  
     }  
-   
+           /**
+	    * ç”ŸæˆéªŒè¯ç å›¾ç‰‡çš„æ–¹æ³•
+	    */
 private String getYZM(HttpServletRequest request){
 	 int width = 60;  
 	    int height = 40;  
 	    BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);  
-	    //´´½¨Í¼Ïó  
+	    //åˆ›å»ºå›¾è±¡  
 	    Graphics g = image.getGraphics();  
-	    //Éú³ÉËæ»ú¶ÔÏó  
+	    //ç”Ÿæˆéšæœºå¯¹è±¡  
 	    Random random = new Random();  
-	    //ÉèÖÃ±³¾°É«  
+	    //è®¾ç½®èƒŒæ™¯è‰²  
 	    g.setColor(getRandColor(200,250));  
 	    g.fillRect(0,0,width,height);  
-	    //ÉèÖÃ×ÖÌå  
+	    //è®¾ç½®å­—ä½“  
 	    g.setFont(new Font("Tines Nev Roman",Font.PLAIN,18));  
-	    //Ëæ»ú²úÉú¸ÉÈÅÏß  
+	    //éšæœºäº§ç”Ÿå¹²æ‰°çº¿  
 	    g.setColor(getRandColor(160,200));  
 	    for(int i = 0; i < 255; i++){  
 	        int x = random.nextInt(width);  
@@ -360,18 +390,18 @@ private String getYZM(HttpServletRequest request){
 	        int y1 = random.nextInt(12); 
 	        g.drawLine(x,y,x-x1,y-y1);
 	    }  
-	    //Ëæ»ú²úÉúÈÏÖ¤Âë,4Î»Êı×Ö  
+	    //éšæœºäº§ç”Ÿè®¤è¯ç ,4ä½æ•°å­—  
 	    String sRand = "";  
 	    for(int i = 0; i < 4; i++){  
 	        String rand = String.valueOf(random.nextInt(10));  
 	        sRand  += rand;  
-	        //½«ÈÏÖ¤ÂëÏÔÊ¾µ½Í¼ÏóÖĞ  
+	        //å°†è®¤è¯ç æ˜¾ç¤ºåˆ°å›¾è±¡ä¸­  
 	        g.setColor(new Color(20 + random.nextInt(110),20 + random.nextInt(110),20 + random.nextInt(110)));  
 	        g.drawString(rand,13*i+6,16);  
 	    }  
-	    //Í¼ÏñÉúĞ§  
+	    //å›¾åƒç”Ÿæ•ˆ  
 	    g.dispose();  
-	    //Êä³öÍ¼Ïñµ½Ò³Ãæ  
+	    //è¾“å‡ºå›¾åƒåˆ°é¡µé¢  
 	    String url=request.getServletContext().getRealPath("/images")+"/"+sRand+".jpg";
 	   FileOutputStream fileOutputStream;
 	try {
@@ -388,6 +418,10 @@ private String getYZM(HttpServletRequest request){
 	  
 	    return sRand;
 }
+    /**
+     * 
+     * åˆ é™¤éªŒè¯ç çš„æ–¹æ³•
+     */
 private void deleteYzm(HttpSession session){
 String	sRand=(String) session.getAttribute("sRand");
     String url=session.getServletContext().getRealPath("/images")+"/"+sRand+".jpg";
@@ -398,6 +432,11 @@ if(file.exists()){
 	
 }
 }
+
+  /**
+   * ç»‘å®šè·³è½¬é¡µé¢ä¼ é€’å‚æ•°çš„æ–¹æ³•
+   * 
+   */
 	private void bindWhere(HttpServletRequest request){
 		url=request.getParameter("url");
 		if(request.getParameter("bname")!=null){
