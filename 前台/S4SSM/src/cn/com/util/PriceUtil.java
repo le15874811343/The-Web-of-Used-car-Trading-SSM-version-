@@ -1,8 +1,11 @@
 package cn.com.util;
-
+/**
+ * ä»·æ ¼å¤„ç†å·¥å…·ç±»
+ *@author lej
+ */
 public class PriceUtil {
- private int minPrice=0;
- private int maxPrice=0;
+ private int minPrice=0; //æœ€å°ä»·æ ¼
+ private int maxPrice=0; //æœ€å¤§ä»·æ ¼
 public int getMinPrice() {
 	return minPrice;
 }
@@ -16,16 +19,16 @@ public void setMaxPrice(int maxPrice) {
 	this.maxPrice = maxPrice;
 }
 public PriceUtil(String price){
-	if(price.contains("ÒÔÄÚ")){
-		String [] s=price.split("Íò");
+	if(price.contains("ä»¥å†…")){
+		String [] s=price.split("ä¸‡");
 		this.maxPrice=Integer.parseInt(s[0]);
 		}
-		if(price.contains("ÒÔÉÏ")){
-			String [] s=price.split("Íò");
+		if(price.contains("ä»¥ä¸Š")){
+			String [] s=price.split("ÃÃ²");
 			this.minPrice=Integer.parseInt(s[0]);
 		}
 		if(price.contains("-")){
-			String [] s=price.split("Íò");
+			String [] s=price.split("ä¸‡");
 			String [] s1 =   s[0].split("-");
 			this.maxPrice=Integer.parseInt(s1[1]);
 			this.minPrice=Integer.parseInt(s1[0]);
