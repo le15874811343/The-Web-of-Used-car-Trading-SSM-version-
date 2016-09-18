@@ -5,9 +5,17 @@ import cn.com.dao.*;
 import java.util.*;
 
 import org.springframework.stereotype.Repository;
+/**
+ * 公司动态消息操作实现类
+ * @author
+ */
 @Repository
 public class TrendsDaoImpl extends BaseDao  implements ITrendsDao,IPageDao {
-
+       /**
+        * 获取指定条数的最新的动态消息集合
+        * @param  rows 获取记录的条数
+        * @return List<Trends> 
+        */
 	@Override
 	public List<Trends> getITrendsByTime(Trends trends,int rows) {
 		// TODO Auto-generated method stub
@@ -38,7 +46,11 @@ public class TrendsDaoImpl extends BaseDao  implements ITrendsDao,IPageDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+/**
+ * 获取公司动态消息记录的总条数
+ * 
+ * @return Long
+ */
 	@Override
 	public Long queryPersonCarCount(Object object) {
 		// TODO Auto-generated method stub
@@ -64,7 +76,12 @@ public class TrendsDaoImpl extends BaseDao  implements ITrendsDao,IPageDao {
 	}
 		return count;
 	}
-
+  /**
+   * 分页获取公司动态消息
+   * @param curPage 当前页
+   * @param rowsPrePage 每页显示记录条数
+   * @return Map<Long,Object>
+   */
 	@Override
 	public Map<Long, Object> showPersonCarList(int curPage, int rowsPrePage,
 			Object object) {
@@ -89,7 +106,10 @@ public class TrendsDaoImpl extends BaseDao  implements ITrendsDao,IPageDao {
 			}
 			return trendsMap;
 	}
-
+       /**
+        * 按条件获取动态消息
+        * @return Trends
+        */
 	@Override
 	public Trends getTrendsByWhere(Trends trends) {
 		// TODO Auto-generated method stub
