@@ -5,6 +5,11 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+/**
+ * 权限过滤器
+ * 
+ * @author lej
+ */
 public class LoginFilter implements Filter {
 
 	@Override
@@ -20,13 +25,13 @@ public class LoginFilter implements Filter {
 		 HttpServletRequest req=(HttpServletRequest) arg0;
 		 HttpServletResponse resp=(HttpServletResponse) arg1;
 		 HttpSession session=req.getSession();
-		 if(session.getAttribute("userinfo")!=null){
-			 arg2.doFilter(req, resp);
+		 if(session.getAttribute("userinfo")!=null){ //获取session中的用户对象并检验是否为空
+			 arg2.doFilter(req, resp); //不为空则通过
 		 }else{
 		 
 		
 		
-		 req.getRequestDispatcher("/CarInfo.action").forward(req, resp);
+		 req.getRequestDispatcher("/CarInfo.action").forward(req, resp); //否则转向首页
 		 }
 	}
 
