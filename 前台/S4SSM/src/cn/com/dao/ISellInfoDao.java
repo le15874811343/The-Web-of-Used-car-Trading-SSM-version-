@@ -5,30 +5,40 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import cn.com.pojo.*;
+ /**
+  * 
+  * é”€å”®ä¿¡æ¯æ“ä½œæ¥å£
+  * @author lej
+  */
 @Repository
 public interface ISellInfoDao {
-	/**
-	 * »ñÈ¡ËùÓĞÏúÊÛĞÅÏ¢
-	 * @return
+        /**
+	 * è·å–æ‰€æœ‰é”€å”®ä¿¡æ¯
+	 * @return   Map<Long, Sellinfo>
 	 */
 public Map<Long, Sellinfo> getAllSellInfo();
 /**
- * ¸ù¾İ³µ±àºÅ»ñÈ¡ÏúÊÛÇé¿ö
- * @return
+ * æ ¹æ®è½¦ç¼–å·è·å–é”€å”®ä¿¡æ¯
+ * @return Sellinfo
  */
 public Sellinfo getSellInfoById(Carinfo carInfo);
 /**
- * Ôö¼ÓÏúÊÛÇé¿ö
+ * å¢åŠ é”€å”®ä¿¡æ¯
  * @param sellInfo
- * @return
+ * @return int
  */
 public int addSellInfo(Sellinfo sellInfo);
 /**
- * É¾³ıÏúÊÛÇé¿ö
+ * åˆ é™¤é”€å”®ä¿¡æ¯
  * @param sellInfo
- * @return
+ * @return int
  */
 public int deleteSellInfo(Sellinfo sellInfo);
+/**
+ * ä¿®æ”¹é”€å”®ä¿¡æ¯
+ * @param sellInfo
+ * @return int
+ */
 public int updateSellInfo(Sellinfo sellInfo);
 
 }
