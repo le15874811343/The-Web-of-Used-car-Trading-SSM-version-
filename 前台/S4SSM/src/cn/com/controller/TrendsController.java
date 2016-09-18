@@ -16,17 +16,20 @@ import cn.com.service.ICommentService;
 import cn.com.service.ITrendsService;
 import cn.com.util.DbUtil;
 import cn.com.util.PageUtil;
-
+/**
+ * 公司动态消息控制器类
+ * @author lej
+ */
 @Controller
 public class TrendsController {
 	@Resource
-	 private ITrendsService trendsService=null;
+	 private ITrendsService trendsService=null;  //公司动态消息服务接口的引用
 	@Resource(name="trendsServiceImpl")
-	   private IPageDao trendsPage=null;
+	   private IPageDao trendsPage=null; //分页处理操作接口的引用（指向公司动态消息操作实现类）
 	@Resource
-	   private ICommentService commentService=null;
+	   private ICommentService commentService=null; //评价信息服务接口的引用
 	@Resource(name="commentServiceImpl")
-	   private IPageDao commentsPage=null;
+	   private IPageDao commentsPage=null; //分页处理操作接口的引用（指向评价信息操作实现类）
 	public ITrendsService getTrendsService() {
 		return trendsService;
 	}
@@ -51,15 +54,21 @@ public class TrendsController {
 	public void setCommentsPage(IPageDao commentsPage) {
 		this.commentsPage = commentsPage;
 	}
+/**
+ * 展示新闻列表action
+ */
 	@RequestMapping("/Trends_showNewsList.action")
 	public String showNewsList(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 	  Trends trends=new Trends();
-		trends.setTrType("����");
+		trends.setTrType("新闻");
 		fenye(request,  trends);
 		
 		return "news_list";
 	}
+/**
+ * 展示新闻详情action
+ */
 	@RequestMapping("/Trends_showTei.action")
 	public String showTei(HttpServletRequest request) throws Exception{
 		String tr_id=	request.getParameter("tr_id");
@@ -70,14 +79,20 @@ public class TrendsController {
 
 		return "news_show";
 	}
+/**
+ * 展示活动列表action
+ */
 	@RequestMapping("/Trends_showActive.action")
 	public String showActive(HttpServletRequest request) throws Exception{
 		Trends trends=new Trends();
-		trends.setTrType("�");
+		trends.setTrType("活动");
 		fenye(request,  trends);
 
 		return "active_list";
 	}
+/**
+ * 展示活动详细action
+ */
 	@RequestMapping("/Trends_showTeia.action")
 	public String showTeia(HttpServletRequest request) throws Exception{
 		String tr_id=	request.getParameter("tr_id");
@@ -88,6 +103,9 @@ public class TrendsController {
 	 
 		return "active_show";
 	}
+/**
+ * 展示评论列表action
+ */
 	@RequestMapping("/Trends_showCom.action")
 	public String showCom(HttpServletRequest request) throws Exception{
 		Comment1 comment=new Comment1();
@@ -95,6 +113,9 @@ public class TrendsController {
 
 		return "comment_list";
 	}
+/**
+ * 展示评论详情action
+ */
 	@RequestMapping("/Trends_showComd.action")
 	public String showComd(HttpServletRequest request) throws Exception{
 		String tr_id=	request.getParameter("cid");
@@ -106,6 +127,11 @@ public class TrendsController {
 
 		return "comment_show";
 	}
+        /**
+	 * 分页处理公司动态消息的方法
+	 * 
+	 * 
+	 */
 	private void fenye(HttpServletRequest req,Trends trends){
 		
 		
@@ -118,9 +144,9 @@ public class TrendsController {
 		
 
 	 long maxRowsCount=trendsPage.queryPersonCarCount(trends);
-		//������ҳ�߼�<=>����
+		//处理分页逻辑<=>调用
 		PageUtil pageUtil=new PageUtil(2, maxRowsCount);
-		// ����ҳ���߼�
+		// 处理页码逻辑
 		if (curPage <= 1) {
 
 			pageUtil.setCurPage(1);
@@ -153,6 +179,10 @@ public class TrendsController {
 		
 		
 	 }
+	 /**
+	  * 分页处理评论信息的方法
+	  * 
+	  */
 	private void fenyec(HttpServletRequest req,Comment1 comment){
 
 	try {
@@ -164,9 +194,9 @@ public class TrendsController {
 
 
 	long maxRowsCount=commentsPage.queryPersonCarCount(comment);
-	//������ҳ�߼�<=>����
+	//处理分页逻辑<=>调用
 	PageUtil pageUtil=new PageUtil(2, maxRowsCount);
-	// ����ҳ���߼�
+	// 处理页码逻辑
 	if (curPage <= 1) {
 
 		pageUtil.setCurPage(1);
