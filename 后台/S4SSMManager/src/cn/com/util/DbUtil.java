@@ -8,14 +8,18 @@ import oracle.jdbc.OracleTypes;
 
 import javax.naming.*;
 import javax.sql.DataSource;
+/**
+ * jdbcæ“ä½œç±»
+ * @author lej
+ */
 public class DbUtil {
-	private static Connection con = null;
-	private static PreparedStatement psmt = null;
-	private static ResultSet res = null;
-	private static CallableStatement csmt = null;
+	private static Connection con = null; //è¿æ¥å¯¹è±¡
+	private static PreparedStatement psmt = null; //é¢„ç¼–è¯‘å‘½ä»¤å¯¹è±¡
+	private static ResultSet res = null; //ç»“æœé›†å¯¹è±¡
+	private static CallableStatement csmt = null;  //è¿‡ç¨‹å¤„ç†å¯¹è±¡
 
 	/**
-	 * »ñÈ¡Á¬½Ó¶ÔÏó
+	 * è·å–è¿æ¥å¯¹è±¡
 	 * 
 	 * @return
 	 */
@@ -23,9 +27,9 @@ public class DbUtil {
 		
 			try {
 				DbUtil.closeAll();
-				Context context=new InitialContext();
-			DataSource dataSource=(DataSource)context.lookup("java:comp/env/jdbc/oracle");
-		con=		dataSource.getConnection();
+				Context context=new InitialContext(); //åŠ è½½è¿æ¥æ± é…ç½®æ–‡ä»¶
+			DataSource dataSource=(DataSource)context.lookup("java:comp/env/jdbc/oracle");  //ä»ç›¸åº”é…ç½®æ–‡ä»¶ä¸­åŠ è½½åä¸º"java:comp/env/jdbc/oracle"çš„å¯¹è±¡
+		con=		dataSource.getConnection(); //è·å–è¿æ¥å¯¹è±¡
 			} catch (NamingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -38,7 +42,7 @@ public class DbUtil {
 	}
 
 	/**
-	 * »ñÈ¡Ô¤±àÒëÃüÁî¶ÔÏó
+	 * è·å–é¢„ç¼–è¯‘å‘½ä»¤å¯¹è±¡
 	 * 
 	 * @param sql
 	 * @return
@@ -55,7 +59,7 @@ public class DbUtil {
 	}
 
 	/**
-	 * »ñÈ¡½á¹û¼¯¶ÔÏó
+	 * è·å–ç»“æœé›†å¯¹è±¡
 	 * 
 	 * @param sql
 	 * @return
@@ -73,7 +77,7 @@ public class DbUtil {
 	}
 
 	/**
-	 * »ñÈ¡Ô¤¹ı³Ì¶ÔÏó
+	 * è·å–é¢„è¿‡ç¨‹å¯¹è±¡
 	 * 
 	 * @param sql
 	 * @return
@@ -91,12 +95,12 @@ public class DbUtil {
 	}
 
 	/**
-	 * Ö´ĞĞsqlÓï¾ä·µ»ØÊÜÓ°ÏìµÄĞĞÊı
+	 * æ‰§è¡Œsqlè¯­å¥è¿”å›å—å½±å“çš„è¡Œæ•°
 	 * 
 	 * @param sql
-	 *            Óï¾ä
+	 *            è¯­å¥
 	 * @param params
-	 *            ²ÎÊı¼¯ºÏ
+	 *            å‚æ•°é›†åˆ
 	 * @return int
 	 */
 	public static int executeUpdate(String sql,  List<Object> params) {
@@ -120,12 +124,12 @@ public class DbUtil {
 	}
 
 	/**
-	 * Ö´ĞĞsqlÓï¾ä·µ»Ø½á¹û¼¯¶ÔÏó
+	 * æ‰§è¡Œsqlè¯­å¥è¿”å›ç»“æœé›†å¯¹è±¡
 	 * 
 	 * @param sql
-	 *            Óï¾ä
+	 *            è¯­å¥
 	 * @param params
-	 *            ²ÎÊı¼¯ºÏ
+	 *            å‚æ•°é›†åˆ
 	 * @return ResultSet
 	 */
 	public static ResultSet executeQuery(String sql, List<Object> params) {
@@ -142,7 +146,7 @@ public class DbUtil {
 		return rest;
 	}
 /**
- * Ö´ĞĞ¹ı³Ì·½·¨
+ * æ‰§è¡Œè¿‡ç¨‹æ–¹æ³•
  * @param sql
  * @param params
  * @return
@@ -151,15 +155,16 @@ public class DbUtil {
 			Map<Integer, MyParams> params) {
 		csmt = getCallableStatement(sql);
 		try {
+			//ç»‘å®šè¿‡ç¨‹å‚æ•°å¯¹è±¡
 			for (Integer key : params.keySet()) {
-				if (params.get(key).getType().equals("out")) {
+				if (params.get(key).getType().equals("out")) { //æ˜¯è¾“å‡ºå‚æ•°çš„æƒ…å†µ
 					if (params.get(key).getValue().equals(OracleTypes.CURSOR)) {
-						csmt.registerOutParameter(key, OracleTypes.CURSOR);
-					}
+						csmt.registerOutParameter(key, OracleTypes.CURSOR); //æ˜¯æ¸¸æ ‡å¯¹è±¡çš„æƒ…å†µ
+					} 
 					if(params.get(key).getValue().equals(Types.INTEGER)){
-						csmt.registerOutParameter(key,Types.INTEGER);
+						csmt.registerOutParameter(key,Types.INTEGER); //è¾“å‡ºè¡Œæ•°çš„æƒ…å†µ
 					}
-				} else {
+				} else { //è¾“å…¥å‚æ•°çš„æƒ…å†µ
                   csmt.setObject(key, params.get(key).getValue());
 				}
 			}
@@ -173,12 +178,12 @@ public class DbUtil {
 	}
 
 	/**
-	 * °ó¶¨²ÎÊı
+	 * ç»‘å®šå‚æ•°
 	 * 
 	 * @param psmt
-	 *            Ô¤±àÒëÃüÁî¶ÔÏó
+	 *            é¢„ç¼–è¯‘å‘½ä»¤å¯¹è±¡
 	 * @param params
-	 *            ²ÎÊı¼¯ºÏ
+	 *            å‚æ•°é›†åˆ
 	 */
 	public static void bindParams(PreparedStatement psmt,
 			List<Object> params) {
@@ -195,6 +200,9 @@ public class DbUtil {
 		}
 	}
 	}
+	/**
+	 * å…³é—­èµ„æºçš„æ–¹æ³•
+	 */
 	public static void closeAll(){
 		try {
 			if (con != null) {
