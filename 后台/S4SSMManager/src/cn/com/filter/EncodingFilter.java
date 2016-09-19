@@ -10,7 +10,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+/**
+ * 编码过滤器类
+ * @author  lej
+ */
 public class EncodingFilter implements Filter{
    private String encoding="";
 	@Override
@@ -23,17 +26,17 @@ public class EncodingFilter implements Filter{
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
 			FilterChain arg2) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		      HttpServletRequest request=(HttpServletRequest) arg0;
+		      HttpServletRequest request=(HttpServletRequest) arg0;  
 		      HttpServletResponse response=(HttpServletResponse) arg1;
-		      request.setCharacterEncoding(encoding);
-		      response.setCharacterEncoding(encoding);
+		      request.setCharacterEncoding(encoding); //设置请求编码
+		      response.setCharacterEncoding(encoding);//设置响应编码
 		      arg2.doFilter(request, response);
 	}
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
-	encoding=	arg0.getInitParameter("Encoding");
+	encoding=	arg0.getInitParameter("Encoding");  //获取配置文件中的编码参数
 	}
 
 }
