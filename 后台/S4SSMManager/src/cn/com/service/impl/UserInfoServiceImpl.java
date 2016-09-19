@@ -11,11 +11,15 @@ import cn.com.dao.IPageDao;
 import cn.com.dao.IUserInfoDao;
 
 import cn.com.service.*;
+/**
+ * 用户信息服务实现类
+ * @author
+ */
 @Service
 public class UserInfoServiceImpl implements IUserInfoService,IPageDao{
 	@Resource
-   private IUserInfoDao userInfoDao=null;
-	@Resource(name="userInfoDaoImpl")
+   private IUserInfoDao userInfoDao=null; //用户信息操作接口的引用
+	@Resource(name="userInfoDaoImpl")//分页处理操作接口的引用
    private IPageDao  userPage=null;
    
 	public IUserInfoDao getUserInfoDao() {
@@ -30,6 +34,10 @@ public IPageDao getUserPage() {
 public void setUserPage(IPageDao userPage) {
 	this.userPage = userPage;
 }
+  /**
+   * 登录的服务
+   * @return UserInfo
+   */
 	@Override
 	public Userinfo3 login(Userinfo3 userInfo) {
 		// TODO Auto-generated method stub
@@ -38,11 +46,19 @@ public void setUserPage(IPageDao userPage) {
 		
 		return userInfoDao.login(userInfo);
 	}
+  /**
+   * 按唯一条件获取用户信息的服务
+   *@return UserInfo 
+   */
 	@Override
 	public Userinfo3 getUserInfoByUnique(Userinfo3 userInfo) {
 		// TODO Auto-generated method stub
 		return userInfoDao.getUserInfoByUnique(userInfo);
 	}
+  /**
+   * 添加用户信息的服务
+   *@return boolean 
+   */
 	@Override
 	public boolean addUserInfo(Userinfo3 userInfo) {
 		// TODO Auto-generated method stub4
@@ -52,6 +68,10 @@ public void setUserPage(IPageDao userPage) {
 		}
 		return flag;
 	}
+  /**
+   * 修改用户信息的服务
+   *@return boolean 
+   */
 	@Override
 	public boolean updateUserInfo(Userinfo3 userInfo) {
 		// TODO Auto-generated method stub
@@ -61,6 +81,10 @@ public void setUserPage(IPageDao userPage) {
 		}
 		return flag;
 	}
+  /**
+   * 修改用户密码的服务
+   *@return boolean 
+   */
 	@Override
 	public boolean updateUserPwd(Userinfo3 userInfo) {
 		// TODO Auto-generated method stub
@@ -83,17 +107,31 @@ public void setUserPage(IPageDao userPage) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+    /**
+     * 按条件获取用户信息的记录总条数
+     * @return int
+     */	
 	@Override
 	public Long queryPersonCarCount(Object object) {
 		// TODO Auto-generated method stub
 		return userPage.queryPersonCarCount(object);
 	}
+/**
+ * 按条件分页获取用户信息
+ * @param curPage 当前页数
+ * @param rowsPrePage
+ * @return Map<Long,Object>
+ */	
 	@Override
 	public Map<Long, Object> showPersonCarList(int curPage, int rowsPrePage,
 			Object object) {
 		// TODO Auto-generated method stub
 		return userPage.showPersonCarList(curPage, rowsPrePage, object);
 	}
+  /**
+   * 删除用户信息的服务
+   *@return boolean 
+   */
 	@Override
 	public boolean deleteuserinfouser(Userinfo3 u) {
 		// TODO Auto-generated method stub
