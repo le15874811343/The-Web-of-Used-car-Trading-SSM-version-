@@ -11,12 +11,17 @@ import cn.com.dao.IEmissionstandardDao;
 import cn.com.dao.IPageDao;
 
 import cn.com.service.*;
+/**
+ * 
+ * 排放标准服务实现类
+ *@author  lej
+ */
 @Service
 public class EmissionstandardServiceImpl implements IEmissionstandardService,IPageDao {
 	@Resource
-    private IEmissionstandardDao emissionstandardDao=null;
+    private IEmissionstandardDao emissionstandardDao=null; //排放标准操作接口的引用
 	@Resource(name="emissionstandardDaoImpl")
-    private IPageDao  emisPage=null;
+    private IPageDao  emisPage=null; //分页处理操作接口的引用
     
 	public IEmissionstandardDao getEmissionstandardDao() {
 		return emissionstandardDao;
@@ -30,6 +35,10 @@ public class EmissionstandardServiceImpl implements IEmissionstandardService,IPa
 	public void setEmisPage(IPageDao emisPage) {
 		this.emisPage = emisPage;
 	}
+	/**
+	 * 按热度获取排放标准信息的服务
+	 * @return Map<Integer,Emissionstandard>
+	 */
 	@Override
 	public Map<Integer, Emissionstandard> getEmissionstandardByCount() {
 		// TODO Auto-generated method stub
@@ -48,17 +57,32 @@ public class EmissionstandardServiceImpl implements IEmissionstandardService,IPa
 		// TODO Auto-generated method stub
 		return null;
 	}
+    /**
+     * 获取排放标准信息的记录总条数的服务
+     * @return int
+     */	
 	@Override
 	public Long queryPersonCarCount(Object object) {
 		// TODO Auto-generated method stub
 		return emisPage.queryPersonCarCount(object);
 	}
+/**
+ * 分页获取排放标准信息的服务
+ * @param curPage 当前页数
+ * @param rowsPrePage
+ * @return Map<Long,Object>
+ */	
 	@Override
 	public Map<Long, Object> showPersonCarList(int curPage, int rowsPrePage,
 			Object object) {
 		// TODO Auto-generated method stub
 		return emisPage.showPersonCarList(curPage, rowsPrePage, object);
 	}
+          /**
+           * 添加排放标准信息的服务
+           * @parma emissionstandard
+           * @return boolean
+           */
 	@Override
 	public boolean addEmissionstandard(Emissionstandard emissionstandard) {
 		// TODO Auto-generated method stub
@@ -68,6 +92,11 @@ public class EmissionstandardServiceImpl implements IEmissionstandardService,IPa
 		}
 		return flag;
 	}
+	  /**
+           * 修改排放标准信息的服务
+           * @parma emissionstandard
+           * @return boolean
+           */
 	@Override
 	public boolean updateEmissionstandard(Emissionstandard emissionstandard) {
 		// TODO Auto-generated method stub
@@ -77,6 +106,11 @@ public class EmissionstandardServiceImpl implements IEmissionstandardService,IPa
 		}
 		return flag;
 	}
+	  /**
+           * 删除排放标准信息的服务
+           * @parma emissionstandard
+           * @return boolean
+           */
 	@Override
 	public boolean deleteEmissionstandard(Emissionstandard emissionstandard) {
 		// TODO Auto-generated method stub
@@ -86,6 +120,10 @@ public class EmissionstandardServiceImpl implements IEmissionstandardService,IPa
 		}
 		return flag;
 	}
+	/**
+	 * 获取排放标准信息的服务
+	 * @return Emissionstandard
+	 */
 	@Override
 	public Emissionstandard getEmissionstandard(
 			Emissionstandard emissionstandard) {
