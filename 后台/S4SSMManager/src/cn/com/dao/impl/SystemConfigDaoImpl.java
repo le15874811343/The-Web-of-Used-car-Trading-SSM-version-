@@ -8,34 +8,22 @@ import org.springframework.stereotype.Repository;
 import cn.com.pojo.*;
 
 import cn.com.dao.ISystemConfigDao;
-
+/**
+ * 
+ * 
+ * 汽车系统配置信息操作实现类
+ * @author lej
+ */ 
 @Repository
 public class SystemConfigDaoImpl extends BaseDao implements ISystemConfigDao{
-	/**
-	 * ��ȡ����ϵͳ��Ϣ
-	 * @return
+        /**
+	 * 获取所有系统信息
+	 * @return Map<Long, SystemConfig>
 	 */
 	@Override
 	public Map<Long, Systemconfig> getAllSystemConfig() {
 		// TODO Auto-generated method stub
-//		 private long u_id;
-//		 private long c_id;
-//		 private String guidanceSystem;
-//		 private String alb;
-//		 private String fpg;
-//		 private String rpg;
-//		 private String rcpa;
-//		 private String dsea;
-//		 private String fsea;
-//		 private String dlcc;
-//		 private String hfs;
-//		 private String hrs;
-//		 private String fsv;
-//		 private String rsv;
-//		 private String fsm;
-//		 private String rsm;
-//		 private String rvmh;
-//		 private String ess;
+
 		Map<Long, Systemconfig> systemConfigMap=new HashMap<Long, Systemconfig>();
 	
 		try {
@@ -50,7 +38,9 @@ public class SystemConfigDaoImpl extends BaseDao implements ISystemConfigDao{
 		return systemConfigMap;
 	}
 /**
- * ͨ����Ż�ȡSystemConfig��Ϣ
+ * 通过Id获取系统信息
+ * @param systemConfig
+ * @return carInfo
  */
 	@Override
 	public Systemconfig getSystemConfigById(Carinfo carInfo) {
@@ -67,6 +57,11 @@ public class SystemConfigDaoImpl extends BaseDao implements ISystemConfigDao{
 		}
 		return systemConfig2;
 	}
+/**
+ * 添加汽车系统配置信息的方法
+ * @param systemConfig
+ *@return int 
+ */
 @Override
 public int addSystemConfig(Systemconfig systemConfig) {
 	// TODO Auto-generated method stub
@@ -81,6 +76,11 @@ public int addSystemConfig(Systemconfig systemConfig) {
 	 }
 	return count;
 }
+/**
+ * 修改汽车系统配置信息的方法
+ *  @param systemConfig
+ * @return int 
+ */
 @Override
 public int updateSystemConfig(Systemconfig systemConfig) {
 	// TODO Auto-generated method stub
@@ -89,31 +89,49 @@ public int updateSystemConfig(Systemconfig systemConfig) {
 	
 	return super.getSqlSessionTemplate().update("cn.com.pojo.SystemconfigMapper.updateSystemConfig", systemConfig);
 }
+/**
+ * 根据车主编号删除汽车系统配置信息的方法
+ *@return int  
+ */
 @Override
 public int deletesystemconfiguser(Systemconfig s) {
 	// TODO Auto-generated method stub
 	return super.getSqlSessionTemplate().delete("cn.com.pojo.SystemconfigMapper.deletesystemconfiguser", s);
 }
+/**
+ * 根据车编号删除汽车系统配置信息的方法
+ *@return int  
+ */
 @Override
 public int deletecidsystemconfiguser(Systemconfig s) {
 	// TODO Auto-generated method stub
 	return super.getSqlSessionTemplate().delete("cn.com.pojo.SystemconfigMapper.deletecidsystemconfiguser", s);
 }
+/**
+ * 
+ * 检查是否还有与某车主编号关联的汽车系统配置信息
+ * @return boolean
+ */
 @Override
 public boolean checksystemconfiguser(Systemconfig s) {
 	// TODO Auto-generated method stub
 	boolean flag=false;
 	   if(super.getSqlSessionTemplate().selectMap("cn.com.pojo.SystemconfigMapper.checksystemconfiguser", s, "cId").size()>0){
-		   flag=true;
+		   flag=true; //若结果集元素个数大于0，则返回为真
 	   }
 	return flag;
 }
+/**
+ * 
+ * 检查是否还有与某车编号关联的汽车系统配置信息
+ * @return boolean
+ */
 @Override
 public boolean checkcidsystemconfiguser(Systemconfig s) {
 	// TODO Auto-generated method stub
 	boolean flag=false;
 	   if(super.getSqlSessionTemplate().selectMap("cn.com.pojo.SystemconfigMapper.checkcidsystemconfiguser", s, "cId").size()>0){
-		   flag=true;
+		   flag=true; //若结果集元素个数大于0，则返回为真
 	   }
 	return flag;
 }
