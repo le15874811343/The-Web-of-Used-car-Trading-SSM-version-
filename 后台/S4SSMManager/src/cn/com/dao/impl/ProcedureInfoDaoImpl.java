@@ -10,23 +10,21 @@ import org.springframework.stereotype.Repository;
 import cn.com.pojo.*;
 
 import cn.com.dao.IProcedureInfoDao;
-
+/**
+ * 手续信息操作实现类
+ * @author lej
+ */
 @Repository
 public class ProcedureInfoDaoImpl extends BaseDao implements IProcedureInfoDao{
-
+  /**
+   * 
+   * 获取所有手续信息的方法
+   *@return Map<Long,ProcedureInfo> 
+   */
 	@Override
 	public Map<Long, Procedureinfo> getAllProcedureInfo() {
 		// TODO Auto-generated method stub
-//		private long u_id;
-//		 private long c_id;
-//		 private String purchaseTax;
-//		 private String drivingLicense;
-//		 private String ncw;
-//		 private String registration;
-//		 private String newInvoice;
-//		 private int key;
-//		 private int transferTimes;
-//		 private String transferTicket;
+
 	
 		Map<Long, Procedureinfo> procedureInfoMap=new HashMap<Long, Procedureinfo>();
 	
@@ -34,7 +32,11 @@ public class ProcedureInfoDaoImpl extends BaseDao implements IProcedureInfoDao{
 
 		return procedureInfoMap;
 	}
-
+  /**
+   * 
+   * 根据编号获取手续信息的方法
+   *@return ProcedureInfo
+   */
 	@Override
 	public Procedureinfo getProcedureInfoById(Carinfo carInfo) {
 		// TODO Auto-generated method stub
@@ -49,7 +51,11 @@ public class ProcedureInfoDaoImpl extends BaseDao implements IProcedureInfoDao{
 		}
 		return procedureInfo2;
 	}
-
+  /**
+   * 
+   * 添加手续信息的方法
+   *@return int
+   */
 	@Override
 	public int addProcedureInfo(Procedureinfo procedureInfo) {
 		// TODO Auto-generated method stub
@@ -66,7 +72,11 @@ public class ProcedureInfoDaoImpl extends BaseDao implements IProcedureInfoDao{
 		
 		return count;
 	}
-
+  /**
+   * 
+   * 修改手续信息的方法
+   *@return  int
+   */
 	@Override
 	public int updateProcedureInfo(Procedureinfo procedureInfo) {
 		// TODO Auto-generated method stub
@@ -75,19 +85,29 @@ public class ProcedureInfoDaoImpl extends BaseDao implements IProcedureInfoDao{
 		
 		return super.getSqlSessionTemplate().update("cn.com.pojo.ProcedureinfoMapper.updateProcedureInfo", procedureInfo);
 	}
-
+/**
+ * 根据车主编号删除手续信息的方法
+ *@return int  
+ */
 	@Override
 	public int deleteprocedureinfouser(Procedureinfo p) {
 		// TODO Auto-generated method stub
 		return super.getSqlSessionTemplate().delete("cn.com.pojo.ProcedureinfoMapper.deleteprocedureinfouser", p);
 	}
-
+/**
+ * 根据车编号删除手续信息的方法
+ *@return int  
+ */
 	@Override
 	public int deletecidprocedureinfouser(Procedureinfo p) {
 		// TODO Auto-generated method stub
 		return super.getSqlSessionTemplate().delete("cn.com.pojo.ProcedureinfoMapper.deletecidprocedureinfouser", p);
 	}
-
+/**
+ * 
+ * 检查是否还有与某车主编号关联的手续信息
+ * @return boolean
+ */
 	@Override
 	public boolean checkprocedureinfouser(Procedureinfo p) {
 		// TODO Auto-generated method stub
@@ -97,7 +117,11 @@ public class ProcedureInfoDaoImpl extends BaseDao implements IProcedureInfoDao{
 		   }
 		return flag;
 	}
-
+/**
+ * 
+ * 检查是否还有与某车编号关联的手续信息
+ * @return boolean
+ */
 	@Override
 	public boolean checkcidprocedureinfouser(Procedureinfo p) {
 		// TODO Auto-generated method stub
