@@ -1,54 +1,16 @@
 package cn.com.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import java.util.*;
 import javax.annotation.Resource;
 import javax.jms.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import cn.com.dao.IPageDao;
-import cn.com.pojo.Basicinfo;
-import cn.com.pojo.Carage;
-import cn.com.pojo.Carbrand;
-import cn.com.pojo.Carinfo;
-import cn.com.pojo.Cartype;
-import cn.com.pojo.Comment1;
-import cn.com.pojo.Distance;
-import cn.com.pojo.Emissionstandard;
-import cn.com.pojo.Hardwareconfig;
-import cn.com.pojo.Priceinterval;
-import cn.com.pojo.Procedureinfo;
-import cn.com.pojo.Sellinfo;
-import cn.com.pojo.Systemconfig;
-import cn.com.pojo.Trends;
-import cn.com.service.IBasicInfoService;
-import cn.com.service.ICarAgeService;
-import cn.com.service.ICarBrandService;
-import cn.com.service.ICarImagesInfoService;
-import cn.com.service.ICarInfoService;
-import cn.com.service.ICarTypeService;
-import cn.com.service.ICommentService;
-import cn.com.service.IDistanceService;
-import cn.com.service.IEmissionstandardService;
-import cn.com.service.IHardwareConfigService;
-import cn.com.service.IPriceIntervalService;
-import cn.com.service.IProcedureInfoService;
-import cn.com.service.ISellInfoService;
-import cn.com.service.ISystemConfigService;
-import cn.com.service.ITrendsService;
-import cn.com.util.CarAgeUtil;
-import cn.com.util.DbUtil;
-import cn.com.util.DistanceUtil;
-import cn.com.util.PageUtil;
-import cn.com.util.PriceUtil;
-
+import cn.com.dao.*;
+import cn.com.pojo.*;
+import cn.com.service.*;
+import cn.com.util.*;
 @Controller
 public class CarInfoController {
 	private Map<Integer, Priceinterval> priceMap = null;
@@ -117,17 +79,17 @@ public class CarInfoController {
 	
 		setOverAllUse(request);
 		Carinfo carInfo=new Carinfo();
-		carInfo.setcState("ÔÚÊÛ");
-		// ½ñÈÕÍÆ¼ö
+		carInfo.setcState("åœ¨å”®");
+		// ä»Šæ—¥æ¨è
 		Map<Long, Carinfo> showCarMap = carInfoService
 				.getCarInfoByCountDesc(carInfo);
 		DbUtil.closeAll();
 		session.setAttribute("showcar", showCarMap);
 
-		// Æ·ÅÆÕ¹Ê¾
+		// å“ç‰Œå±•ç¤º
 		
 
-		// ÈÈÏúÆ·ÅÆÏÂµÄÈÈÏú³µÁ¾
+		// çƒ­é”€å“ç‰Œä¸‹çš„çƒ­é”€è½¦è¾†
 		Map<Long, Carinfo> carMap = new HashMap<Long, Carinfo>();
 		for (Integer key : showBrandMap.keySet()) {
 			clerCarAtr(carInfo);
@@ -142,7 +104,7 @@ public class CarInfoController {
 			}
 		}
 	request.setAttribute("brandcar", carMap);
-		// ×îĞÂµ½µê
+		// æœ€æ–°åˆ°åº—
 		Map<Long, Carinfo> newCarMap = carInfoService
 				.getCarInfoBySjTime(carInfo);
 		DbUtil.closeAll();
@@ -188,7 +150,7 @@ public class CarInfoController {
 			}
 		}
 		Comment1 comment = new Comment1();
-		comment.setcAdmin("Ê×Ò³Õ¹Ê¾");
+		comment.setcAdmin("é¦–é¡µå±•ç¤º");
 	
 	request.setAttribute("com1",
 				commentService.getTheTowComment(comment, 0, 2));
@@ -197,20 +159,20 @@ public class CarInfoController {
 	request.setAttribute("com3",
 				commentService.getTheTowComment(comment,4, 6));
 		Trends trends = new Trends();
-		trends.setTrType("Ö¸ÄÏ");
+		trends.setTrType("æŒ‡å—");
 		List<Trends> trendsList1 = trendsService.getITrendsByTime(trends, 6);
 		session.setAttribute("zhinan", trendsList1);
-		trends.setTrType("³ĞÅµ");
+		trends.setTrType("æ‰¿è¯º");
 		List<Trends> trendsList2 = trendsService.getITrendsByTime(trends, 6);
 	  session.setAttribute("chennuo", trendsList2);
-		trends.setTrType("»î¶¯");
+		trends.setTrType("æ´»åŠ¨");
 
 		List<Trends> trendsList = trendsService.getITrendsByTime(trends, 5);
 		for (int i = 0; i < trendsList.size(); i++) {
 			request.setAttribute("active" + (i + 1) + "",
 					trendsList.get(i));
 		}
-		trends.setTrType("ĞÂÎÅ");
+		trends.setTrType("æ–°é—»");
 
 		List<Trends> newsList = trendsService.getITrendsByTime(trends, 11);
 		List<Trends> news1 = new ArrayList<Trends>();
@@ -483,7 +445,7 @@ public class CarInfoController {
 	public String djbd(HttpServletRequest request){
 		 setOverAllUse(request);
 		Carinfo carInfo=new Carinfo();
-		carInfo.setcState("ÔÚÊÛ");
+		carInfo.setcState("åœ¨å”®");
 		 List<Carinfo>	tencar=	carInfoService.getTenCount(carInfo);
 		 request.setAttribute("trends", tencar);
 		
@@ -509,7 +471,7 @@ public class CarInfoController {
 	}
 	
    /**
-	 * ÖÃ¿ÕcarinfoµÄÊôĞÔ
+	 * ç½®ç©ºcarinfoçš„å±æ€§
 	 * 
 	 * @param carInfo
 	 */
@@ -520,24 +482,24 @@ public class CarInfoController {
 	 
 		private void fenye(HttpServletRequest req, Carinfo carInfo){
 			try {
-				carInfo.setcState("ÔÚÊÛ");
+				carInfo.setcState("åœ¨å”®");
 			int curPage=0;
 			if(req.getParameter("jumpPage")!=null){
 			 curPage =Integer.parseInt(req.getParameter("jumpPage"));
 		 }
-			//ÉèÖÃ¾àÀë²ÎÊı
+			//è®¾ç½®è·ç¦»å‚æ•°
 			String distance=null;
 			if(req.getParameter("distance")!=null){
 				distance = new String(req.getParameter("distance").getBytes("ISO8859-1"),"utf-8");
 				}
 		   Map<String, Integer> distanceMap=setDistance(distance);
-			//ÉèÖÃ¼Û¸ñ²ÎÊı
+			//è®¾ç½®ä»·æ ¼å‚æ•°
 		   String price = null;
 			if(req.getParameter("price")!=null){
 				price = new String(req.getParameter("price").getBytes("ISO8859-1"),"utf-8");
 			}
 	      Map<String, Integer> priceMap=setPrice(price);
-	      //ÉèÖÃ³µÁä²ÎÊı
+	      //è®¾ç½®è½¦é¾„å‚æ•°
 	      String age = null;
 			if(req.getParameter("age")!=null){
 				age = new String(req.getParameter("age").getBytes("ISO8859-1"),"utf-8");
@@ -557,9 +519,9 @@ public class CarInfoController {
 			 carInfo.setcEmissionstandard(new String(req.getParameter("emsi").getBytes("ISO8859-1"),"utf-8"));
 		 }
 		long maxRowsCount=carPage.queryMsgCount(carInfo,priceMap.get("minPrice"),priceMap.get("maxPrice"),distanceMap.get("minDis"),distanceMap.get("maxDis"),ageMap.get("minAge"),ageMap.get("maxAge"));
-			//´¦Àí·ÖÒ³Âß¼­<=>µ÷ÓÃ
+			//å¤„ç†åˆ†é¡µé€»è¾‘<=>è°ƒç”¨
 			PageUtil pageUtil=new PageUtil(7, maxRowsCount);
-			// ´¦ÀíÒ³ÂëÂß¼­
+			// å¤„ç†é¡µç é€»è¾‘
 			if (curPage <= 1) {
 
 				pageUtil.setCurPage(1);
@@ -604,7 +566,7 @@ public class CarInfoController {
 			
 		 }
 		  /**
-	        * ÉèÖÃ¾àÀë²ÎÊıµÄ·½·¨
+	        * è®¾ç½®è·ç¦»å‚æ•°çš„æ–¹æ³•
 	        * @param distance
 	        * @return
 	        */
@@ -623,7 +585,7 @@ public class CarInfoController {
 	    	   return distanceMap;
 	       }
 	       /**
-	        * ÉèÖÃ¼Û¸ñ²ÎÊıµÄ·½·¨
+	        * è®¾ç½®ä»·æ ¼å‚æ•°çš„æ–¹æ³•
 	        * @param price
 	        * @return
 	        */
@@ -643,7 +605,7 @@ public class CarInfoController {
 	    		return priceMap;
 	       }
 	       /**
-	        * ÉèÖÃ³µÁä²ÎÊıµÄ·½·¨
+	        * è®¾ç½®è½¦é¾„å‚æ•°çš„æ–¹æ³•
 	        * @param age
 	        * @return
 	        */
@@ -663,7 +625,7 @@ public class CarInfoController {
 	    		return ageMap;
 	       }
 	       /**
-	        * ÉèÖÃÁ½¸öIDµÄ·½·¨µÄ·½·¨
+	        * è®¾ç½®ä¸¤ä¸ªIDçš„æ–¹æ³•çš„æ–¹æ³•
 	        * @param req
 	        * @param resp
 	        * @param carInfo
@@ -719,21 +681,21 @@ public class CarInfoController {
 	       private void setOverAllUse(HttpServletRequest request) {
 	    	   this.setPriceMap(priceIntervalService.getPriceIntervalByCount());
 
-	   		// ÈÈÏúÆ·ÅÆ
+	   		// çƒ­é”€å“ç‰Œ
 	   		this.setShowBrandMap(carBrandService.getCarBrandByCount());
 
-	   		// ÈÈÏú³µĞÍ
+	   		// çƒ­é”€è½¦å‹
 	   		this.setShowType(carTypeService.getCarTypeByCount());
 
-	   		// ÈÈÏú³µÁä
+	   		// çƒ­é”€è½¦é¾„
 	   		this.setAgeMap(carAgeService.getCarAgeByCount());
-	   		// ÈÈÏú¼Û¸ñ
+	   		// çƒ­é”€ä»·æ ¼
 	    	   request.setAttribute("priceMap", this.priceMap);
 	   		
 	   		request.setAttribute("showType", this.showType);
 	   	request.setAttribute("showBrandMap",this.showBrandMap);
 	   	request.setAttribute("ageMap", this.ageMap);
-	   		// ÈÈÏúÆ·ÅÆ
+	   		// çƒ­é”€å“ç‰Œ
 	  allBrandMap = carBrandService.getAllBrand();
 	   	HttpSession session=request.getSession();
 		DbUtil.closeAll();
