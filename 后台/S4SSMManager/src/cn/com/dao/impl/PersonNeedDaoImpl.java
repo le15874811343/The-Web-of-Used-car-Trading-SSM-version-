@@ -8,18 +8,18 @@ import org.springframework.stereotype.Repository;
 
 import cn.com.pojo.*;
 import cn.com.dao.*;
-
+/**
+ * 个人需求信息操作实现类
+ *@author 
+ */
 @Repository
 public class PersonNeedDaoImpl extends BaseDao implements IPersonNeedDao,IPageDao{
 
-//	 private long p_id;
-//	 private long u_id;
-//	 private String p_brand;
-//	 private String p_series;
-//	 private String p_age;
-//	 private String p_price;
-//	 private String p_time;
-//	 private String p_miaoshu;
+ /**
+   * 
+   * 添加个人需求信息的方法
+   *@return int 
+   */
 	public int addPersonNeed(Personneed personNeed) {
 		// TODO Auto-generated method stub
 	
@@ -34,7 +34,11 @@ public class PersonNeedDaoImpl extends BaseDao implements IPersonNeedDao,IPageDa
 		}
 		return count;
 	}
-
+ /**
+   * 
+   * 删除个人需求信息的方法
+   *@return int 
+   */
 	public int deletePersonNeed(Personneed personNeed) {
 		// TODO Auto-generated method stub
 		int count=0;
@@ -48,7 +52,11 @@ public class PersonNeedDaoImpl extends BaseDao implements IPersonNeedDao,IPageDa
 		}
 		return count;
 	}
-
+  /**
+   * 
+   * 获取个人需求信息的方法
+   *@return PersonNeed
+   */
 	@Override
 	public Personneed getPerSonNeed(Personneed personNeed) {
 		// TODO Auto-generated method stub
@@ -82,7 +90,11 @@ public class PersonNeedDaoImpl extends BaseDao implements IPersonNeedDao,IPageDa
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+        /**
+         * 获取个人需求记录总条数
+         * 
+         * @return int
+         */
 	@Override
 	public Long queryPersonCarCount(Object object) {
 		// TODO Auto-generated method stub
@@ -99,7 +111,12 @@ public class PersonNeedDaoImpl extends BaseDao implements IPersonNeedDao,IPageDa
 	}
 		return count;
 	}
-
+      /**
+       * 分页获取个人需求信息
+       * @param curPage 当前页
+       * @param rowsPrePage 每页显示记录条数
+       * @return Map<Long,Object>
+       */
 	@Override
 	public Map<Long, Object> showPersonCarList(int curPage, int rowsPrePage,
 			Object object) {
@@ -120,13 +137,21 @@ public class PersonNeedDaoImpl extends BaseDao implements IPersonNeedDao,IPageDa
 			}
 			return personNeedMap;
 	}
-
+  /**
+   * 
+   * 修改个人需求信息的方法
+   *@return int 
+   */
 	@Override
 	public int updatePersonNeed(Personneed personNeed) {
 		// TODO Auto-generated method stub
 		return super.getSqlSessionTemplate().update("cn.com.pojo.PersonneedMapper.updatePersonNeed", personNeed);
 	}
-
+/**
+ * 
+ * 检查是否还有与某用户编号关联的个人需求信息
+ * @return boolean
+ */
 	@Override
 	public boolean chekUidPerson(Personneed personneed) {
 		// TODO Auto-generated method stub
@@ -136,7 +161,10 @@ public class PersonNeedDaoImpl extends BaseDao implements IPersonNeedDao,IPageDa
 		   }
 		return flag;
 	}
-
+/**
+ * 根据用户编号删除个人需求信息的方法
+ *@return int  
+ */
 	@Override
 	public int deleteUidPerson(Personneed personneed) {
 		// TODO Auto-generated method stub
