@@ -8,10 +8,17 @@ import org.springframework.stereotype.Repository;
 import cn.com.pojo.*;
 
 import cn.com.dao.*;
-
+/**
+ * 行驶距离操作实现类
+ *@author lej 
+ */
 @Repository
 public class DistanceDaoImpl extends BaseDao implements IDistanceDao,IPageDao {
-
+   /**
+    * 
+    * 按热度获取行驶距离信息的方法
+    *@return Map<Integer,Distance> 
+    */
 	@Override
 	public Map<Integer, Distance> getDistanceByCount() {
 		// TODO Auto-generated method stub
@@ -35,7 +42,10 @@ public class DistanceDaoImpl extends BaseDao implements IDistanceDao,IPageDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+    /**
+     * 获取行驶距离信息的记录总条数
+     * @return Long
+     */	
 	@Override
 	public Long queryPersonCarCount(Object object) {
 		// TODO Auto-generated method stub
@@ -46,7 +56,12 @@ public class DistanceDaoImpl extends BaseDao implements IDistanceDao,IPageDao {
 		}
 			return count;
 	}
-
+/**
+ * 分页获取行驶距离信息
+ * @param curPage 当前页数
+ * @param rowsPrePage
+ * @return Map<Long,Object>
+ */	
 	@Override
 	public Map<Long, Object> showPersonCarList(int curPage, int rowsPrePage,
 			Object object) {
@@ -59,25 +74,41 @@ public class DistanceDaoImpl extends BaseDao implements IDistanceDao,IPageDao {
 		 brandMap=super.getSqlSessionTemplate().selectMap("cn.com.pojo.DistanceMapper.showPersonCarList", parmas, "dId");
 		return brandMap;
 	}
-
+          /**
+           * 添加行驶距离的方法
+           * @parma distance
+           * @return int
+           */
 	@Override
 	public int addDistance(Distance distance) {
 		// TODO Auto-generated method stub
 		return super.getSqlSessionTemplate().insert("cn.com.pojo.DistanceMapper.insertSelective", distance);
 	}
-
+          /**
+           * 删除行驶距离的方法
+           * @parma distance
+           * @return int
+           */
 	@Override
 	public int deleteDistance(Distance distance) {
 		// TODO Auto-generated method stub
 		return super.getSqlSessionTemplate().delete("cn.com.pojo.DistanceMapper.deleteDistance", distance);
 	}
-
+          /**
+           * 修改行驶距离的方法
+           * @parma distance
+           * @return int
+           */
 	@Override
 	public int updateDistance(Distance distance) {
 		// TODO Auto-generated method stub
 		return super.getSqlSessionTemplate().update("cn.com.pojo.DistanceMapper.updateDistance", distance);
 	}
-
+   /**
+    * 
+    * 按编号获取行驶距离信息的方法
+    *@return Distance
+    */
 	@Override
 	public Distance getDistanceById(Distance distance) {
 		// TODO Auto-generated method stub
