@@ -7,9 +7,17 @@ import org.springframework.stereotype.Repository;
 import cn.com.pojo.*;
 
 import cn.com.dao.*;
+/**
+ * 
+ * 排放标准操作实现类
+ *@author  lej
+ */
 @Repository
 public class EmissionstandardDaoImpl extends BaseDao implements IEmissionstandardDao,IPageDao {
-
+        /**
+	 * 按热度获取排放标准信息的方法
+	 * @Map<Integer,Emissionstandard>
+	 */ 
 	@Override
 	public Map<Integer, Emissionstandard> getEmissionstandardByCount() {
 		// TODO Auto-generated method stub
@@ -18,25 +26,40 @@ public class EmissionstandardDaoImpl extends BaseDao implements IEmissionstandar
 		emissionstandardMap=super.getSqlSessionTemplate().selectMap("cn.com.pojo.EmissionstandardMapper.getEmissionstandardByCount", "eId");
 		return emissionstandardMap;
 	}
-
+          /**
+           * 添加排放标准信息的方法
+           * @parma emissionstandard
+           * @return int
+           */
 	@Override
 	public int addEmissionstandard(Emissionstandard emissionstandard) {
 		// TODO Auto-generated method stub
 		return super.getSqlSessionTemplate().insert("cn.com.pojo.EmissionstandardMapper.insertSelective",emissionstandard);
 	}
-
+          /**
+           * 删除排放标准信息的方法
+           * @parma emissionstandard
+           * @return int
+           */
 	@Override
 	public int deleteEmissionstandard(Emissionstandard emissionstandard) {
 		// TODO Auto-generated method stub
 		return  super.getSqlSessionTemplate().delete("cn.com.pojo.EmissionstandardMapper.deleteEmissionstandard",emissionstandard);
 	}
-
+          /**
+           * 修改排放标准信息的方法
+           * @parma emissionstandard
+           * @return int
+           */
 	@Override
 	public int updateEmissionstandard(Emissionstandard emissionstandard) {
 		// TODO Auto-generated method stub
 		return super.getSqlSessionTemplate().update("cn.com.pojo.EmissionstandardMapper.updateEmissionstandard",emissionstandard);
 	}
-
+        /**
+	 * 获取排放标准信息的方法
+	 * @return Emissionstandard
+	 */
 	@Override
 	public Emissionstandard getEmissionstandard(
 			Emissionstandard emissionstandard) {
@@ -63,7 +86,10 @@ public class EmissionstandardDaoImpl extends BaseDao implements IEmissionstandar
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+    /**
+     * 获取排放标准信息的记录总条数
+     * @return int
+     */	
 	@Override
 	public Long queryPersonCarCount(Object object) {
 		// TODO Auto-generated method stub
@@ -74,7 +100,12 @@ public class EmissionstandardDaoImpl extends BaseDao implements IEmissionstandar
 		}
 			return count;
 	}
-
+/**
+ * 分页获取排放标准信息
+ * @param curPage 当前页数
+ * @param rowsPrePage
+ * @return Map<Long,Object>
+ */	
 	@Override
 	public Map<Long, Object> showPersonCarList(int curPage, int rowsPrePage,
 			Object object) {
