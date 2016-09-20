@@ -12,14 +12,22 @@ import org.springframework.stereotype.Repository;
 import cn.com.pojo.Carchart;
 import cn.com.dao.ICarchartDao;
 import cn.com.util.DbUtil;
+/**
+ * 品牌销量操作实现类
+ * 
+ */
 @Repository
 public class CarchartDaoImpl extends BaseDao implements ICarchartDao {
-
+  /**
+   * 按年月查询的方法
+   * @return  List<Carchart>
+   */
 	@Override
 	public List<Carchart> chartinfo(int year,int month) {
 		// TODO Auto-generated method stub
 		List<Carchart> list=new ArrayList<Carchart>();
 		Map<String, Object> parmas=new HashMap<String, Object>();
+		//月份数字形式处理
 		if(month>9)
 		{
 			parmas.put("time", year+"-"+month);
@@ -39,7 +47,10 @@ public class CarchartDaoImpl extends BaseDao implements ICarchartDao {
 	}
 		return list;
 	}
-
+/**
+ * 查询不同年的方法
+ *  @return List<Carchart>
+ */
 	@Override
 	public List<Carchart> chartinfo() {
 		// TODO Auto-generated method stub
@@ -57,12 +68,16 @@ public class CarchartDaoImpl extends BaseDao implements ICarchartDao {
 	}
 		return list;
 	}
-
+/**
+ * 按年月日查询的方法
+ * @return  Map<String, Carchart>
+ */
 	@Override
 	public Map<String, Carchart> chartinfo(int year, int month, int day) {
 		// TODO Auto-generated method stub
 		Map<String, Carchart> list=new HashMap<String, Carchart>();
 		Map<String, Object> parmas=new HashMap<String, Object>();
+		//月份数字形式处理
 		if(month>9)
 		{
 			parmas.put("month", month);
@@ -71,6 +86,7 @@ public class CarchartDaoImpl extends BaseDao implements ICarchartDao {
 		{
 			parmas.put("month", "0"+month);
 		}
+		//日期数字形式处理
 		if(day>9)
 		{
 			parmas.put("day", day);
@@ -91,7 +107,10 @@ public class CarchartDaoImpl extends BaseDao implements ICarchartDao {
 	}
 		return list;
 	}
-
+/**
+ * 按年查询的方法
+ *  @return  Map<String, Carchart>
+ */
 	@Override
 	public Map<String, Carchart> chartinfo(int year) {
 		// TODO Auto-generated method stub
