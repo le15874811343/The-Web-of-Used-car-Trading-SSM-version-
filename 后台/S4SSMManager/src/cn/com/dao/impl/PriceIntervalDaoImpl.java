@@ -7,10 +7,17 @@ import org.springframework.stereotype.Repository;
 
 import cn.com.pojo.*;
 import cn.com.dao.*;
-
+/**
+ * 价格区间操作实现类
+ * @author lej
+ */
 @Repository
 public class PriceIntervalDaoImpl extends BaseDao implements IPriceIntervalDao,IPageDao{
-
+ /**
+   * 
+   * 按热度获取价格区间信息的方法
+   * @return Map<Integer,PriceInterval>
+   */
 	@Override
 	public Map<Integer, Priceinterval> getPriceIntervalByCount() {
 		// TODO Auto-generated method stub
@@ -25,25 +32,41 @@ public class PriceIntervalDaoImpl extends BaseDao implements IPriceIntervalDao,I
 	}
 		return priceIntervalMap;
 	}
-
+  /**
+   * 
+   * 添加价格区间信息的方法
+   * @return int
+   */
 	@Override
 	public int addPriceInterval(Priceinterval priceInterval) {
 		// TODO Auto-generated method stub
 		return super.getSqlSessionTemplate().insert("cn.com.pojo.PriceintervalMapper.insertSelective",priceInterval);
 	}
-
+  /**
+   * 
+   * 删除价格区间信息的方法
+   * @return int
+   */
 	@Override
 	public int deletePriceInterval(Priceinterval priceInterval) {
 		// TODO Auto-generated method stub
 		return super.getSqlSessionTemplate().delete("cn.com.pojo.PriceintervalMapper.deletePriceInterval",priceInterval);
 	}
-
+  /**
+   * 
+   * 修改价格区间信息的方法
+   * @return int
+   */
 	@Override
 	public int updatePriceInterval(Priceinterval priceInterval) {
 		// TODO Auto-generated method stub
 		return super.getSqlSessionTemplate().delete("cn.com.pojo.PriceintervalMapper.updatePriceInterval",priceInterval);
 	}
-
+  /**
+   * 
+   * 获取价格区间信息的方法
+   * @return PriceInterval
+   */
 	@Override
 	public Priceinterval getPriceIntervalById(Priceinterval priceInterval) {
 		// TODO Auto-generated method stub
@@ -69,7 +92,10 @@ public class PriceIntervalDaoImpl extends BaseDao implements IPriceIntervalDao,I
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+    /**
+     * 获取价格区间信息的记录总条数
+     * @return int
+     */	
 	@Override
 	public Long queryPersonCarCount(Object object) {
 		// TODO Auto-generated method stub
@@ -80,7 +106,12 @@ public class PriceIntervalDaoImpl extends BaseDao implements IPriceIntervalDao,I
 		}
 			return count;
 	}
-
+/**
+ * 分页获取价格区间信息
+ * @param curPage 当前页数
+ * @param rowsPrePage
+ * @return Map<Long,Object>
+ */	
 	@Override
 	public Map<Long, Object> showPersonCarList(int curPage, int rowsPrePage,
 			Object object) {
