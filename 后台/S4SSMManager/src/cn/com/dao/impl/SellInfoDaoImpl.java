@@ -10,17 +10,17 @@ import org.springframework.stereotype.Repository;
 import cn.com.pojo.*;
 
 import cn.com.dao.ISellInfoDao;
-
+/**
+  * 
+  * 销售信息操作实现类
+  * @author lej
+  */
 @Repository
 public class SellInfoDaoImpl extends BaseDao implements ISellInfoDao{
-/**
- * ��ȡ����������Ϣ
- */
-//	private long u_id;
-//	 private long c_id;
-//	 private String priceType;
-//	 private String transferFee;
-//	 private String stage;
+        /**
+	 * 获取所有销售信息
+	 * @return   Map<Long, SellInfo>
+	 */
 	@Override
 	public Map<Long, Sellinfo> getAllSellInfo() {
 		// TODO Auto-generated method stub
@@ -31,7 +31,8 @@ public class SellInfoDaoImpl extends BaseDao implements ISellInfoDao{
 		return sellInfoMap;
 	}
 /**
- * ���ݳ���Ż�ȡ�������
+ * 根据车编号获取销售信息
+ * @return SellInfo
  */
 	@Override
 	public Sellinfo getSellInfoById(Carinfo carInfo) {
@@ -49,7 +50,9 @@ public class SellInfoDaoImpl extends BaseDao implements ISellInfoDao{
 		return sellInfo2;
 	}
 /**
- * �����������
+ * 增加销售信息
+ * @param sellInfo
+ * @return int
  */
 	@Override
 	public int addSellInfo(Sellinfo sellInfo) {
@@ -67,7 +70,9 @@ public class SellInfoDaoImpl extends BaseDao implements ISellInfoDao{
 		 return count;
 	}
 /**
- * ɾ���������
+ * 删除销售信息
+ * @param sellInfo
+ * @return int
  */
 	@Override
 	public int deleteSellInfo(Sellinfo sellInfo) {
@@ -84,6 +89,11 @@ public class SellInfoDaoImpl extends BaseDao implements ISellInfoDao{
 		}
 		 return count;
 	}
+/**
+ * 修改销售信息
+ * @param sellInfo
+ * @return int
+ */
 @Override
 public int updateSellInfo(Sellinfo sellInfo) {
 	// TODO Auto-generated method stub
@@ -94,16 +104,29 @@ public int updateSellInfo(Sellinfo sellInfo) {
 	
 	return super.getSqlSessionTemplate().update("cn.com.pojo.SellinfoMapper.updateSellInfo", sellInfo);
 }
+/**
+ * 根据车主编号删除销售信息的方法
+ *@return int  
+ */
 @Override
 public int deletesellinfouser(Sellinfo s) {
 	// TODO Auto-generated method stub
 	return super.getSqlSessionTemplate().delete("cn.com.pojo.SellinfoMapper.deletesellinfouser", s);
 }
+/**
+ * 根据车编号删除销售信息的方法
+ *@return int  
+ */
 @Override
 public int deletecidsellinfouser(Sellinfo s) {
 	// TODO Auto-generated method stub
 	return super.getSqlSessionTemplate().delete("cn.com.pojo.SellinfoMapper.deletecidsellinfouser", s);
 }
+/**
+ * 
+ * 检查是否还有与某车主编号关联的销售信息
+ * @return boolean
+ */
 @Override
 public boolean checksellinfouser(Sellinfo s) {
 	// TODO Auto-generated method stub
@@ -113,6 +136,11 @@ public boolean checksellinfouser(Sellinfo s) {
 	   }
 	return flag;
 }
+/**
+ * 
+ * 检查是否还有与某车编号关联的销售信息
+ * @return boolean
+ */
 @Override
 public boolean checkcidsellinfouser(Sellinfo s) {
 	// TODO Auto-generated method stub
