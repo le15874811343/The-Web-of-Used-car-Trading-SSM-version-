@@ -10,16 +10,24 @@ import org.springframework.stereotype.Repository;
 import cn.com.pojo.*;
 import cn.com.dao.ICommentDao;
 import cn.com.dao.IPageDao;
-
+/**
+ * 评论操作实现类
+ * @author lej
+ */
 @Repository
 public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
-
+          /**
+           * 添加评论的方法
+           * @parma comment
+           * @return int
+           */
 	@Override
 	public int addComment(Comment1 comment) {
 		// TODO Auto-generated method stub
 
 		int count = 0;
 		try {
+			//添加
 		 super.getSqlSessionTemplate().insert("cn.com.pojo.Comment1Mapper.insertSelective", comment);
 			count = 1;
 		} catch (Exception e) {
@@ -28,13 +36,18 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
 		}
 		return count;
 	}
-
+          /**
+           * 删除评论的方法
+           * @parma comment
+           * @return int
+           */
 	@Override
 	public int deleteComment(Comment1 comment) {
 		// TODO Auto-generated method stub
 
 		int count = 0;
 		try {
+			//删除
 			super.getSqlSessionTemplate().delete("cn.com.pojo.Comment1Mapper.deleteComment", comment);
 			count = 1;
 		} catch (Exception e) {
@@ -43,12 +56,17 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
 		}
 		return count;
 	}
-
+          /**
+           * 获取评论的方法
+           * @parma comment
+           * @return Comment
+           */
 	@Override
 	public Comment1 getComment(Comment1 comment) {
 		// TODO Auto-generated method stub
 		Comment1 _comment = null;
 		try{
+			//获取结果
 		_comment=	 (Comment1) super.getSqlSessionTemplate().selectList("cn.com.pojo.Comment1Mapper.getComment", comment).get(0);
 		}
 		catch (Exception e) {
@@ -57,7 +75,13 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
 		}
 		return _comment;
 	}
-
+          /**
+           * 获取两条最新的评论的方法
+           * @parma comment
+           * @parma min 最小行
+           * @parma max 最大行
+           * @return Map<Long,Comment>
+           */
 	@Override
 	public Map<Long, Comment1> getTheTowComment(Comment1 comment, int min, int max) {
 		// TODO Auto-generated method stub
@@ -68,6 +92,7 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
 		parmas.put("cAdmin", comment.getcAdmin());
 		parmas.put("min", min);
 		parmas.put("max", max);
+		//获取结果集
 		comMap=    super.getSqlSessionTemplate().selectMap("cn.com.pojo.Comment1Mapper.getTheTowComment", parmas, "cId");
 		
 		return comMap;
@@ -87,16 +112,24 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+          /**
+           * 获取评论总记录条数的方法
+           * @return Long
+           */
 	@Override
 	public Long queryPersonCarCount(Object object) {
 		// TODO Auto-generated method stub
 		Long count = null;
-
+  //获取结果
 	 count=(Long) super.getSqlSessionTemplate().selectList("cn.com.pojo.Comment1Mapper.queryPersonCarCount").get(0);
 		return count;
 	}
-
+          /**
+           * 分页获取评论信息
+           * @param curPage 当前页
+           * @param rowsPrePage 每页展示条数
+           * @return Map<Long, Object> 
+           */
 	@Override
 	public Map<Long, Object> showPersonCarList(int curPage, int rowsPrePage,
 			Object object) {
@@ -109,10 +142,15 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao, IPageDao {
       trendsMap=  super.getSqlSessionTemplate().selectMap("cn.com.pojo.Comment1Mapper.showPersonCarList",parmas ,"cId");
 		return trendsMap;
 	}
-
+          /**
+           * 修改评论的方法
+           * @parma comment
+           * @return int
+           */
 	@Override
 	public int updateComment(Comment1 comment) {
 		// TODO Auto-generated method stub
+		//返回受影响的行数
 		return super.getSqlSessionTemplate().insert("cn.com.pojo.Comment1Mapper.updateComment", comment);
 	}
 
