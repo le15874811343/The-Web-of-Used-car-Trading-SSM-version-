@@ -11,12 +11,16 @@ import cn.com.dao.*;
 import cn.com.pojo.*;
 import cn.com.service.*;
 import cn.com.util.*;
+/**
+ * 汽车信息操作控制器
+ * @author lej
+ */
 @Controller
 public class CarInfoController {
-	private Map<Integer, Priceinterval> priceMap = null;
-	private Map<Integer, Carbrand> showBrandMap = null;
-	private Map<Integer, Cartype> showType = null;
-	private Map<Integer, Carage> ageMap = null;
+	private Map<Integer, Priceinterval> priceMap = null; //车价区间集合
+	private Map<Integer, Carbrand> showBrandMap = null; //名牌集合
+	private Map<Integer, Cartype> showType = null; //热门车型集合
+	private Map<Integer, Carage> ageMap = null;   //热门车龄集合
 	public Map<Integer, Priceinterval> getPriceMap() {
 		return priceMap;
 	}
@@ -42,38 +46,41 @@ public class CarInfoController {
 		this.ageMap = ageMap;
 	}
 	@Resource
-	private IDistanceService distanceService=null;
+	private IDistanceService distanceService=null; //行驶距离服务接口的引用
 	@Resource
-	private   IEmissionstandardService emissionstandardService=null;
+	private   IEmissionstandardService emissionstandardService=null;  //排放标准服务接口的引用
 	@Resource
-	private IBasicInfoService basicInfoService=null;
+	private IBasicInfoService basicInfoService=null;  //汽车基础信息服务的引用
 	@Resource
-	private   ICarImagesInfoService carImagesInfoService=null;
+	private   ICarImagesInfoService carImagesInfoService=null; //汽车图片信息服务接口的引用
+	@Resource 
+	private   IHardwareConfigService hardwareConfigService=null; //汽车硬件配置信息服务接口的引用
 	@Resource
-	private   IHardwareConfigService hardwareConfigService=null;
+	private	IProcedureInfoService procedureInfoService=null; //手续服务接口的引用
 	@Resource
-	private	IProcedureInfoService procedureInfoService=null;
+	private	ISellInfoService sellInfoService=null; //销售信息服务接口的引用
 	@Resource
-	private	ISellInfoService sellInfoService=null;
+	private	ISystemConfigService systemConfigService=null; //汽车系统配置服务接口的引用
 	@Resource
-	private	ISystemConfigService systemConfigService=null;
-	@Resource
-	private ICarInfoService carInfoService = null;
+	private ICarInfoService carInfoService = null;  //汽车概要信息服务接口的引用
 	@Resource(name = "carInfoDaoImpl" )
-	private IPageDao carPage = null;
+	private IPageDao carPage = null; //分页处理操作接口引用
 	@Resource
-	private ICarBrandService carBrandService = null;
+	private ICarBrandService carBrandService = null;  //品服务接口的引用
 	@Resource
-	private ICarTypeService carTypeService = null;
+	private ICarTypeService carTypeService = null;  //车型服务接口的引用
 	@Resource
-	private ITrendsService trendsService = null;
+	private ITrendsService trendsService = null; //公司动态消息服务接口的引用
 	@Resource
-	private IPriceIntervalService priceIntervalService = null;
+	private IPriceIntervalService priceIntervalService = null; //价格区间消息服务接口的引用
 	@Resource
-	private ICarAgeService carAgeService = null;
+	private ICarAgeService carAgeService = null; //车龄服务接口的引用
 	@Resource
-	private ICommentService commentService=null;
-	private Map<Integer, Carbrand> allBrandMap = null;
+	private ICommentService commentService=null; //品牌服务接口的引用
+	private Map<Integer, Carbrand> allBrandMap = null; //所有品牌集合
+  /**
+   *展示首页的请求
+   */
 	@RequestMapping("/CarInfo.action")
    public String show(HttpServletRequest request,HttpSession session){
 	
@@ -113,7 +120,7 @@ public class CarInfoController {
 				.getFourthCarInfoBySjTime(carInfo);
 		DbUtil.closeAll();
 		request.setAttribute("fourthcar", fourthCarMap);
-
+//首字母菜单数据处理
 		List<String> leftszm = new ArrayList<String>();
 		List<String> rightszm = new ArrayList<String>();
 		for (Integer key : allBrandMap.keySet()) {
@@ -135,7 +142,7 @@ public class CarInfoController {
 		Collections.sort(rightszm);
 		request.setAttribute("leftszm", leftszm);
 	  request.setAttribute("rightszm", rightszm);
-
+//热销车型下的车
 		Map<Long, Carinfo> typeCarMap = new HashMap<Long, Carinfo>();
 		for (Integer key : showType.keySet()) {
 			clerCarAtr(carInfo);
@@ -149,6 +156,7 @@ public class CarInfoController {
 				typeCarMap.put(key1, typeCar.get(key1));
 			}
 		}
+		//评论信息
 		Comment1 comment = new Comment1();
 		comment.setcAdmin("首页展示");
 	
@@ -158,6 +166,7 @@ public class CarInfoController {
 				commentService.getTheTowComment(comment, 2, 4));
 	request.setAttribute("com3",
 				commentService.getTheTowComment(comment,4, 6));
+				//公司动态消息展示
 		Trends trends = new Trends();
 		trends.setTrType("指南");
 		List<Trends> trendsList1 = trendsService.getITrendsByTime(trends, 6);
@@ -196,6 +205,10 @@ public class CarInfoController {
 
 	   return "index";
    }
+        /**
+	 * 展示买车菜单action
+	 * 
+	 */
 	@RequestMapping("/CarInfo_showList.action")
 	public String showList(HttpServletRequest request) {
 		  Carinfo carInfo=new Carinfo();
@@ -208,6 +221,10 @@ public class CarInfoController {
 		
 		   return "maiche_list";
 	   }
+	    /**
+	    * 车辆详情展示action
+	    * 
+	    */
 	@RequestMapping("/CarInfo_showDetails.action")
 	public String showDetails(HttpServletRequest request){
 		 setOverAllUse(request);
@@ -227,6 +244,9 @@ public class CarInfoController {
 	    }
 	
 	}
+	        /**
+		 *审核中的车详情展示action
+		 */
 	@RequestMapping("/CarInfo_showshdea.action")
 	public String showshdea(HttpServletRequest request){
 		 setOverAllUse(request);
@@ -235,11 +255,18 @@ public class CarInfoController {
 		getdea(request, carInfo);
 		return "admin/maiche_show";
 	}
+	        /**
+		 *展示私人定制页面的action
+		 */
 	@RequestMapping("/CarInfo_showsrdz.action")
 	public String showsrdz(HttpServletRequest request){
 		setOverAllUse(request);
 		return "admin/srdz";
 	}
+	        /**
+		 * 进行车辆比较的action
+		 * 
+		 */
 	@RequestMapping("/CarInfo_showCompare.action")
 	public String showCompare(HttpServletRequest request,HttpSession session){
 		 setOverAllUse(request);
@@ -257,14 +284,15 @@ public class CarInfoController {
 	 Systemconfig  systemConfig= systemConfigService.getSystemConfigById(carInfo);
 	 DbUtil.closeAll();
 	 Sellinfo sellInfo=sellInfoService.getSellInfoById(carInfo);
-	 DbUtil.closeAll();        
-			 Object pareCar=   session.getAttribute("pareCarInfo");
+	 DbUtil.closeAll();
+	 //从session中获取比较过的车的集合
+       Object pareCar=   session.getAttribute("pareCarInfo");
        Object pareSys=   session.getAttribute("pareSystemConfig");
        Object pareSell=   session.getAttribute("pareSellInfo");
        Object pareHar=   session.getAttribute("pareHardwareConfig");
        Object parePro=   session.getAttribute("pareProcedureInfo");
        Object pareBas=   session.getAttribute("pareBasic");
-       
+        //创建进行比较的车的各种信息的集合，指向空引用
        Map<Integer, Carinfo> pareCarInfo=null;
        Map<Integer, Systemconfig> pareSystemConfig=null;
        Map<Integer, Sellinfo> pareSellInfo=null;
@@ -272,17 +300,18 @@ public class CarInfoController {
        Map<Integer, Procedureinfo> pareProcedureInfo=null;
        Map<Integer, Basicinfo> pareBasic=null;
        boolean flag=false;
-      
+       //如果之前没有进行比较，则直接将该车加入进比较集合
        if(pareCar==null){
            pareCarInfo=new HashMap<Integer, Carinfo>();
            pareCarInfo.put(1, detailsMap.get(carInfo.getcId()));
        }
+       //如果之前进行过比较
        if(pareCar!=null){
-       	       
+       	       //新的比较集合指向之前比较的集合
            pareCarInfo=(Map<Integer, Carinfo>) pareCar;
-      
+       //判断集合中是否存在现在选中的车
          flag=  pareCarInfo.containsValue(detailsMap.get(carInfo.getcId()));
-      
+       //如果不存在，则按照不同的条件在比较集合中加入这辆车
          if(flag==false){
            if(pareCarInfo.size()==1){
            	 pareCarInfo.put(2, detailsMap.get(carInfo.getcId()));
@@ -297,6 +326,7 @@ public class CarInfoController {
            }
        }
        }
+        //之后的操作与pareCar处相同
        if(pareSys==null){
            pareSystemConfig=new HashMap<Integer, Systemconfig>();
           pareSystemConfig.put(1, systemConfig);
@@ -417,6 +447,10 @@ public class CarInfoController {
     
 		return "compareCar";
 	}
+	        /**
+		 * 会员操作栏中的直接比较action，即获取session中的比较集合
+		 * 
+		 */
 	@RequestMapping("/CarInfo_zjbj.action")
 	public String zjbj(HttpServletRequest request,HttpSession session){
 		 setOverAllUse(request);
@@ -441,6 +475,10 @@ public class CarInfoController {
 	    
 		return "compareCar";
 	}
+	        /**
+		 * /展示点击榜单的action
+		 * 
+		 */
 	@RequestMapping("/CarInfo_djbd.action")
 	public String djbd(HttpServletRequest request){
 		 setOverAllUse(request);
@@ -451,6 +489,9 @@ public class CarInfoController {
 		
 		return "count_list";
 	}
+	        /**
+		 * 展示交易榜单的action
+		 */
 	@RequestMapping("/CarInfo_jybd.action")
 	public String jybd(HttpServletRequest request){
 		 setOverAllUse(request);
@@ -470,16 +511,20 @@ public class CarInfoController {
 		return "jy_list";
 	}
 	
-   /**
-	 * 置空carinfo的属性
-	 * 
-	 * @param carInfo
-	 */
+                /**
+		 * 置空carinfo的属性
+		 * 
+		 * @param carInfo
+		 */
 	private void clerCarAtr(Carinfo carInfo) {
 		carInfo.setcBrand(null);
 		carInfo.setcType(null);
 	}
-	 
+      /**
+       * 分页处理的方法
+       * 
+       * 
+       */
 		private void fenye(HttpServletRequest req, Carinfo carInfo){
 			try {
 				carInfo.setcState("在售");
@@ -637,18 +682,23 @@ public class CarInfoController {
 	    		carInfo.setcId(c_id);
 	    		carInfo.setuId(u_id);
 	       }
+	 /**
+	  * 绑定几个页面需要用到条件参数
+	  * 
+	  */
 	       private  void bindWhere(HttpServletRequest req){
 	    	   
 	    	   Map<Integer, Distance> distanceMap= distanceService.getDistanceByCount();
 	          DbUtil.closeAll();  
 	    	  req.setAttribute("distanceMap", distanceMap);
-	   	 
-	  	
-		
 	  Map<Integer,Emissionstandard> emisMap=emissionstandardService.getEmissionstandardByCount();
 	    DbUtil.closeAll();
 	    req.setAttribute("emisMap", emisMap);
 	       }
+      /**
+       * 获取车辆详细信息的方法
+       * @return Map<Long,CarInfo>
+       */
 	       private Map<Long, Carinfo> getdea(HttpServletRequest req,Carinfo carInfo){
 	    		 
 	    		    this.setID(req, carInfo);
@@ -678,6 +728,10 @@ public class CarInfoController {
 	    	  req.setAttribute("basicInfo", basicInfo);
 	    		  return detailsMap;
 	    	  }
+/**
+ * 注入多个页面需要用到的条件数据
+ * 
+ */
 	       private void setOverAllUse(HttpServletRequest request) {
 	    	   this.setPriceMap(priceIntervalService.getPriceIntervalByCount());
 
