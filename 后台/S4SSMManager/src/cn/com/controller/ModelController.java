@@ -21,35 +21,38 @@ import cn.com.service.*;
 
 import cn.com.util.*;
 
-
+/**
+ * 各项参数管理控制器
+ * 
+ */
 @Controller
 public class ModelController {
 	@Resource
-	 private IModelService modelService=null;
+	 private IModelService modelService=null; //车系信息服务接口的引用
 	@Resource
-	 private  ICarBrandService brandServiceImpl=null;
+	 private  ICarBrandService brandServiceImpl=null; //汽车品牌服务接口的引用
 	@Resource(name="carBrandServiceImpl")
-	  private IPageDao brandPage=null;
+	  private IPageDao brandPage=null;  //分页处理操作接口的引用（指向汽车品牌信息操作实现类）
 	  @Resource
-	  private  ICarAgeService ageServiceImpl=null;
+	  private  ICarAgeService ageServiceImpl=null; //车龄信息服务接口的引用
 	  @Resource(name="carAgeServiceImpl")
-	  private IPageDao carAgePage=null;
+	  private IPageDao carAgePage=null;  //分页处理操作接口的引用（指向车龄信息操作实现类）
 	  @Resource
-	  private IPriceIntervalService priceIntervalServiceImpl=null;
+	  private IPriceIntervalService priceIntervalServiceImpl=null; //车价信息服务接口的引用
 	  @Resource(name="priceIntervalServiceImpl")
-	  private  IPageDao  pricePage=null;
+	  private  IPageDao  pricePage=null; //分页处理操作接口的引用（指向车价信息操作实现类）
 	  @Resource
-	  private  IDistanceService distanceService=null;
+	  private  IDistanceService distanceService=null; //行驶距离信息服务接口的引用
 	  @Resource(name="distanceServiceImpl")
-	  private IPageDao distancePage=null;
+	  private IPageDao distancePage=null; //分页处理操作接口的引用（指向行驶距离信息操作实现类）
 	  @Resource
-	  private IEmissionstandardService emissionstandardService=null;
+	  private IEmissionstandardService emissionstandardService=null; //排放标准服务接口的引用
 	  @Resource(name="emissionstandardServiceImpl")
-	  private IPageDao  emisPage=null;
+	  private IPageDao  emisPage=null; //分页处理操作接口的引用（指向排放标准信息操作实现类）
 	  @Resource
-	  private ICarTypeService carTypeService=null;
+	  private ICarTypeService carTypeService=null; //车型服务接口的引用
 	  @Resource(name="carTypeServiceImpl")
-	  private IPageDao carTypePage=null;
+	  private IPageDao carTypePage=null;  //分页处理操作接口的引用（指向车型信息操作实现类）
 	public IModelService getModelService() {
 		return modelService;
 	}
@@ -130,6 +133,9 @@ public class ModelController {
 	public void setCarTypePage(IPageDao carTypePage) {
 		this.carTypePage = carTypePage;
 	}
+   /**
+    * 品牌车系二级联动操作action
+    */
 	@RequestMapping("/Model.action")
 	public void execute(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -143,10 +149,13 @@ public class ModelController {
 	   JSONArray jsonArray= JSONArray.fromObject(modelMap);
 	  response.setContentType("text/html;charset=utf-8");
 	  response.getWriter().println(jsonArray);
-	  response.getWriter().flush();//��ջ���,ˢ��
+	  response.getWriter().flush();//清空缓存,刷新
 	  response.getWriter().close();
 	  
 	}
+        /**
+	 * 展示车系详情操作action
+	 */
 	@RequestMapping("/Model_getDea.action")
 	public void getDea(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		
@@ -160,10 +169,13 @@ public class ModelController {
 	   JSONArray jsonArray= JSONArray.fromObject(modelMap);
 	   response.setContentType("text/html;charset=utf-8");
 	   response.getWriter().println(jsonArray);
-	   response.getWriter().flush();//��ջ���,ˢ��
+	   response.getWriter().flush();//清空缓存,刷新
 	   response.getWriter().close();
 		 
 	}
+	/**
+	 * 展示品牌操作action
+	 */
 	@RequestMapping("/Model_showbrand.action")
 	public String showbrand(HttpServletRequest request) throws Exception {
 		 Carbrand carBrand=new Carbrand();
@@ -172,6 +184,9 @@ public class ModelController {
 	       
 		 return "admin/brand";
 	}
+	/**
+	 * 展示车龄信息操作action
+	 */
 	@RequestMapping("/Model_showage.action")
 	public String showage(HttpServletRequest request) throws Exception {
 		Carage carAge=new Carage();
@@ -179,6 +194,9 @@ public class ModelController {
 		
 		 return "admin/age";
 	}
+	/**
+	 * 展示车型信息操作action
+	 */
 	@RequestMapping("/Model_showtype.action")
 	public String showtype(HttpServletRequest request) throws Exception {
 		Cartype carType=new Cartype();
@@ -186,6 +204,9 @@ public class ModelController {
 		
 		 return "admin/type";
 	}
+	/**
+	 * 展示行驶距离信息操作action
+	 */
 	@RequestMapping("/Model_showdistance.action")
 	public String showdistance(HttpServletRequest request) throws Exception {
 		Distance distance=new Distance();
@@ -193,6 +214,9 @@ public class ModelController {
       
 		 return "admin/distance";
 	}
+	/**
+	 * 展示排放标准操作action
+	 */
 	@RequestMapping("/Model_showemsi.action")
 	public String showemsi(HttpServletRequest request) throws Exception {
 		 Emissionstandard emissionstandard=new Emissionstandard();
@@ -200,6 +224,9 @@ public class ModelController {
        
 		 return "admin/emsi";
 	}
+	/**
+	 * 展示价格区间操作action
+	 */
 	@RequestMapping("/Model_showprice.action")
 	public String showprice(HttpServletRequest request) throws Exception {
 		Priceinterval priceInterval=new Priceinterval();
@@ -207,6 +234,9 @@ public class ModelController {
       
 		 return "admin/price";
 	}
+	/**
+	 * 展示车系操作action
+	 */
 	@RequestMapping("/Model_showseries.action")
 	public String showseries(HttpServletRequest request) throws Exception {
 		
@@ -215,6 +245,9 @@ public class ModelController {
 		
 		 return "admin/series";
 	}
+	/**
+	 * 请求增加车系操作action
+	 */
 	@RequestMapping("/Model_addseries.action")
 	public String addseries(HttpServletRequest request) throws Exception {
 	
@@ -223,6 +256,9 @@ public class ModelController {
 		
 		 return "admin/series-add";
 	}
+	/**
+	 * //增加品牌操作action
+	 */
 	@RequestMapping("/Model_addbrand.action")
 	public String addbrand(HttpServletRequest request) throws Exception {
 		
@@ -243,11 +279,14 @@ public class ModelController {
           }
         if(brandServiceImpl.addCarBrand(carBrand)){
         	
-        	request.setAttribute("meag", "���ӳɹ�");
+        	request.setAttribute("meag", "添加成功");
         	
         }
 		 return "admin/brand-add";
 	}
+	/**
+	 * 请求修改品牌操作action
+	 */
 	@RequestMapping("/Model_upbrand.action")
 	public String upbrand(HttpServletRequest request,HttpSession session) throws Exception {
 		String bid=request.getParameter("bid");
@@ -261,6 +300,9 @@ public class ModelController {
 
 		 return "redirect:/admin/brand-up.jsp";
 	}
+	/**
+	 * 提交修改品牌action
+	 */
 	@RequestMapping("/Model_tjupbr.action")
 	public String tjupbr(HttpServletRequest request,HttpSession session) throws Exception {
 		
@@ -285,12 +327,15 @@ public class ModelController {
           }
         if(brandServiceImpl.updateCarBrand(carBrand)){
         	
-        	session.setAttribute("upbrand", "�޸ĳɹ�");
+        	session.setAttribute("upbrand", "修改成功");
         	session.setAttribute("brand", carBrand);
         	
         }
 		 return "redirect:/admin/brand-up.jsp";
 	}
+	/**
+	 * 删除品牌操作action
+	 */
 	@RequestMapping("/Model_delbrand.action")
 	public void delbrand(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		
@@ -300,11 +345,14 @@ public class ModelController {
 		 if(brandServiceImpl.deleteCarBrand(carBrand)){
 			 response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print(1);
-				 response.getWriter().flush();//��ջ���,ˢ��
+				 response.getWriter().flush();//清空缓存,刷新
 				   response.getWriter().close();
 		 }
 		
 	}
+	/**
+	 * 提交增加车系操作action
+	 */
 	@RequestMapping("/Model_addser.action")
 	public String addser(HttpServletRequest request) throws Exception {
 		String bid=request.getParameter("cpp");
@@ -314,11 +362,14 @@ public class ModelController {
 		model.setmName(sname);
 		
 		if(modelService.addModel(model)){
-			request.setAttribute("mea", "���ӳɹ�");
+			request.setAttribute("mea", "添加成功");
 		
 		}
 		 return "admin/series-add";
 	}
+	/**
+	 * 请求修改车系操作action
+	 */
 	@RequestMapping("/Model_upser.action")
 	public String upser(HttpServletRequest request) throws Exception {
 		String mid=request.getParameter("mid");
@@ -332,6 +383,9 @@ public class ModelController {
 	
 		 return "admin/series-up";
 	}
+	/**
+	 * 提交车系修改action
+	 */
 	@RequestMapping("/Model_tjupser.action")
 	public String tjupser(HttpServletRequest request) throws Exception {
 		String mid=request.getParameter("mid");
@@ -346,11 +400,14 @@ public class ModelController {
 			Map<Integer, Carbrand> brandMap=	brandServiceImpl.getAllBrand();
 			request.setAttribute("allbrand", brandMap);
 			request.setAttribute("model", model);
-			request.setAttribute("mea", "�޸ĳɹ�");
+			request.setAttribute("mea", "修改成功");
 			
 		}
 		 return "admin/series-up";
 	}
+	/**
+	 * 删除车系action
+	 */
 	@RequestMapping("/Model_delser.action")
 	public void delser(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		String mid=request.getParameter("mid");
@@ -359,11 +416,14 @@ public class ModelController {
 		if(modelService.deleteModel(model)){
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print(1);
-			 response.getWriter().flush();//��ջ���,ˢ��
+			 response.getWriter().flush();//清空缓存,刷新
 			   response.getWriter().close();
 		}
 		 
 	}
+	/**
+	 * 加车龄信息action
+	 */
 	@RequestMapping("/Model_addage.action")
 	public String addage(HttpServletRequest request) throws Exception {
 		String aname=request.getParameter("cAge");
@@ -376,11 +436,14 @@ public class ModelController {
               }
 		
 		 if(ageServiceImpl.addCarAge(carAge)){
-			 request.setAttribute("mea", "���ӳɹ�");
+			 request.setAttribute("mea", "添加成功");
 				
 		 }
 		 return "admin/age-add";
 	}
+	/**
+	 *请求修改车龄信息 action
+	 */
 	@RequestMapping("/Model_upage.action")
 	public String upage(HttpServletRequest request) throws Exception {
 		String a_id=request.getParameter("aid");
@@ -392,6 +455,9 @@ public class ModelController {
 	
 		 return "admin/age-up";
 	}
+	/**
+	 * 提交修改车龄信息action
+	 */
 	@RequestMapping("/Model_tjupage.action")
 	public String tjupage(HttpServletRequest request) throws Exception {
 		String aname=request.getParameter("cAge");
@@ -408,12 +474,15 @@ public class ModelController {
 
 			if(ageServiceImpl.updateCarAge(carAge)){
 				request.setAttribute("age", carAge);
-				request.setAttribute("mea", "�޸ĳɹ�");
+				request.setAttribute("mea", "修改成功");
 			
 			
 			}
 		 return "admin/age-up";
 	}
+	/**
+	 * 删除车龄信息action
+	 */
 	@RequestMapping("/Model_delage.action")
 	public void delage(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		String aid=request.getParameter("aid");
@@ -423,11 +492,14 @@ public class ModelController {
 		if(ageServiceImpl.deleteCarAge(carAge)){
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print(1);
-			 response.getWriter().flush();//��ջ���,ˢ��
+			 response.getWriter().flush();//清空缓存,刷新
 			   response.getWriter().close();
 		}
 		
 	}
+	/**
+	 * 增加价格区间信息action
+	 */
 	@RequestMapping("/Model_addprice.action")
 	public String addprice(HttpServletRequest request) throws Exception {
 		String aname=request.getParameter("cAge");
@@ -440,11 +512,14 @@ public class ModelController {
               }
 		
 		 if(priceIntervalServiceImpl.addPriceInterval(priceInterval)){
-			 request.setAttribute("mea", "���ӳɹ�");
+			 request.setAttribute("mea", "添加成功");
 				
 		 }
 		 return "admin/price-add";
 	}
+	/**
+	 * 请求修改价格区间信息action
+	 */
 	@RequestMapping("/Model_upprice.action")
 	public String upprice(HttpServletRequest request) throws Exception {
 		String pid=request.getParameter("pid");
@@ -457,6 +532,9 @@ public class ModelController {
 
 		 return "admin/price-up";
 	}
+	/**
+	 * 提交修改价格区间action
+	 */
 	@RequestMapping("/Model_tjupprice.action")
 	public String tjupprice(HttpServletRequest request) throws Exception {
 		String pid=request.getParameter("pid");
@@ -471,12 +549,15 @@ public class ModelController {
               }
 		
    if(priceIntervalServiceImpl.updatePriceInterval(priceInterval)){
-	   request.setAttribute("mea", "�޸ĳɹ�");
+	   request.setAttribute("mea", "修改成功");
 	   request.setAttribute("price", priceInterval);
 		
    }
 		 return "admin/price-up";
 	}
+	/**
+	 * 删除价格区间action
+	 */
 	@RequestMapping("/Model_delprice.action")
 	public void delprice(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		String pid=request.getParameter("pid");
@@ -486,11 +567,14 @@ public class ModelController {
 if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 	response.setContentType("text/html;charset=utf-8");
 	response.getWriter().print(1);
-	 response.getWriter().flush();//��ջ���,ˢ��
+	 response.getWriter().flush();//清空缓存,刷新
 	   response.getWriter().close();
 } 
 	
 	}
+	/**
+	 * 添加行驶距离action
+	 */
 	@RequestMapping("/Model_adddis.action")
 	public String adddis(HttpServletRequest request) throws Exception {
 		String aname=request.getParameter("cAge");
@@ -503,11 +587,14 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
               }
 		
 		 if(distanceService.addDistance(distance)){
-			 request.setAttribute("mea", "���ӳɹ�");
+			 request.setAttribute("mea", "添加成功");
 			
 		 }
 		 return "admin/distance-add";
 	}
+	/**
+	 * 请求修改行驶距离action
+	 */
 	@RequestMapping("/Model_updis.action")
 	public String updis(HttpServletRequest request) throws Exception {
 		String did=request.getParameter("did");
@@ -519,6 +606,9 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 	 
 		 return "admin/distance-up";
 	}
+	/**
+	 * 提交修改行驶距离action
+	 */
 	@RequestMapping("/Model_tjupdis.action")
 	public String tjupdis(HttpServletRequest request) throws Exception {
 		String aname=request.getParameter("cAge");
@@ -533,12 +623,15 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
               }
 		
 		 if(distanceService.updateDistance(distance)){
-			 request.setAttribute("mea", "�޸ĳɹ�");
+			 request.setAttribute("mea", "修改成功");
 			 request.setAttribute("distance", distance);
 			
 		 }
 		 return "admin/distance-up";
 	}
+	/**
+	 * 删除行驶距离action
+	 */
 	@RequestMapping("/Model_deldis.action")
 	public void deldis(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		String did=request.getParameter("did");
@@ -549,11 +642,14 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 		 if(distanceService.deleteDistance(distance)){
 			 response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print(1);
-				 response.getWriter().flush();//��ջ���,ˢ��
+				 response.getWriter().flush();//清空缓存,刷新
 				   response.getWriter().close();
 		 }
 		
 	}
+	/**
+	 * 添加排放标准action
+	 */
 	@RequestMapping("/Model_addemsi.action")
 	public String addemsi(HttpServletRequest request) throws Exception {
 		String name=request.getParameter("name");
@@ -566,11 +662,14 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
               }
 		
 		 if(emissionstandardService.addEmissionstandard(emissionstandard)){
-			 request.setAttribute("mea", "���ӳɹ�");
+			 request.setAttribute("mea", "添加成功");
 			
 		 }
 		 return "admin/emsi-add";
 	}
+	/**
+	 * 请求修改排放标准action
+	 */
 	@RequestMapping("/Model_upemsi.action")
 	public String upemsi(HttpServletRequest request) throws Exception {
 		String eid=request.getParameter("eid");
@@ -582,6 +681,9 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 	
 		 return "admin/emsi-up";
 	}
+	/**
+	 * 提交排放标准修改action
+	 */
 	@RequestMapping("/Model_tjemsi.action")
 	public String tjemsi(HttpServletRequest request) throws Exception {
 		String eid=request.getParameter("eid");
@@ -596,11 +698,14 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
               }
 		
 	if(emissionstandardService.updateEmissionstandard(emissionstandard)){
-		request.setAttribute("mea", "�޸ĳɹ�");
+		request.setAttribute("mea", "修改成功");
 		request.setAttribute("emsi", emissionstandard);
 	}
 		 return "admin/emsi-up";
 	}
+	/**
+	 * 删除排放标准action
+	 */
 	@RequestMapping("/Model_delemsi.action")
 	public void delemsi(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		String eid=request.getParameter("eid");
@@ -610,11 +715,14 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
        if(emissionstandardService.deleteEmissionstandard(emissionstandard)){
     	   response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print(1);
-			 response.getWriter().flush();//��ջ���,ˢ��
+			 response.getWriter().flush();//清空缓存,刷新
 			   response.getWriter().close();
        }
 		
 	}
+	/**
+	 * 添加车型action
+	 */
 	@RequestMapping("/Model_addtype.action")
 	public String addtype(HttpServletRequest request) throws Exception {
 		 String bname=request.getParameter("maxAge");
@@ -633,11 +741,14 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
           }
         
         if(  carTypeService.addCarType(carType)){
-        	request.setAttribute("mea", "���ӳɹ�");
+        	request.setAttribute("mea", "添加成功");
      	  
         }
 		 return "admin/type-add";
 	}
+	/**
+	 * 请求修改车型action
+	 */
 	@RequestMapping("/Model_uptype.action")
 	public String uptype(HttpServletRequest request,HttpSession session) throws Exception {
 		  String tid=request.getParameter("tid");
@@ -649,6 +760,9 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 		 
 		 return "redirect:/admin/type-up.jsp";
 	}
+	/**
+	 * 提交修改车型action
+	 */
 	@RequestMapping("/Model_tjuptype.action")
 	public String tjuptype(HttpServletRequest request,HttpSession session) throws Exception {
 		 String tid=request.getParameter("tid");
@@ -670,11 +784,14 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 		  
 		   if(carTypeService.updateType(carType)){
 			   session.setAttribute("upcartype", carType);
-			   session.setAttribute("upbrand", "�޸ĳɹ�");
+			   session.setAttribute("upbrand", "修改成功");
 			 
 		   }
 		   return "redirect:/admin/type-up.jsp";
 	}
+	/**
+	 * 删除车型action
+	 */
 	@RequestMapping("/Model_deltype.action")
 	 public void deltype(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		 String tid=request.getParameter("tid");
@@ -684,10 +801,14 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
    if(carTypeService.deleteCarType(carType)){
 	   response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(1);
-		 response.getWriter().flush();//��ջ���,ˢ��
+		 response.getWriter().flush();//清空缓存,刷新
 		   response.getWriter().close();
    }
 	 }
+        /**
+	 * 分页展示品牌的方法
+	 * 
+	 */
 	private void fenye(HttpServletRequest req,Carbrand carBrand){
 		
 			try {
@@ -699,9 +820,9 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 			
 	   
 		 long maxRowsCount=brandPage.queryPersonCarCount(carBrand);
-			//������ҳ�߼�<=>����
+			//处理分页逻辑<=>调用
 			PageUtil pageUtil=new PageUtil(8, maxRowsCount);
-			// ����ҳ���߼�
+			// 处理页码逻辑
 			if (curPage <= 1) {
 
 				pageUtil.setCurPage(1);
@@ -732,10 +853,11 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
-			
 		 }
+        /**
+	 * 分页展示车龄的方法
+	 * 
+	 */
 	private void fenyeage(HttpServletRequest req,Carage carAge){
 		
 		
@@ -748,9 +870,9 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 			
 	  
 		 long maxRowsCount=carAgePage.queryPersonCarCount(carAge);
-			//������ҳ�߼�<=>����
+			//处理分页逻辑<=>调用
 			PageUtil pageUtil=new PageUtil(8, maxRowsCount);
-			// ����ҳ���߼�
+			// 处理页码逻辑
 			if (curPage <= 1) {
 
 				pageUtil.setCurPage(1);
@@ -784,6 +906,10 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 			
 			
 		 }
+        /**
+	 * 分页展示价格区间的方法
+	 * 
+	 */
 	private void fenyeprice(HttpServletRequest req, Priceinterval priceInterval){
 		
 	
@@ -796,9 +922,9 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 			
 	  
 		 long maxRowsCount=pricePage.queryPersonCarCount(priceInterval);
-			//������ҳ�߼�<=>����
+			//处理分页逻辑<=>调用
 			PageUtil pageUtil=new PageUtil(8, maxRowsCount);
-			// ����ҳ���߼�
+			// 处理页码逻辑
 			if (curPage <= 1) {
 
 				pageUtil.setCurPage(1);
@@ -832,6 +958,10 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 			
 			
 		 }
+	/**
+	 * 分页展示行驶距离的方法
+	 * 
+	 */
 	private void fenyedis(HttpServletRequest req,Distance distance){
 		
 		
@@ -844,9 +974,9 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 			
 	 
 		 long maxRowsCount=distancePage.queryPersonCarCount(distance);
-			//������ҳ�߼�<=>����
+			//处理分页逻辑<=>调用
 			PageUtil pageUtil=new PageUtil(8, maxRowsCount);
-			// ����ҳ���߼�
+			// 处理页码逻辑
 			if (curPage <= 1) {
 
 				pageUtil.setCurPage(1);
@@ -880,6 +1010,10 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 			
 			
 		 }
+	/**
+	 * 分页展示排放标准的方法
+	 * 
+	 */
 	private void fenyeemsi(HttpServletRequest req, Emissionstandard emissionstandard){
 		
 		
@@ -892,9 +1026,9 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 			
 
 		 long maxRowsCount=emisPage.queryPersonCarCount(emissionstandard);
-			//������ҳ�߼�<=>����
+			//处理分页逻辑<=>调用
 			PageUtil pageUtil=new PageUtil(8, maxRowsCount);
-			// ����ҳ���߼�
+			// 处理页码逻辑
 			if (curPage <= 1) {
 
 				pageUtil.setCurPage(1);
@@ -928,6 +1062,10 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 			
 			
 		 }
+	/**
+	 * 分页展示车型的方法
+	 * 
+	 */
 	private void fenyeety(HttpServletRequest req,Cartype carType){
 		
 		
@@ -940,9 +1078,9 @@ if(priceIntervalServiceImpl.deletePriceInterval(priceInterval)){
 			
 
 		 long maxRowsCount=carTypePage.queryPersonCarCount(carType);
-			//������ҳ�߼�<=>����
+			//处理分页逻辑<=>调用
 			PageUtil pageUtil=new PageUtil(8, maxRowsCount);
-			// ����ҳ���߼�
+			// 处理页码逻辑
 			if (curPage <= 1) {
 
 				pageUtil.setCurPage(1);
