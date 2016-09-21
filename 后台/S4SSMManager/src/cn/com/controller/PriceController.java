@@ -1,34 +1,17 @@
 package cn.com.controller;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.awt.*;
+import java.io.*;
+import java.text.*;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.CategoryLabelPositions;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.*;
+import org.jfree.chart.axis.*;
+import org.jfree.chart.labels.*;
 import org.jfree.chart.labels.ItemLabelPosition;
-import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
-import org.jfree.chart.labels.StandardPieToolTipGenerator;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.plot.PiePlot3D;
-import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.*;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
@@ -37,21 +20,22 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.ui.TextAnchor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import cn.com.pojo.Price;
 import cn.com.service.IPriceService;
-
-
+/**
+ * é”€é‡æŠ¥è¡¨å¤„ç†æ§åˆ¶å™¨
+ * 
+ */
 @Controller
 public class PriceController {
-	private  int year=0;
+	private  int year=0; //å¹´
 
-	private  int month=0;
-	private  int day=0;
-	private CategoryDataset dataset =null;  
-	private DefaultPieDataset dfp = new DefaultPieDataset();
+	private  int month=0; //æœˆ
+	private  int day=0;  //æ—¥
+	private CategoryDataset dataset =null;     //æŸ±çŠ¶æ•°æ®é›†
+	private DefaultPieDataset dfp = new DefaultPieDataset(); //é¥¼è£…æ•°æ®é›†
 	@Resource
-	private IPriceService iPriceService=null;
+	private IPriceService iPriceService=null;  //é”€é‡æœåŠ¡æ¥å£çš„å¼•ç”¨
 	public IPriceService getiPriceService() {
 		return iPriceService;
 	}
@@ -61,6 +45,7 @@ public class PriceController {
 	@RequestMapping("/price.action")
 	public String execute(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
+		//é¡µé¢ä¼ é€’å¹´å‚æ•°å¤„ç†
 		if(request.getParameter("sel1")==null)
 		{
 			year=0;
@@ -69,6 +54,7 @@ public class PriceController {
 		{
 			 year=Integer.parseInt(request.getParameter("sel1")) ;
 		}
+		//é¡µé¢ä¼ é€’æœˆå‚æ•°å¤„ç†
 		if(request.getParameter("sel2")==null)
 		{
 			month=0;
@@ -77,6 +63,7 @@ public class PriceController {
 		{
 			month=Integer.parseInt(request.getParameter("sel2")) ;
 		}
+		//é¡µé¢ä¼ é€’æ—¥å‚æ•°å¤„ç†
 		if(request.getParameter("sel3")==null)
 		{
 			day=0;
@@ -85,9 +72,9 @@ public class PriceController {
 		{
 			 day=Integer.parseInt(request.getParameter("sel3")) ;
 		}
-			String chartkind=new String(request.getParameter("sel4").getBytes("ISO8859-1"),"UTF-8");
+			String chartkind=new String(request.getParameter("sel4").getBytes("ISO8859-1"),"UTF-8");//é¡µé¢ä¼ é€’å›¾ç‰‡ç±»å‹
 			
-			if(chartkind.equals("Öù×´Í¼"))
+			if(chartkind.equals("æŸ±çŠ¶å›¾"))
 			{ 
 				
 			if(year>0&month>0&day>0)
@@ -108,55 +95,55 @@ public class PriceController {
 			}
 				
 			      
-			        JFreeChart chart = ChartFactory.createBarChart3D("Æû³µÏúÊÛÇé¿ö", "Æû³µÆ·ÅÆ","ÏúÊÛÊıÁ¿", dataset, PlotOrientation.VERTICAL, true, true, true);  
+			        JFreeChart chart = ChartFactory.createBarChart3D("æ±½è½¦é”€å”®æƒ…å†µ", "æ±½è½¦å“ç‰Œ","é”€å”®æ•°é‡", dataset, PlotOrientation.VERTICAL, true, true, true);  
 			       
-			        // ×Ô¶¨ÒåÉè¶¨±³¾°É«  
+			        // è‡ªå®šä¹‰è®¾å®šèƒŒæ™¯è‰²  
 			        // chart.setBackgroundPaint(Color.getHSBColor(23,192,223));  
 			        chart.setBackgroundPaint(Color.WHITE);  
-			        // »ñµÃ plot£º3dBarÎªCategoryPlot  
+			        // è·å¾— plotï¼š3dBarä¸ºCategoryPlot  
 			        CategoryPlot categoryPlot = chart.getCategoryPlot();  
-			        // Éè¶¨Í¼±íÊı¾İÏÔÊ¾²¿·Ö±³¾°É«  
+			        // è®¾å®šå›¾è¡¨æ•°æ®æ˜¾ç¤ºéƒ¨åˆ†èƒŒæ™¯è‰²  
 			        categoryPlot.setBackgroundPaint(Color.BLACK);  
-			        // ºá×ø±êÍø¸ñÏß  
+			        // æ¨ªåæ ‡ç½‘æ ¼çº¿  
 			        categoryPlot.setDomainGridlinePaint(Color.RED);  
-			        // ÉèÖÃÍø¸ñÏß¿É¼û  
+			        // è®¾ç½®ç½‘æ ¼çº¿å¯è§  
 			        categoryPlot.setDomainGridlinesVisible(true);  
-			        // ×İ×ø±êÍø¸ñÏß  
+			        // çºµåæ ‡ç½‘æ ¼çº¿  
 			        categoryPlot.setRangeGridlinePaint(Color.RED);  
-			        // ÖØÒªµÄÀà£¬¸ºÔğÉú³É¸÷ÖÖĞ§¹û  
+			        // é‡è¦çš„ç±»ï¼Œè´Ÿè´£ç”Ÿæˆå„ç§æ•ˆæœ  
 			        // BarRenderer3D renderer=(BarRenderer3D) categoryPlot.getRenderer();  
-			        // »ñÈ¡×İ×ø±ê  
+			        // è·å–çºµåæ ‡  
 			        NumberAxis numberaxis = (NumberAxis) categoryPlot.getRangeAxis();  
-			        // ÉèÖÃ×İ×ø±êµÄ±êÌâ×ÖÌåºÍ´óĞ¡  
-			        numberaxis.setLabelFont(new Font("ºÚÌå", Font.CENTER_BASELINE, 24));  
-			        // ÉèÖÃ´Ô×ø±êµÄ×ø±êÖµµÄ×ÖÌåÑÕÉ«  
+			        // è®¾ç½®çºµåæ ‡çš„æ ‡é¢˜å­—ä½“å’Œå¤§å°  
+			        numberaxis.setLabelFont(new Font("é»‘ä½“", Font.CENTER_BASELINE, 24));  
+			        // è®¾ç½®ä¸›åæ ‡çš„åæ ‡å€¼çš„å­—ä½“é¢œè‰²  
 			        numberaxis.setLabelPaint(Color.BLACK);  
-			        // ÉèÖÃ´Ô×ø±êµÄ×ø±êÖá±ê³ßÑÕÉ«  
+			        // è®¾ç½®ä¸›åæ ‡çš„åæ ‡è½´æ ‡å°ºé¢œè‰²  
 			        numberaxis.setTickLabelPaint(Color.RED);  
-			        // ×ø±êÖá±ê³ßÑÕÉ«  
+			        // åæ ‡è½´æ ‡å°ºé¢œè‰²  
 			        numberaxis.setTickMarkPaint(Color.BLUE);  
-			        // ´Ô×ø±êµÄÄ¬ÈÏ¼ä¾àÖµ  
+			        // ä¸›åæ ‡çš„é»˜è®¤é—´è·å€¼  
 			        // numberaxis.setAutoTickUnitSelection(true);  
-			        // ÉèÖÃ´Ô×ø±ê¼ä¾àÖµ  
+			        // è®¾ç½®ä¸›åæ ‡é—´è·å€¼  
 			        numberaxis.setAutoTickUnitSelection(false);  
 			        numberaxis.setTickUnit(new NumberTickUnit(1));  
-			        // »ñÈ¡ºá×ø±ê  
+			        // è·å–æ¨ªåæ ‡  
 			        CategoryAxis domainAxis = categoryPlot.getDomainAxis();  
-			        // ÉèÖÃºá×ø±êµÄ±êÌâ×ÖÌåºÍ´óĞ¡  
-			        domainAxis.setLabelFont(new Font("ËÎÌå", Font.PLAIN, 13));  
-			        // ÉèÖÃºá×ø±êµÄ×ø±êÖµµÄ×ÖÌåÑÕÉ«  
+			        // è®¾ç½®æ¨ªåæ ‡çš„æ ‡é¢˜å­—ä½“å’Œå¤§å°  
+			        domainAxis.setLabelFont(new Font("å®‹ä½“", Font.PLAIN, 13));  
+			        // è®¾ç½®æ¨ªåæ ‡çš„åæ ‡å€¼çš„å­—ä½“é¢œè‰²  
 			        domainAxis.setTickLabelPaint(Color.RED);  
-			        // ÉèÖÃºá×ø±êµÄ×ø±êÖµµÄ×ÖÌå  
-			        domainAxis.setTickLabelFont(new Font("ËÎÌå", Font.PLAIN, 30));  
-			        // ÉèÖÃºá×ø±êµÄÏÔÊ¾  
+			        // è®¾ç½®æ¨ªåæ ‡çš„åæ ‡å€¼çš„å­—ä½“  
+			        domainAxis.setTickLabelFont(new Font("å®‹ä½“", Font.PLAIN, 30));  
+			        // è®¾ç½®æ¨ªåæ ‡çš„æ˜¾ç¤º  
 			        domainAxis.setCategoryLabelPositions(CategoryLabelPositions.createUpRotationLabelPositions(0.4));  
-			        // Õâ¾ä´úÂë½â¾öÁËµ×²¿ºº×ÖÂÒÂëµÄÎÊÌâ  
-			        chart.getLegend().setItemFont(new Font("ºÚÌå", 0, 16));  
-			        // ÉèÖÃÍ¼Àı±êÌâ  
-			        Font font = new java.awt.Font("ºÚÌå", java.awt.Font.CENTER_BASELINE, 50);  
+			        // è¿™å¥ä»£ç è§£å†³äº†åº•éƒ¨æ±‰å­—ä¹±ç çš„é—®é¢˜  
+			        chart.getLegend().setItemFont(new Font("é»‘ä½“", 0, 16));  
+			        // è®¾ç½®å›¾ä¾‹æ ‡é¢˜  
+			        Font font = new java.awt.Font("é»‘ä½“", java.awt.Font.CENTER_BASELINE, 50);  
 			        if(day>0)
 			        {
-			        	 TextTitle title = new TextTitle("Æû³µ"+year+"-"+month+"-"+day+"ÏúÊÛÇé¿ö");  
+			        	 TextTitle title = new TextTitle("æ±½è½¦"+year+"-"+month+"-"+day+"é”€å”®æƒ…å†µ");  
 			        	  title.setFont(font);  
 			        	//  title.getBackgroundPaint(); 
 			        	  title.setPaint(Color.RED); 
@@ -166,7 +153,7 @@ public class PriceController {
 			        {
 			        	if(year==0)
 			        	{
-			        		TextTitle title = new TextTitle("Æû³µÀúÄêÏúÊÛÇé¿ö");  
+			        		TextTitle title = new TextTitle("æ±½è½¦å†å¹´é”€å”®æƒ…å†µ");  
 				        	 title.setFont(font);  
 				        	 // title.getBackgroundPaint(); 
 				        	  title.setPaint(Color.RED);  
@@ -175,14 +162,14 @@ public class PriceController {
 			        	else
 			        	{
 			        	
-			        		if(month!=0){	TextTitle title = new TextTitle("Æû³µ"+year+"-"+month+"ÏúÊÛÇé¿ö");  
+			        		if(month!=0){	TextTitle title = new TextTitle("æ±½è½¦"+year+"-"+month+"é”€å”®æƒ…å†µ");  
 			        	 title.setFont(font);  
 			        	  title.setPaint(Color.RED);  
 			        	//  title.getBackgroundPaint(); 
 			        	  chart.setTitle(title); 
 			        	}
 			        		else{
-			        			TextTitle title = new TextTitle("Æû³µ"+year+"ÏúÊÛÇé¿ö");  
+			        			TextTitle title = new TextTitle("æ±½è½¦"+year+"é”€å”®æƒ…å†µ");  
 					        	 title.setFont(font);  
 					        	  title.setPaint(Color.RED);  
 					        	//  title.getBackgroundPaint(); 
@@ -202,7 +189,7 @@ public class PriceController {
 		
 			    
 			}
-			if(chartkind.equals("±ı×´Í¼"))
+			if(chartkind.equals("é¥¼çŠ¶å›¾"))
 			{
 				int count=0;
 				dfp.clear();
@@ -217,7 +204,7 @@ public class PriceController {
 				}
 		 for(Price p:map)
 		 {  double b=(p.getC_sum()/count)*100;
-			 dfp.setValue(p.getC_selltime()+"±ÈÀı:"+df.format(b)+"%", p.getC_sum());  
+			 dfp.setValue(p.getC_selltime()+"æ¯”ä¾‹:"+df.format(b)+"%", p.getC_sum());  
 		 }
 				}
 				if(year>0&month>0&day==0)
@@ -229,7 +216,7 @@ public class PriceController {
 					 for(Price c:list)
 					 {  String date[]=c.getC_selltime().split("-");
 							double b=(c.getC_sum()/count)*100;
-						dfp.setValue(date[2]+"ÈÕ"+"±ÈÀı:"+df.format(b)+"%", c.getC_sum());
+						dfp.setValue(date[2]+"æ—¥"+"æ¯”ä¾‹:"+df.format(b)+"%", c.getC_sum());
 					 }
 				}
 				if(year==0&month==0&day==0)
@@ -241,7 +228,7 @@ public class PriceController {
 				{
 					double b=(s.getC_sum()/count)*100;
 					  String date[]=s.getC_selltime().split("-");
-					dfp.setValue(date[0]+"Äê"+"±ÈÀı:"+df.format(b)+"%", s.getC_sum());
+					dfp.setValue(date[0]+"å¹´"+"æ¯”ä¾‹:"+df.format(b)+"%", s.getC_sum());
 				}
 					
 				}
@@ -256,58 +243,58 @@ public class PriceController {
 					{
 						double b=(p.getC_sum()/count)*100;
 						String date[]=p.getC_selltime().split("-");
-						dfp.setValue(date[1]+"ÔÂ"+"±ÈÀı:"+df.format(b)+"%",p.getC_sum());
+						dfp.setValue(date[1]+"æœˆ"+"æ¯”ä¾‹:"+df.format(b)+"%",p.getC_sum());
 					}
 				}
 		 
-		        // ±ı×´Í¼µÄ½â¾ö°ì·¨  
-		        // createpieChart3D´´½¨3D±ıÍ¼  
-		        // createpieChart´´½¨±ıÍ¼  
-		        JFreeChart chart = ChartFactory.createPieChart3D("Æû³µÏúÊÛĞÅÏ¢",dfp, true, true, true);  
-		      //±ÈÀı  
+		        // é¥¼çŠ¶å›¾çš„è§£å†³åŠæ³•  
+		        // createpieChart3Dåˆ›å»º3Dé¥¼å›¾  
+		        // createpieChartåˆ›å»ºé¥¼å›¾  
+		        JFreeChart chart = ChartFactory.createPieChart3D("æ±½è½¦é”€å”®ä¿¡æ¯",dfp, true, true, true);  
+		      //æ¯”ä¾‹  
 		        PiePlot pieplot = (PiePlot)chart.getPlot();
-		        pieplot.setLabelFont(new Font("ËÎÌå", 0, 12));
-		        pieplot.setNoDataMessage("ÎŞÊı¾İ");
+		        pieplot.setLabelFont(new Font("å®‹ä½“", 0, 12));
+		        pieplot.setNoDataMessage("æ— æ•°æ®");
 		        pieplot.setCircular(true);
 		        
 		       
 		      
 		        chart.setBackgroundPaint(Color.red);  
-		        // ÉèÖÃ±êÌâÎÄ×Ö  
-		        // È¡µÃ±ıÍ¼plot¶ÔÏó  
+		        // è®¾ç½®æ ‡é¢˜æ–‡å­—  
+		        // å–å¾—é¥¼å›¾plotå¯¹è±¡  
 		        // PiePlot plot = (PiePlot) chart.getPlot();  
-		        // È¡µÃ3D±ıÍ¼¶ÔÏó  
+		        // å–å¾—3Dé¥¼å›¾å¯¹è±¡  
 		        PiePlot3D plot = (PiePlot3D) chart.getPlot();  
-		        // Í¼ĞÎ±ß¿òÑÕÉ«  
+		        // å›¾å½¢è¾¹æ¡†é¢œè‰²  
 		        plot.setBaseSectionOutlinePaint(Color.RED);  
 		        // plot.setBaseSectionPaint(Color.WHITE);  
-		        // Í¼ĞÎ±ß¿ò´ÖÏ¸  
+		        // å›¾å½¢è¾¹æ¡†ç²—ç»†  
 		        plot.setBaseSectionOutlineStroke(new BasicStroke(1.0f));  
 		 
-		        // Ö¸¶¨Í¼Æ¬µÄÍ¸Ã÷¶È(0.0-1.0)  
+		        // æŒ‡å®šå›¾ç‰‡çš„é€æ˜åº¦(0.0-1.0)  
 		        plot.setForegroundAlpha(0.65f);  
-		        // Ö¸¶¨ÏÔÊ¾µÄ±ıÍ¼ÉÏÔ²ĞÎ(false)»¹ÍÖÔ²ĞÎ(true)  
+		        // æŒ‡å®šæ˜¾ç¤ºçš„é¥¼å›¾ä¸Šåœ†å½¢(false)è¿˜æ¤­åœ†å½¢(true)  
 		        plot.setCircular(true);  
 		 
-		        // ÉèÖÃµÚÒ»¸ö ±ı¿ésection µÄ¿ªÊ¼Î»ÖÃ£¬Ä¬ÈÏÊÇ12µãÖÓ·½Ïò  
+		        // è®¾ç½®ç¬¬ä¸€ä¸ª é¥¼å—section çš„å¼€å§‹ä½ç½®ï¼Œé»˜è®¤æ˜¯12ç‚¹é’Ÿæ–¹å‘  
 		        plot.setStartAngle(360);  
-		        // ÉèÖÃÊó±êĞüÍ£ÌáÊ¾  
+		        // è®¾ç½®é¼ æ ‡æ‚¬åœæç¤º  
 		        plot.setToolTipGenerator(new StandardPieToolTipGenerator());  
 		 
-		        // ÉèÖÃÍ»³öÏÔÊ¾µÄÊı¾İ¿é  
+		        // è®¾ç½®çªå‡ºæ˜¾ç¤ºçš„æ•°æ®å—  
 		        plot.setExplodePercent("One", 0.1D);  
-		        // ÉèÖÃ±ıÍ¼¸÷²¿·Ö±êÇ©×ÖÌå  
-		        plot.setLabelFont(new Font("ËÎÌå", Font.ITALIC, 20));  
-		        // ÉèÖÃ·Ö±ıÑÕÉ«  
+		        // è®¾ç½®é¥¼å›¾å„éƒ¨åˆ†æ ‡ç­¾å­—ä½“  
+		        plot.setLabelFont(new Font("å®‹ä½“", Font.ITALIC, 20));  
+		        // è®¾ç½®åˆ†é¥¼é¢œè‰²  
 		        plot.setSectionPaint(0, new Color(244, 194, 144));  
 		        // plot.setSectionPaint("2", new Color(144, 233, 144));  
-		        // ÉèÖÃÍ¼ÀıËµÃ÷LegendÉÏµÄÎÄ×Ö  
-		        chart.getLegend().setItemFont(new Font("ËÎÌå", Font.PLAIN, 30));  
-		        // ¶¨Òå×ÖÌå¸ñÊ½  
-		        Font font = new java.awt.Font("ºÚÌå", java.awt.Font.CENTER_BASELINE,50); 
+		        // è®¾ç½®å›¾ä¾‹è¯´æ˜Legendä¸Šçš„æ–‡å­—  
+		        chart.getLegend().setItemFont(new Font("å®‹ä½“", Font.PLAIN, 30));  
+		        // å®šä¹‰å­—ä½“æ ¼å¼  
+		        Font font = new java.awt.Font("é»‘ä½“", java.awt.Font.CENTER_BASELINE,50); 
 		        if(day>0)
 		        {
-		        	 TextTitle title = new TextTitle("Æû³µ"+year+"-"+month+"-"+day+"ÏúÊÛÇé¿ö");  
+		        	 TextTitle title = new TextTitle("æ±½è½¦"+year+"-"+month+"-"+day+"é”€å”®æƒ…å†µ");  
 		        	  title.setFont(font);  
 		        	  chart.setTitle(title); 
 		        }
@@ -315,20 +302,20 @@ public class PriceController {
 		        {
 		        	if(year==0)
 		        	{
-		        		TextTitle title = new TextTitle("Æû³µÀúÄêÏúÊÛÇé¿ö");  
+		        		TextTitle title = new TextTitle("æ±½è½¦å†å¹´é”€å”®æƒ…å†µ");  
 			        	 title.setFont(font);  
 			        	  chart.setTitle(title); 
 		        	}
 		        	else
 		        	{
-		        		if(month!=0){	TextTitle title = new TextTitle("Æû³µ"+year+"-"+month+"ÏúÊÛÇé¿ö");  
+		        		if(month!=0){	TextTitle title = new TextTitle("æ±½è½¦"+year+"-"+month+"é”€å”®æƒ…å†µ");  
 			        	 title.setFont(font);  
 			        	  title.setPaint(Color.RED);  
 			        	//  title.getBackgroundPaint(); 
 			        	  chart.setTitle(title); 
 			        	}
 			        		else{
-			        			TextTitle title = new TextTitle("Æû³µ"+year+"ÏúÊÛÇé¿ö");  
+			        			TextTitle title = new TextTitle("æ±½è½¦"+year+"é”€å”®æƒ…å†µ");  
 					        	 title.setFont(font);  
 					        	  title.setPaint(Color.RED);  
 					        	//  title.getBackgroundPaint(); 
@@ -346,7 +333,7 @@ public class PriceController {
 		 ChartUtilities.writeChartAsJPEG(out, chart, 700, 700);
 		 request.setAttribute("name", name);
 				}
-			if(chartkind.equals("ÕÛÏßÍ¼")){
+			if(chartkind.equals("æŠ˜çº¿å›¾")){
 				
 				DefaultCategoryDataset dat = new DefaultCategoryDataset();
 				dat.clear();
@@ -355,7 +342,7 @@ public class PriceController {
 			 List<Price> map=  iPriceService.getsellinfo(year, month, day);
 
 		 for(Price s:map)
-		 {  dat.addValue(s.getC_sum(), "Ê±¿Ì", s.getC_selltime());
+		 {  dat.addValue(s.getC_sum(), "æ—¶åˆ»", s.getC_selltime());
 		 }
 				}
 				if(year>0&month>0&day==0)
@@ -364,7 +351,7 @@ public class PriceController {
 					
 					 for(Price c:map)
 					 {  String date[]=c.getC_selltime().split("-");
-					 dat.addValue(c.getC_sum(), "ÈÕ", date[2]+"ÈÕ");
+					 dat.addValue(c.getC_sum(), "æ—¥", date[2]+"æ—¥");
 					 }
 				}
 				if(year==0&month==0&day==0)
@@ -374,7 +361,7 @@ public class PriceController {
 				{
 					
 					  String date[]=s.getC_selltime().split("-");
-						 dat.addValue(s.getC_sum(), "ÈÕ", date[0]+"Äê");
+						 dat.addValue(s.getC_sum(), "æ—¥", date[0]+"å¹´");
 
 				}
 					
@@ -386,12 +373,12 @@ public class PriceController {
 					for(Price s:map)
 					{
 						String date[]=s.getC_selltime().split("-");
-						 dat.addValue(s.getC_sum(), "ÔÂ", date[1]+"ÔÂ");
+						 dat.addValue(s.getC_sum(), "æœˆ", date[1]+"æœˆ");
 
 					}
 				}
 		 
-				JFreeChart chart = ChartFactory.createLineChart("ÏúÊÛÕÛÏßÍ¼", "ÈÕÆÚ", "Á¾Êı", dat, PlotOrientation.VERTICAL,true, true, true);
+				JFreeChart chart = ChartFactory.createLineChart("é”€å”®æŠ˜çº¿å›¾", "æ—¥æœŸ", "è¾†æ•°", dat, PlotOrientation.VERTICAL,true, true, true);
 				CategoryPlot cp = chart.getCategoryPlot();
 				LineAndShapeRenderer renderer = (LineAndShapeRenderer) cp
 						.getRenderer();
@@ -404,8 +391,8 @@ public class PriceController {
 				.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
 
 				cp.setRenderer(renderer);
-				cp.setBackgroundPaint(Color.WHITE); // ±³¾°É«ÉèÖÃ
-				cp.setRangeGridlinePaint(Color.GRAY); // Íø¸ñÏßÉ«ÉèÖÃ
+				cp.setBackgroundPaint(Color.WHITE); // èƒŒæ™¯è‰²è®¾ç½®
+				cp.setRangeGridlinePaint(Color.GRAY); // ç½‘æ ¼çº¿è‰²è®¾ç½®
 				 Date date=new Date();
 			        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 			        String name=dateFormat.format(date);
@@ -420,7 +407,10 @@ public class PriceController {
 			return "admin/dateview";
 	}
 	
-	
+	        /**
+		 * è·å¾—æŒ‰å¹´æœˆæ—¥æŸ¥è¯¢æ•°æ®é›†çš„æ–¹æ³•
+		 * 
+		 */
 	private   CategoryDataset getDataSet(){
 		  DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
 		
@@ -428,11 +418,15 @@ public class PriceController {
 		
 		  for(Price s:map)
 		  {
-			  dataset.addValue(s.getC_sum(),s.getC_selltime()+s.getC_sum()+"ÍòÔª",year+"-"+month+"-"+day );
+			  dataset.addValue(s.getC_sum(),s.getC_selltime()+s.getC_sum()+"ä¸‡å…ƒ",year+"-"+month+"-"+day );
 			  }
  
 		 return dataset;
 	    }  
+	        /**
+		 * è·å¾—ä¸åŒå¹´æŸ¥è¯¢æ•°æ®é›†çš„æ–¹æ³•
+		 * 
+		 */
 	private  CategoryDataset getallDataSet(){
 		  DefaultCategoryDataset dataset = new DefaultCategoryDataset(); 
 		 
@@ -441,11 +435,15 @@ public class PriceController {
 		  for(Price s:list)
 		  {
 			  String date[]=s.getC_selltime().split("-");
-			  dataset.addValue(s.getC_sum(), date[0]+"Äê"+s.getC_sum()+"ÍòÔª", s.getC_selltime());
+			  dataset.addValue(s.getC_sum(), date[0]+"å¹´"+s.getC_sum()+"ä¸‡å…ƒ", s.getC_selltime());
 			  }
 
 		 return dataset;
 	    } 
+	        /**
+		 * è·å¾—æŒ‰å¹´æœˆæŸ¥è¯¢æ•°æ®é›†çš„æ–¹æ³•
+		 * 
+		 */
 	private   CategoryDataset getymDataSet(){
 		  DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
 		
@@ -453,10 +451,14 @@ public class PriceController {
 		for(Price c:list)
 		{
 			String date[]=c.getC_selltime().split("-");
-			dataset.addValue(c.getC_sum(), date[2]+"ÈÕ"+ c.getC_sum()+"ÍòÔª", c.getC_selltime());
+			dataset.addValue(c.getC_sum(), date[2]+"æ—¥"+ c.getC_sum()+"ä¸‡å…ƒ", c.getC_selltime());
 		}
 		 return dataset;
 	    }  
+	        /**
+		 * è·å¾—æŒ‰å¹´æŸ¥è¯¢æ•°æ®é›†çš„æ–¹æ³•
+		 * 
+		 */
 	private  CategoryDataset getyearDataSet(){
 		  DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
 		 
@@ -465,7 +467,7 @@ public class PriceController {
 		for(Price p:list)
 		{
 			String date[]=p.getC_selltime().split("-");
-			dataset.addValue(p.getC_sum(), date[1]+"ÔÂ"+p.getC_sum()+"ÍòÔª", p.getC_selltime());
+			dataset.addValue(p.getC_sum(), date[1]+"æœˆ"+p.getC_sum()+"ä¸‡å…ƒ", p.getC_selltime());
 			
 		}
 		 return dataset;
