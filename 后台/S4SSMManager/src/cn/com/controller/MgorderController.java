@@ -17,17 +17,20 @@ import cn.com.service.impl.*;
 
 import cn.com.util.*;
 
-
+/**
+ * 订单管理控制器
+ * 
+ */
 @Controller
 public class MgorderController {
 	@Resource
-	private IPerSonCarService perSonCarService=null;
+	private IPerSonCarService perSonCarService=null;  //个人汽车订单信息服务接口的引用
 	@Resource(name="personCarServiceImpl")
-	private IPageDao perSonCarPage=null;
+	private IPageDao perSonCarPage=null;  //分页处理操作接口的引用（指向个人汽车订单信息操作实现类）
 	@Resource
-	private	CarInfoServiceImpl carInfoServiceImpl=null;
+	private	CarInfoServiceImpl carInfoServiceImpl=null; //汽车概要信息服务接口的引用
 	@Resource
-	private	PersonNeedServiceImpl personNeedServiceImpl=null;
+	private	PersonNeedServiceImpl personNeedServiceImpl=null; //个人需求服务接口的引用
 	public IPerSonCarService getPerSonCarService() {
 		return perSonCarService;
 	}
@@ -52,33 +55,45 @@ public class MgorderController {
 	public void setPersonNeedServiceImpl(PersonNeedServiceImpl personNeedServiceImpl) {
 		this.personNeedServiceImpl = personNeedServiceImpl;
 	}
+        /**
+	 * 展示暂停交易的订单action
+	 */
 	@RequestMapping("/Mgord_showzzjy.action")
 	public String showzzjy(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Personcar perSonCar=new Personcar();
-		perSonCar.setpState("��ͣ����");
+		perSonCar.setpState("暂停交易");
 		this.fenye(request, perSonCar);
 		
 		return  "admin/zzjy";
 	}
+	/**
+	 * 展示交易中的订单action
+	 */
 	@RequestMapping("/Mgord_showjyz.action")
 	public String showjyz(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Personcar perSonCar=new Personcar();
-		perSonCar.setpState("�Ѷ�");
+		perSonCar.setpState("已定");
 		this.fenye(request,  perSonCar);
 		
 		return "admin/jyz";
 	}
+	/**
+	 * 展示交易完成的订单action
+	 */
 	@RequestMapping("/Mgord_showjywc.action")
 	public String showjywc(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Personcar perSonCar=new Personcar();
-		perSonCar.setpState("�������");
+		perSonCar.setpState("交易完成");
 		this.fenye(request, perSonCar);
 		
 		return "admin/jywc";
 	}
+	/**
+	 * 展示所有订单action
+	 */
 	@RequestMapping("/Mgord_showallord.action")
 	public String showallord(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -88,6 +103,9 @@ public class MgorderController {
 		
 		return "admin/allorder";
 	}
+	/**
+	 * 通过取消交易请求action
+	 */
 	@RequestMapping("/Mgord_tgzz.action")
 	public void tgzz(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -99,24 +117,27 @@ public class MgorderController {
 		perSonCar.setuId(Long.parseLong(uid));
 		perSonCar.setcId(Long.parseLong(cid));
 		perSonCar.setcUid(Long.parseLong(cuid));
-		perSonCar.setpState("��ͣ����");
+		perSonCar.setpState("暂停交易");
 		Carinfo carInfo=new Carinfo();
 		carInfo.setcId(Long.parseLong(cid));
-		carInfo.setcState("����");
+		carInfo.setcState("在售");
 		Personcar _PerSonCar=new Personcar();
 		_PerSonCar.setuId(Long.parseLong(cuid));
 		_PerSonCar.setcId(Long.parseLong(cid));
 		_PerSonCar.setcUid(Long.parseLong(cuid));
-		_PerSonCar.setpState("��ͣ����");
+		_PerSonCar.setpState("暂停交易");
 		
-		if(perSonCarService.updatePerSoncar(_PerSonCar, "����")&&perSonCarService.deletePersonByAll(perSonCar)&&carInfoServiceImpl.updateCarInfo(carInfo)){
+		if(perSonCarService.updatePerSoncar(_PerSonCar, "出售")&&perSonCarService.deletePersonByAll(perSonCar)&&carInfoServiceImpl.updateCarInfo(carInfo)){
 			 response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print(1);
-				 response.getWriter().flush();//��ջ���,ˢ��
+				 response.getWriter().flush();//清空缓存,刷新
 				   response.getWriter().close();
 		}
 		
 	}
+	/**
+	 * 强制中止交易action
+	 */
 	@RequestMapping("/Mgord_qzzz.action")
 	public void qzzz(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -127,24 +148,27 @@ public class MgorderController {
 		perSonCar.setuId(Long.parseLong(uid));
 		perSonCar.setcId(Long.parseLong(cid));
 		perSonCar.setcUid(Long.parseLong(cuid));
-		perSonCar.setpState("�Ѷ�");
+		perSonCar.setpState("已定");
 		Carinfo carInfo=new Carinfo();
 		carInfo.setcId(Long.parseLong(cid));
-		carInfo.setcState("����");
+		carInfo.setcState("在售");
 		Personcar _PerSonCar=new Personcar();
 		_PerSonCar.setuId(Long.parseLong(cuid));
 		_PerSonCar.setcId(Long.parseLong(cid));
 		_PerSonCar.setcUid(Long.parseLong(cuid));
-		_PerSonCar.setpState("����");
+		_PerSonCar.setpState("被定");
 		
-		if(perSonCarService.updatePerSoncar(_PerSonCar, "����")&&perSonCarService.deletePersonByAll(perSonCar)&&carInfoServiceImpl.updateCarInfo(carInfo)){
+		if(perSonCarService.updatePerSoncar(_PerSonCar, "出售")&&perSonCarService.deletePersonByAll(perSonCar)&&carInfoServiceImpl.updateCarInfo(carInfo)){
 			 response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print(1);
-				 response.getWriter().flush();//��ջ���,ˢ��
+				 response.getWriter().flush();//清空缓存,刷新
 				   response.getWriter().close();
 		}
 		
 	}
+	/**
+	 * 拒绝中止交易action
+	 */
 	@RequestMapping("/Mgord_jjzz.action")
 	public void jjzz(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -156,17 +180,17 @@ public class MgorderController {
 		perSonCar.setuId(Long.parseLong(uid));
 		perSonCar.setcId(Long.parseLong(cid));
 		perSonCar.setcUid(Long.parseLong(cuid));
-		perSonCar.setpState("��ͣ����");
+		perSonCar.setpState("暂停交易");
 		Personcar _PerSonCar=new Personcar();
 		_PerSonCar.setuId(Long.parseLong(cuid));
 		_PerSonCar.setcId(Long.parseLong(cid));
 		_PerSonCar.setcUid(Long.parseLong(cuid));
-		_PerSonCar.setpState("��ͣ����");
+		_PerSonCar.setpState("暂停交易");
 		try{
-		if(perSonCarService.updatePerSoncar(_PerSonCar, "����")&&perSonCarService.updatePerSoncar(perSonCar, "�Ѷ�")){
+		if(perSonCarService.updatePerSoncar(_PerSonCar, "被定")&&perSonCarService.updatePerSoncar(perSonCar, "已定")){
 			 response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print(1);
-				 response.getWriter().flush();//��ջ���,ˢ��
+				 response.getWriter().flush();//清空缓存,刷新
 				   response.getWriter().close();
 		}
 		
@@ -177,22 +201,28 @@ public class MgorderController {
 		}
 		
 	}
+	/**
+	 * 展示已处理个人需求信息action
+	 */
 	@RequestMapping("/Mgord_yclsrdz.action")
 	public void yclsrdz(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		String id=request.getParameter("pid");
 		Personneed personNeed=new Personneed();
 		personNeed.setpId(Long.parseLong(id));
-		personNeed.setpState("�Ѵ���");
+		personNeed.setpState("已处理");
 	
 		if(personNeedServiceImpl.updatePersonNeed(personNeed)){
 			 response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print(1);
-				 response.getWriter().flush();//��ջ���,ˢ��
+				 response.getWriter().flush();//清空缓存,刷新
 				   response.getWriter().close();
 		}
 		
 	}
+	/**
+	 * 删除个人需求信息action
+	 */
 	@RequestMapping("/Mgord_delsrdz.action")
 	public void delsrdz(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -204,11 +234,15 @@ public class MgorderController {
 		if(personNeedServiceImpl.deletePersonNeed(personNeed) ){
 			 response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print(1);
-				 response.getWriter().flush();//��ջ���,ˢ��
+				 response.getWriter().flush();//清空缓存,刷新
 				   response.getWriter().close();
 		}
 		
 	}
+        /**
+	 * 分页展示个人汽车订单的方法
+	 * 
+	 */
 private void fenye(HttpServletRequest req, Personcar perSonCar){
 		
 		
@@ -221,9 +255,9 @@ private void fenye(HttpServletRequest req, Personcar perSonCar){
 		
    
 	 Long maxRowsCount=perSonCarPage.queryPersonCarCount(perSonCar);
-		//������ҳ�߼�<=>����
+		//处理分页逻辑<=>调用
 		PageUtil pageUtil=new PageUtil(9, maxRowsCount);
-		// ����ҳ���߼�
+		// 处理页码逻辑
 		if (curPage <= 1) {
 
 			pageUtil.setCurPage(1);
