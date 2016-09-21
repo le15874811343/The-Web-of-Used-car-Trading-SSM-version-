@@ -12,31 +12,34 @@ import cn.com.pojo.*;
 import cn.com.service.*;
 
 import cn.com.util.DbUtil;
-
+/**
+ * 用户信息管理action
+ * 
+ */
 @Controller
 public class MgUserInfoController {
 	@Resource
-	private IUserInfoService userInfoServiceImpl=null;
+	private IUserInfoService userInfoServiceImpl=null;   //用户信息服务接口的引用
 	@Resource
-	private IBasicInfoService iBasicInfoService=null;
+	private IBasicInfoService iBasicInfoService=null; //汽车基础信息服务接口的引用
 	@Resource
-	private	IHardwareConfigService iHardwareConfigService=null;
+	private	IHardwareConfigService iHardwareConfigService=null; //汽车硬件配置信息服务接口的引用
 	@Resource
-	private	ICarImagesInfoService iCarImagesInfoService=null;
+	private	ICarImagesInfoService iCarImagesInfoService=null; //汽车图片服务接口的引用
 	@Resource
-	private	IPerSonCarService iPerSonCarService=null;
+	private	IPerSonCarService iPerSonCarService=null;  //汽车个人订单服务接口的引用
 	@Resource
-	private	ISellInfoService iSellInfoService=null;
+	private	ISellInfoService iSellInfoService=null;  //销售信息服务接口的引用
 	@Resource
-	private	ISystemConfigService iSystemConfigService=null;
+	private	ISystemConfigService iSystemConfigService=null;  //汽车系统配置信服服务接口的引用
 	@Resource
-	private	IProcedureInfoService iProcedureInfoService=null;
+	private	IProcedureInfoService iProcedureInfoService=null; //手续信息服务接口的引用
 	@Resource
-	private	IUserInfoService iUserinfoService=null;
+	private	IUserInfoService iUserinfoService=null; //用户信息服务接口的引用
 	@Resource
-	private	ICarInfoService iCarInfoService=null;
+	private	ICarInfoService iCarInfoService=null; //汽车概要信息服务接口的引用
 	@Resource
-	private IPersonNeedService iPersonNeedService=null;
+	private IPersonNeedService iPersonNeedService=null; //用户个人需求信息服务接口引用
 	
 	public IPersonNeedService getiPersonNeedService() {
 		return iPersonNeedService;
@@ -105,6 +108,9 @@ public class MgUserInfoController {
 	public void setiCarInfoService(ICarInfoService iCarInfoService) {
 		this.iCarInfoService = iCarInfoService;
 	}
+	/**
+	 * 修改用户信息请求action
+	 */
 	@RequestMapping("/MgUsIn_uptadeuser.action")
 	public String uptadeuser(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -116,6 +122,9 @@ public class MgUserInfoController {
 	
 		return "admin/user-modify";
 	}
+	/**
+	 * 新增用户操作action
+	 */
 	@RequestMapping("/MgUsIn_reguser.action")
 	public String reguser(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -130,7 +139,7 @@ public class MgUserInfoController {
 	     userInfo.setuTel(regname);
 	     if(userInfoServiceImpl.getUserInfoByUnique(userInfo)!=null){
 	    	 DbUtil.closeAll();
-	    	 regmessage="���û��Ѵ���";
+	    	 regmessage="该用户已存在";
 	    	
 	    	 
 	     }
@@ -141,13 +150,13 @@ public class MgUserInfoController {
 		     userInfo.setuAdmin(admin);
 		     if(userInfoServiceImpl.addUserInfo(userInfo)){
 		    	 DbUtil.closeAll();
-		    	 regmessage="���ӳɹ�";
+		    	 regmessage="添加成功";
 		   
 		    	 request.setAttribute("regmessage", regmessage);
 		     }
 		     else{
 		    	 DbUtil.closeAll();
-		    	 regmessage="����ʧ��";
+		    	 regmessage="添加失败";
 		    	
 		     }
 	     }
@@ -155,6 +164,9 @@ public class MgUserInfoController {
 			
 		return "admin/user-add";
 	}
+	/**
+	 * 删除用户操作action（先删除子表，再删主表）
+	 */
 	@RequestMapping("/MgUsIn_del.action")
 	public void del(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -276,14 +288,14 @@ public class MgUserInfoController {
 			{
 				 response.setContentType("text/html;charset=utf-8");
 					response.getWriter().print(1);
-					 response.getWriter().flush();//��ջ���,ˢ��
+					 response.getWriter().flush();//清空缓存,刷新
 					   response.getWriter().close();
 			}
 			else
 			{
 				response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print(0);
-				 response.getWriter().flush();//��ջ���,ˢ��
+				 response.getWriter().flush();//清空缓存,刷新
 				   response.getWriter().close();
 			}
 			}
@@ -291,7 +303,7 @@ public class MgUserInfoController {
 			{
 				response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print(0);
-				 response.getWriter().flush();//��ջ���,ˢ��
+				 response.getWriter().flush();//清空缓存,刷新
 				   response.getWriter().close();
 			}
 		}
@@ -301,6 +313,9 @@ public class MgUserInfoController {
 		}
 		
 	}
+	/**
+	 * 展示用户详细信息操作action
+	 */
 	@RequestMapping("/MgUsIn_showdeauser.action")
 	public String showdeauser(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -312,6 +327,9 @@ public class MgUserInfoController {
 	
 		return "admin/showuser";
 	}
+	/**
+	 * 提交修改action
+	 */
 	@RequestMapping("/MgUsIn_update.action")
 	public String update(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -340,7 +358,7 @@ public class MgUserInfoController {
 			 userInfo.setuAdr(adr);
 		 }
 		 if(userInfoServiceImpl.updateUserInfo(userInfo)){
-			String mesg="�޸ĳɹ�";
+			String mesg="修改成功";
 		Userinfo3 info=	userInfoServiceImpl.getUserInfoByUnique(userInfo);
 		 request.setAttribute("getuser", info);
 		 request.setAttribute("mesg", mesg);
