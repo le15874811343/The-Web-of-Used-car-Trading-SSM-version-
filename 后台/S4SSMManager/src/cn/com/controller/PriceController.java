@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import cn.com.pojo.Price;
 import cn.com.service.IPriceService;
 /**
- * 销量报表处理控制器
+ * 营业额报表处理控制器
  * 
  */
 @Controller
