@@ -17,17 +17,20 @@ import cn.com.dao.*;
 import cn.com.pojo.*;
 import cn.com.service.*;
 import cn.com.util.*;
-
+/**
+  * 公司动态消息管理控制器
+  * 
+  */
 @Controller
 public class TrendsController {
 	@Resource
-	 private ITrendsService trendsService=null;
+	 private ITrendsService trendsService=null;  //公司动态消息服务接口的引用
 	@Resource(name="trendsServiceImpl")
-	   private IPageDao trendsPage=null;
+	   private IPageDao trendsPage=null;  //分页处理操作接口的引用（指向公司动态消息操作实现类）
 	@Resource
-	   private ICommentService commentService=null;
+	   private ICommentService commentService=null; //评论信息服务接口的引用
 	@Resource(name="commentServiceImpl")
-	   private IPageDao commentsPage=null;
+	   private IPageDao commentsPage=null;  //分页处理操作接口的引用（指向评论消息操作实现类）
 	public ITrendsService getTrendsService() {
 		return trendsService;
 	}
@@ -52,16 +55,22 @@ public class TrendsController {
 	public void setCommentsPage(IPageDao commentsPage) {
 		this.commentsPage = commentsPage;
 	}
+/**
+ * 展示新闻列表action
+ */
 	@RequestMapping("/Trends_shownewslist.action")
 	public String shownewslist(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Trends trends=new Trends();
-		trends.setTrType("����");
+		trends.setTrType("新闻");
 		fenye(request, trends);
 		
 		
 		return "admin/news";
 	}
+/**
+ * 展示新闻详情action
+ */
 	@RequestMapping("/Trends_showtei.action")
 	public String showtei(HttpServletRequest request) throws Exception{
 		String tr_id=	request.getParameter("tr_id");
@@ -72,14 +81,20 @@ public class TrendsController {
 
 		return "news_show";
 	}
+/**
+ * 展示活动列表action
+ */
 	@RequestMapping("/Trends_showactive.action")
 	public String showactive(HttpServletRequest request) throws Exception{
 		Trends trends=new Trends();
-		trends.setTrType("�");
+		trends.setTrType("活动");
 		fenye(request,  trends);
 
 		return "admin/active";
 	}
+/**
+ * 展示活动详情action
+ */
 	@RequestMapping("/Trends_showteia.action")
 	public String showteia(HttpServletRequest request) throws Exception{
 		String tr_id=	request.getParameter("tr_id");
@@ -90,6 +105,9 @@ public class TrendsController {
 	 
 		return "active_show";
 	}
+/**
+ * 展示评价列表action
+ */
 	@RequestMapping("/Trends_showcom.action")
 	public String showcom(HttpServletRequest request) throws Exception{
 		Comment1 comment=new Comment1();
@@ -97,6 +115,9 @@ public class TrendsController {
 
 		return "admin/comment";
 	}
+/**
+ *展示评价详情action 
+ */
 	@RequestMapping("/Trends_showcomd.action")
 	public String showcomd(HttpServletRequest request) throws Exception{
 		String tr_id=	request.getParameter("cid");
@@ -108,6 +129,9 @@ public class TrendsController {
 
 		return "comment_show";
 	}
+/**
+ * 展示所有动态消息action
+ */
 	@RequestMapping("/Trends_showalltrends.action")
 	public String showalltrends(HttpServletRequest request) throws Exception{
 		Trends trends=new Trends();
@@ -116,6 +140,9 @@ public class TrendsController {
 
 		return "admin/alltrends";
 	}
+/**
+ * 添加动态消息action
+ */
 	@RequestMapping("/Trends_addtrends.action")
 	public String addtrends(HttpServletRequest request) throws Exception{
 		String title=request.getParameter("maxAge");
@@ -134,11 +161,14 @@ public class TrendsController {
 		   trends.setTrImg("tepimages/"+img);
 	     }
 	   if(trendsService.addTrends(trends)){
-		   request.setAttribute("mea", "���ӳɹ�");
+		   request.setAttribute("mea", "添加成功");
 		 
 	   }
 		return "admin/alltrend-add";
 	}
+/**
+ * 请求修改动态消息action
+ */
 	@RequestMapping("/Trends_uptrends.action")
 	public String uptrends(HttpServletRequest request,HttpSession session) throws Exception{
 		String id=request.getParameter("tid");
@@ -149,6 +179,9 @@ public class TrendsController {
 	session.setAttribute("utrends",trends );
 		return "redirect:/admin/alltrend-up.jsp";
 	}
+/**
+ * 提交修改动态消息action
+ */
 	@RequestMapping("/Trends_tjuptrends.action")
 	public String tjuptrends(HttpServletRequest request,HttpSession session) throws Exception{
 		String id=request.getParameter("tid");
@@ -173,11 +206,14 @@ public class TrendsController {
 	     }
 	   if(trendsService.updateTrends(trends)){
 		   session.setAttribute("utrends",trends );
-		   session.setAttribute("tmea","�޸ĳɹ�" );
+		   session.setAttribute("tmea","修改成功" );
 			
 	   }
 		return "redirect:/admin/alltrend-up.jsp";
 	}
+/**
+ * 删除动态消息action
+ */
 	@RequestMapping("/Trends_deltrends.action")
 	public void deltrends(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		String id=request.getParameter("tid");
@@ -186,11 +222,14 @@ public class TrendsController {
 		if(trendsService.deleteTrends(trends)){
 			 response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print(1);
-			 response.getWriter().flush();//��ջ���,ˢ��
+			 response.getWriter().flush();//清空缓存,刷新
 			   response.getWriter().close();
 		}
 		
 	}
+/**
+ * 添加新闻action
+ */
 	@RequestMapping("/Trends_addnews.action")
 	public String addnews(HttpServletRequest request) throws Exception{
 		String title=request.getParameter("maxAge");
@@ -200,7 +239,7 @@ public class TrendsController {
 		Trends trends=new Trends();
 		trends.setTrTitle(title);
 		trends.setTrText(text);
-		trends.setTrType("����");
+		trends.setTrType("新闻");
 		
 		DateFormat dateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	    Date date=new Date();
@@ -210,11 +249,14 @@ public class TrendsController {
 		   trends.setTrImg("tepimages/"+img);
 	     }
 	   if(trendsService.addTrends(trends)){
-		   request.setAttribute("mea", "���ӳɹ�");
+		   request.setAttribute("mea", "添加成功");
 		   
 	   }
 		return "admin/allnews-add";
 	}
+/**
+ * 请求修改新闻action
+ */
 	@RequestMapping("/Trends_upnews.action")
 	public String upnews(HttpServletRequest request,HttpSession session) throws Exception{
 		String id=request.getParameter("tid");
@@ -226,6 +268,9 @@ public class TrendsController {
 
 		return "redirect:/admin/allnews-up.jsp";
 	}
+/**
+ * 提交修改新闻action
+ */
 	@RequestMapping("/Trends_tjupnews.action")
 	public String tjupnews(HttpServletRequest request,HttpSession session) throws Exception{
 		String id=request.getParameter("tid");
@@ -237,7 +282,7 @@ public class TrendsController {
 		Trends trends=new Trends();
 		trends.setTrTitle(title);
 		trends.setTrText(text);
-		trends.setTrType("����");
+		trends.setTrType("新闻");
 		trends.setTrId(Long.parseLong(id));
 		
 		   trends.setTrImg(request.getParameter("qtp"));
@@ -249,11 +294,14 @@ public class TrendsController {
 	     }
 	   if(trendsService.updateTrends(trends)){
 		   session.setAttribute("utrends",trends );
-		   session.setAttribute("tmea","�޸ĳɹ�" );
+		   session.setAttribute("tmea","修改成功" );
 			
 	   }
 		return "redirect:/admin/allnews-up.jsp";
 	}
+/**
+ * 添加活动action
+ */
 	@RequestMapping("/Trends_addactive.action")
 	public String addactive(HttpServletRequest request) throws Exception{
 		String title=request.getParameter("maxAge");
@@ -263,7 +311,7 @@ public class TrendsController {
 		Trends trends=new Trends();
 		trends.setTrTitle(title);
 		trends.setTrText(text);
-		trends.setTrType("�");
+		trends.setTrType("活动");
 		DateFormat dateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	    Date date=new Date();
 	   trends.setTrDate(dateFormat.format(date));
@@ -272,11 +320,14 @@ public class TrendsController {
 		   trends.setTrImg("tepimages/"+img);
 	     }
 	   if(trendsService.addTrends(trends)){
-		   request.setAttribute("mea", "���ӳɹ�");
+		   request.setAttribute("mea", "添加成功");
 		  
 	   }
 		return "admin/active-add";
 	}
+/**
+ * 请求修改活动action
+ */
 	@RequestMapping("/Trends_upactive.action")
 	public String upactive(HttpServletRequest request,HttpSession session) throws Exception{
 		String id=request.getParameter("tid");
@@ -288,6 +339,9 @@ public class TrendsController {
 
 		return "redirect:/admin/active-up.jsp";
 	}
+/**
+ * 提交修改活动action
+ */
 	@RequestMapping("/Trends_tjupactive.action")
 	public String tjupactive(HttpServletRequest request,HttpSession session) throws Exception{
 		String id=request.getParameter("tid");
@@ -299,7 +353,7 @@ public class TrendsController {
 		Trends trends=new Trends();
 		trends.setTrTitle(title);
 		trends.setTrText(text);
-		trends.setTrType("�");
+		trends.setTrType("活动");
 		trends.setTrId(Long.parseLong(id));
 		
 		   trends.setTrImg(request.getParameter("qtp"));
@@ -311,11 +365,14 @@ public class TrendsController {
 	     }
 	   if(trendsService.updateTrends(trends)){
 		   session.setAttribute("utrends",trends );
-		   session.setAttribute("tmea","�޸ĳɹ�" );
+		   session.setAttribute("tmea","修改成功" );
 			
 	   }
 		return "redirect:/admin/active-up.jsp";
 	}
+/**
+ * 请求修改评价action
+ */
 	@RequestMapping("/Trends_upcom.action")
 	public String upcom(HttpServletRequest request,HttpSession session) throws Exception{
 		String cid=request.getParameter("cid");
@@ -328,6 +385,9 @@ public class TrendsController {
 		
 		return "redirect:/admin/comment-up.jsp";
 	}
+/**
+ * 提交修改评价action
+ */
 	@RequestMapping("/Trends_tjupcom.action")
 	public String tjupcom(HttpServletRequest request,HttpSession session) throws Exception{
 		String cid=request.getParameter("cid");
@@ -347,11 +407,14 @@ public class TrendsController {
 	  
 	   if(commentService.updateComment(comment)){
 		   session.setAttribute("ucomment", comment);
-		   session.setAttribute("cmea", "�޸ĳɹ�");
+		   session.setAttribute("cmea", "修改成功");
 			
 	   }
 		return "redirect:/admin/comment-up.jsp";
 	}
+/**
+ * 删除评价action
+ */
 	@RequestMapping("/Trends_delcom.action")
 	public void delcom(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		String cid=request.getParameter("cid");
@@ -361,11 +424,15 @@ public class TrendsController {
 		if(commentService.deleteComment(comment)){
 			 response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print(1);
-				 response.getWriter().flush();//��ջ���,ˢ��
+				 response.getWriter().flush();//清空缓存,刷新
 				   response.getWriter().close();
 		}
 		
 	}
+        /**
+	 * 分页展示动态消息的方法
+	 * 
+	 */
 	private void fenye(HttpServletRequest req,Trends trends){
 		
 		
@@ -378,9 +445,9 @@ public class TrendsController {
 		
 
 	 long maxRowsCount=trendsPage.queryPersonCarCount(trends);
-		//������ҳ�߼�<=>����
+		//处理分页逻辑<=>调用
 		PageUtil pageUtil=new PageUtil(2, maxRowsCount);
-		// ����ҳ���߼�
+		// 处理页码逻辑
 		if (curPage <= 1) {
 
 			pageUtil.setCurPage(1);
@@ -413,6 +480,10 @@ public class TrendsController {
 		
 		
 	 }
+	/**
+	  * 分页展示评价的方法
+	  * 
+	  */
 	private void fenyec(HttpServletRequest req,Comment1 comment){
 
 	try {
@@ -424,9 +495,9 @@ public class TrendsController {
 
 
 	long maxRowsCount=commentsPage.queryPersonCarCount(comment);
-	//������ҳ�߼�<=>����
+	//处理分页逻辑<=>调用
 	PageUtil pageUtil=new PageUtil(2, maxRowsCount);
-	// ����ҳ���߼�
+	// 处理页码逻辑
 	if (curPage <= 1) {
 
 		pageUtil.setCurPage(1);
