@@ -16,16 +16,20 @@ import cn.com.service.IPersonNeedService;
 import cn.com.service.IUserInfoService;
 import cn.com.util.DbUtil;
 import cn.com.util.PageUtil;
+/**
+ * 管理用户控制器
+ * 
+ */
 @Controller
 public class ManagerController {
 	@Resource
-	 private IUserInfoService userInfoServiceImpl=null;
+	 private IUserInfoService userInfoServiceImpl=null;  //用户信息服务接口的引用
 	@Resource(name="userInfoServiceImpl")
-	   private IPageDao userInfoPage=null;
+	   private IPageDao userInfoPage=null; //分页处理操作接口的引用（指向用户信息操作实现类）
 	@Resource
-	   private IPersonNeedService personNeedServiceImpl=null;
+	   private IPersonNeedService personNeedServiceImpl=null; //个人需求信息服务接口的引用
 	@Resource(name="personNeedServiceImpl")
-	   private IPageDao personndPage=null;
+	   private IPageDao personndPage=null; //分页处理操作接口的引用（个人需求信息操作实现类）
 	public IUserInfoService getUserInfoServiceImpl() {
 		return userInfoServiceImpl;
 	}
@@ -50,36 +54,51 @@ public class ManagerController {
 	public void setPersonndPage(IPageDao personndPage) {
 		this.personndPage = personndPage;
 	}
+/**
+ * 展示所有用户action
+ * 
+ */
 	@RequestMapping("/Manager_showalluser.action")
 	public String showalluser(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Userinfo3 userInfo=new Userinfo3();
 		fenye(request,  userInfo);
-		request.setAttribute("titile", "�����û�");
+		request.setAttribute("titile", "所有用户");
 		
 		return "admin/user";
 	}
+/**
+ * 展示管理员action
+ * 
+ */
 	@RequestMapping("/Manager_showadmin.action")
 	public String showadmin(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Userinfo3 userInfo=new Userinfo3();
-		userInfo.setuAdmin("����Ա");
+		userInfo.setuAdmin("管理员");
 		fenye(request, userInfo);
-		request.setAttribute("titile", "����Ա");
+		request.setAttribute("titile", "管理员");
 		
 		
 		return "admin/admin";
 	}
+	/**
+	 * 展示普通用户action
+	 * 
+	 */
 	@RequestMapping("/Manager_showuser.action")
 	public String showuser(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Userinfo3 userInfo=new Userinfo3();
-		userInfo.setuAdmin("��ͨ�û�");
+		userInfo.setuAdmin("普通用户");
 		fenye(request,  userInfo);
-		request.setAttribute("titile", "��ͨ�û�");
+		request.setAttribute("titile", "普通用户");
 		
 		return "admin/putong";
 	}
+	/**
+	 * 展示用户个人需求action
+	 */
 	@RequestMapping("/Manager_showsrdz.action")
 	public String showsrdz(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -90,28 +109,38 @@ public class ManagerController {
 	
 		return "admin/srdz";
 	}
+	/**
+	 * 展示处理中的用户个人需求action
+	 */
 	@RequestMapping("/Manager_showclzsrdz.action")
 	public String showclzsrdz(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 	
 		Personneed personNeed=new Personneed();
-		personNeed.setpState("������");
+		personNeed.setpState("处理中");
 		this.fenyepn(request,personNeed);
 		DbUtil.closeAll();
 	
 		return "admin/clz";
 	}
+	/**
+	 * 展示已处理用户个人需求action
+	 */
 	@RequestMapping("/Manager_showyclsrdz.action")
 	public String showyclsrdz(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Personneed personNeed=new Personneed();
-		personNeed.setpState("�Ѵ���");
+		personNeed.setpState("已处理");
 		this.fenyepn(request,personNeed);
 		DbUtil.closeAll();
 	
 		
 		return "admin/ycl";
 	}
+	/**
+	 * 分页展示用户信息的方法
+	 * 
+	 */
 private void fenye(HttpServletRequest req, Userinfo3 userInfo){
 		
 		
@@ -124,9 +153,9 @@ private void fenye(HttpServletRequest req, Userinfo3 userInfo){
 		
    
 	 long maxRowsCount=userInfoPage.queryPersonCarCount(userInfo);
-		//������ҳ�߼�<=>����
+		//处理分页逻辑<=>调用
 		PageUtil pageUtil=new PageUtil(6, maxRowsCount);
-		// ����ҳ���߼�
+		// 处理页码逻辑
 		if (curPage <= 1) {
 
 			pageUtil.setCurPage(1);
@@ -155,10 +184,12 @@ private void fenye(HttpServletRequest req, Userinfo3 userInfo){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 	 }
+         /**
+	  * 分页展示用户需求的方法
+	  * 
+	  * 
+	  */
 private void fenyepn(HttpServletRequest req, Personneed personNeed){
 	
 	
@@ -171,9 +202,9 @@ private void fenyepn(HttpServletRequest req, Personneed personNeed){
 	
 
  Long maxRowsCount=personndPage.queryPersonCarCount(personNeed);
-	//������ҳ�߼�<=>����
+	//处理分页逻辑<=>调用
 	PageUtil pageUtil=new PageUtil(4, maxRowsCount);
-	// ����ҳ���߼�
+	// 处理页码逻辑
 	if (curPage <= 1) {
 
 		pageUtil.setCurPage(1);
