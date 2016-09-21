@@ -13,7 +13,7 @@ import cn.com.service.*;
 
 import cn.com.util.DbUtil;
 /**
- * 用户信息管理action
+ * 用户信息管理控制器
  * 
  */
 @Controller
