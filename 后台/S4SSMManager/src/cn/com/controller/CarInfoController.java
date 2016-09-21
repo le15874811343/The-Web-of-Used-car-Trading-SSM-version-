@@ -92,10 +92,6 @@ public class CarInfoController {
 				.getCarInfoByCountDesc(carInfo);
 		DbUtil.closeAll();
 		session.setAttribute("showcar", showCarMap);
-
-		// 品牌展示
-		
-
 		// 热销品牌下的热销车辆
 		Map<Long, Carinfo> carMap = new HashMap<Long, Carinfo>();
 		for (Integer key : showBrandMap.keySet()) {
