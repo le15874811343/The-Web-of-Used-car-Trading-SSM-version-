@@ -17,29 +17,32 @@ import cn.com.service.*;
 import cn.com.service.impl.*;
 
 import cn.com.util.*;
-
+/**
+ * 汽车管理控制器
+ * 
+ */
 @Controller
 public class MgCarInfoController {
 	@Resource
-	private ICarInfoService carInfoService=null;
+	private ICarInfoService carInfoService=null; //汽车概要信息服务接口的引用
 	@Resource(name="carInfoServiceImpl")
-	private IPageDao carInfoPage=null;
+	private IPageDao carInfoPage=null; //分页处理操作接口的引用（指向汽车概要信息操作实现类）
 	@Resource
-	private ICarBrandService  brandServiceImpl=null;
+	private ICarBrandService  brandServiceImpl=null; //汽车品牌信息服务接口的引用
 	@Resource
-  private	IPerSonCarService personCarServiceImpl=null;
+  private	IPerSonCarService personCarServiceImpl=null;  //个人汽车订单服务接口的引用
 	@Resource
-  private HardwareConfigServiceImpl hardwareConfigServiceImpl=null;
+  private HardwareConfigServiceImpl hardwareConfigServiceImpl=null; //汽车硬件配置信息服务接口的引用
 	@Resource
-  private	ProcedureInfoServiceImpl procedureInfoServiceImpl=null;
+  private	ProcedureInfoServiceImpl procedureInfoServiceImpl=null;  //手续信息服务接口的引用
 	@Resource
-  private	SystemConfigServiceImpl systemConfigServiceImpl=null;
+  private	SystemConfigServiceImpl systemConfigServiceImpl=null;  //汽车系统配置信息服务接口的引用
 	@Resource
-  private	SellInfoServiceImpl sellInfoServiceImpl=null;
+  private	SellInfoServiceImpl sellInfoServiceImpl=null; //销售信息服务接口的引用
 	@Resource
-  private	CarImagesInfoServiceImpl carImagesInfoServiceImpl=null;
+  private	CarImagesInfoServiceImpl carImagesInfoServiceImpl=null; //汽车图片服务接口的引用
 	@Resource
-  private	BasicInfoServiceImpl basicInfoServiceImpl=null;
+  private	BasicInfoServiceImpl basicInfoServiceImpl=null; //汽车基础信息服务接口的引用
 	public ICarInfoService getCarInfoService() {
 		return carInfoService;
 	}
@@ -104,6 +107,9 @@ public class MgCarInfoController {
 	public void setBasicInfoServiceImpl(BasicInfoServiceImpl basicInfoServiceImpl) {
 		this.basicInfoServiceImpl = basicInfoServiceImpl;
 	}
+        /**
+	 * 展示车辆列表action
+	 */
 	@RequestMapping("/MgCar_showlist.action")
 	public String showlist(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -114,22 +120,28 @@ public class MgCarInfoController {
 		
 		return "admin/allproduct";
 	}
+	/**
+	 * 展示在售的汽车action
+	 */
 	@RequestMapping("/MgCar_showzs.action")
 	public String showzs(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Carinfo carInfo=new Carinfo();
-		carInfo.setcState("����");
+		carInfo.setcState("在售");
 		fenye(request, carInfo);
 		
 		request.setAttribute("allbrand", brandServiceImpl.getAllBrand());
 		
 		return "admin/zaishouproduct";
 	}
+	/**
+	 * 展示审核中的车action
+	 */
 	@RequestMapping("/MgCar_showsh.action")
 	public String showsh(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Carinfo carInfo=new Carinfo();
-		carInfo.setcState("�����");
+		carInfo.setcState("审核中");
 		fenye(request,carInfo);
 		
 		request.setAttribute("allbrand", brandServiceImpl.getAllBrand());
@@ -137,28 +149,37 @@ public class MgCarInfoController {
 	
 		return "admin/shproduct";
 	}
+	/**
+	 * 展示下架的车action
+	 */
 	@RequestMapping("/MgCar_showxj.action")
 	public String showxj(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Carinfo carInfo=new Carinfo();
-		carInfo.setcState("�¼�");
+		carInfo.setcState("下架");
 		fenye(request, carInfo);
 		
 		request.setAttribute("allbrand", brandServiceImpl.getAllBrand());
 		
 		return "admin/xjproduct";
 	}
+	/**
+	 * 展示未通过的车action
+	 */
 	@RequestMapping("/MgCar_showwtg.action")
 	public String showwtg(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Carinfo carInfo=new Carinfo();
-		carInfo.setcState("δͨ��");
+		carInfo.setcState("未通过");
 		fenye(request, carInfo);
 		
 		request.setAttribute("allbrand", brandServiceImpl.getAllBrand());
 		
 		return "admin/wtgproduct";
 	}
+	/**
+	 * 展示所有条件查询出的车action
+	 */
 	@RequestMapping("/MgCar_showwhere.action")
 	public String showwhere(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -181,6 +202,9 @@ public class MgCarInfoController {
 		
 		return "admin/allproduct";
 	}
+	/**
+	 * 展示在售的条件查询出的车action
+	 */
 	@RequestMapping("/MgCar_showzswhere.action")
 	public String showzswhere(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -188,7 +212,7 @@ public class MgCarInfoController {
 		String cx=request.getParameter("ccx");
 	
 		Carinfo carInfo=new Carinfo();
-		carInfo.setcState("����");
+		carInfo.setcState("在售");
 		if(cx!=null&&!cx.equals("")){
 			carInfo.setcSeries(cx);
 		}
@@ -203,13 +227,16 @@ public class MgCarInfoController {
 	
 		return "admin/zaishouproduct";
 	}
+	/**
+	 * 展示审核中的条件查询出的车
+	 */
 	@RequestMapping("/MgCar_showshwhere.action")
 	public String showshwhere(HttpServletRequest request) throws Exception {
 		String pp=request.getParameter("cpp");
 		String cx=request.getParameter("ccx");
 	
 		Carinfo carInfo=new Carinfo();
-		carInfo.setcState("�����");
+		carInfo.setcState("审核中");
 		if(cx!=null&&!cx.equals("")){
 			carInfo.setcSeries(cx);
 		}
@@ -227,6 +254,9 @@ public class MgCarInfoController {
 		
 		return "admin/shproduct";
 	}
+	/**
+	 * 展示下架的条件查询出的车
+	 */
 	@RequestMapping("/MgCar_showxjwhere.action")
 	public String showxjwhere(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -234,7 +264,7 @@ public class MgCarInfoController {
 		String cx=request.getParameter("ccx");
 	
 		Carinfo carInfo=new Carinfo();
-		carInfo.setcState("�¼�");
+		carInfo.setcState("下架");
 		if(cx!=null&&!cx.equals("")){
 			carInfo.setcSeries(cx);
 		}
@@ -251,6 +281,9 @@ public class MgCarInfoController {
 
 		return "admin/xjproduct";
 	}
+	/**
+	 * 展示未通过的条件查询的车action
+	 */
 	@RequestMapping("/MgCar_showwtgwhere.action")
 	public String showwtgwhere(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
@@ -258,7 +291,7 @@ public class MgCarInfoController {
 		String cx=request.getParameter("ccx");
 	
 		Carinfo carInfo=new Carinfo();
-		carInfo.setcState("δͨ��");
+		carInfo.setcState("未通过");
 		if(cx!=null&&!cx.equals("")){
 			carInfo.setcSeries(cx);
 		}
@@ -275,6 +308,9 @@ public class MgCarInfoController {
 
 		return "admin/wtgproduct";
 	}
+	/**
+	 * 拒绝通过操作action
+	 */
 	@RequestMapping("/MgCar_jjtg.action")
 	public void jjtg(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -286,21 +322,24 @@ public class MgCarInfoController {
 		perSonCar.setcId(Long.parseLong(cid));
 		perSonCar.setuId(Long.parseLong(uid));
 		perSonCar.setcUid(Long.parseLong(uid));
-		perSonCar.setpState("�����");
+		perSonCar.setpState("审核中");
 	
 		
 		Carinfo carInfo=new Carinfo();
 		carInfo.setcId(Long.parseLong(cid));
-		carInfo.setcState("δͨ��");
+		carInfo.setcState("未通过");
 		
-		if(personCarServiceImpl.updatePerSoncar(perSonCar, "δͨ��")&&carInfoService.updateCarInfo(carInfo)){
+		if(personCarServiceImpl.updatePerSoncar(perSonCar, "未通过")&&carInfoService.updateCarInfo(carInfo)){
 			 response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print(1);
-				 response.getWriter().flush();//��ջ���,ˢ��
+				 response.getWriter().flush();//清空缓存,刷新
 				   response.getWriter().close();
 		}
 		
 	}
+	/**
+	 * 允许通过操作action
+	 */
 	@RequestMapping("/MgCar_yxtg.action")
 	public void yxtg(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -312,24 +351,27 @@ public class MgCarInfoController {
 		perSonCar.setcId(Long.parseLong(cid));
 		perSonCar.setuId(Long.parseLong(uid));
 		perSonCar.setcUid(Long.parseLong(uid));
-		perSonCar.setpState("�����");
+		perSonCar.setpState("审核中");
 		
 	
 		String newprice=request.getParameter("newprice");
 	
 		Carinfo carInfo=new Carinfo();
 		carInfo.setcId(Long.parseLong(cid));
-		carInfo.setcState("����");
+		carInfo.setcState("在售");
 		carInfo.setNewprice(Double.parseDouble(newprice));
 		
-		if(personCarServiceImpl.updatePerSoncar(perSonCar, "����")&&carInfoService.updateCarInfo(carInfo)){
+		if(personCarServiceImpl.updatePerSoncar(perSonCar, "出售")&&carInfoService.updateCarInfo(carInfo)){
 			 response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print(1);
-				 response.getWriter().flush();//��ջ���,ˢ��
+				 response.getWriter().flush();//清空缓存,刷新
 				   response.getWriter().close();
 		}
 		
 	}
+	/**
+	 * 删除车操作action
+	 */
 	@RequestMapping("/MgCar_dellcar.action")
 	public void dellcar(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -369,7 +411,7 @@ public class MgCarInfoController {
 									if(personCarServiceImpl.deletecidpersoncaruser(perSonCar)){
 										 response.setContentType("text/html;charset=utf-8");
 											response.getWriter().print(1);
-											 response.getWriter().flush();//��ջ���,ˢ��
+											 response.getWriter().flush();//清空缓存,刷新
 											   response.getWriter().close();
 									}
 								}
@@ -387,26 +429,29 @@ public class MgCarInfoController {
 	
 		
 	}
-	
+	/**
+	 * 分页展示车辆操作
+	 * 
+	 */
 	private void fenye(HttpServletRequest req,Carinfo carInfo){
 		try {
 		int curPage=0;
 		if(req.getParameter("jumpPage")!=null){
 		 curPage =Integer.parseInt(req.getParameter("jumpPage"));
 	 }
-		//���þ������
+		//设置距离参数
 		String distance=null;
 		if(req.getParameter("distance")!=null){
 			distance = new String(req.getParameter("distance").getBytes("ISO8859-1"),"utf-8");
 			}
 	   Map<String, Integer> distanceMap=setDistance(distance);
-		//���ü۸����
+		//设置价格参数
 	   String price = null;
 		if(req.getParameter("price")!=null){
 			price = new String(req.getParameter("price").getBytes("ISO8859-1"),"utf-8");
 		}
       Map<String, Integer> priceMap=setPrice(price);
-      //���ó������
+      //设置车龄参数
       String age = null;
 		if(req.getParameter("age")!=null){
 			age = new String(req.getParameter("age").getBytes("ISO8859-1"),"utf-8");
@@ -426,9 +471,9 @@ public class MgCarInfoController {
 		 carInfo.setcEmissionstandard(new String(req.getParameter("emsi").getBytes("ISO8859-1"),"utf-8"));
 	 }
 	 long maxRowsCount=carInfoPage.queryMsgCount(carInfo,priceMap.get("minPrice"),priceMap.get("maxPrice"),distanceMap.get("minDis"),distanceMap.get("maxDis"),ageMap.get("minAge"),ageMap.get("maxAge"));
-		//������ҳ�߼�<=>����
+		//处理分页逻辑<=>调用
 		PageUtil pageUtil=new PageUtil(7, maxRowsCount);
-		// ����ҳ���߼�
+		// 处理页码逻辑
 		if (curPage <= 1) {
 
 			pageUtil.setCurPage(1);
@@ -471,8 +516,12 @@ public class MgCarInfoController {
 		}
 		
 	 }
+	  /**
+	  * 设置距离参数的方法
+	  * 
+	  */
 	 private Map<String, Integer> setDistance(String distance){
-		   Map<String, Integer> distanceMap=new HashMap<String, Integer>();
+      Map<String, Integer> distanceMap=new HashMap<String, Integer>();
 	    DistanceUtil distanceUtil=null;
 	    int minDis=0;
 	    int maxDis=0;
@@ -486,7 +535,7 @@ public class MgCarInfoController {
   	   return distanceMap;
      }
      /**
-      * ���ü۸�����ķ���
+      * 设置价格参数的方法
       * @param price
       * @return
       */
@@ -506,7 +555,7 @@ public class MgCarInfoController {
   		return priceMap;
      }
      /**
-      * ���ó�������ķ���
+      * 设置车龄参数的方法
       * @param age
       * @return
       */
