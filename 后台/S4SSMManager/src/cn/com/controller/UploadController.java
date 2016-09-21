@@ -15,34 +15,39 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+/**
+ * 图片上传控制器
+ * @author lej
+ */
 @Controller
 public class UploadController {
+	/**
+	 * 图片上传action
+	 */
  @RequestMapping("/ScImage.action")
 	  protected void doPost(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws ServletException, IOException {
 		  
 		  
-		  bancfsc(request,session);
-		  String filepath =session.getServletContext().getRealPath("/tepimages")+"/";
+		  bancfsc(request,session);  //禁止重复上传
+		  String filepath =session.getServletContext().getRealPath("/tepimages")+"/";  //获取文件保存路径
 	      String filename = "";  
 	      String type="";  
-	      ServletInputStream in = request.getInputStream(); 
+	      ServletInputStream in = request.getInputStream();   //获取上传读取流
 	      
 	      byte[] buf = new byte[4048];  
-	      int len = in.readLine(buf, 0, buf.length);  
+	      int len = in.readLine(buf, 0, buf.length);    //标识符字节流
 	      String f = new String(buf, 0, len - 1);   
 	      while ((len = in.readLine(buf, 0, buf.length)) != -1) {  
 	          filename = new String(buf, 0, len);  
 	          int j = filename.lastIndexOf("\"");  
 	          int p = filename.lastIndexOf(".");   
-	          //�ļ�����  
+	           //文件类型
 	          type=filename.substring(p,j);     
-	          //�ļ�����  
+	          //文件名称  
 	          filename = System.currentTimeMillis()+type;    
 	          DataOutputStream fileStream = new DataOutputStream(  
 	          new BufferedOutputStream(new FileOutputStream(filepath+ filename))  
-	          );  
-
+	          );  //创建一个将数据写入指定输出流out的数据输出流
 	          len = in.readLine(buf, 0, buf.length);   
 	          len = in.readLine(buf, 0, buf.length);   
 	          while ((len = in.readLine(buf, 0, buf.length)) != -1) {  
@@ -51,25 +56,31 @@ public class UploadController {
 	                  break;      
 	              }  
 	              else{  
-	               // д��  
+	                // 写入
 	                   fileStream.write(buf, 0, len);  
 	              }  
 	          }  
 	          fileStream.close();
 	        session.setAttribute("sctname", filename);
 	      }  
+	        //异步返回结果
 	      PrintWriter out=response.getWriter();  
 	      String result = filename ;  
 	      out.print(result);  
 	      out.close();  
 	      in.close();  
 	  }
+	  /**
+	   * 检测重复上传的方法
+	   * 
+	   * 
+	   */
 	  private void bancfsc(HttpServletRequest request,HttpSession session){
 		  String	sctname=(String)  request.getParameter("sctname");
 		 if(sctname!=null&&!sctname.equals(""))  {String url=session.getServletContext().getRealPath("/tepimages")+"/"+sctname;
 		    File file=new File(url);
 		    if(file.exists()){
-		    	file.delete();
+		    	file.delete(); //若存在则删除
 		    }
 		   }
 	  }
